@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Service Desk &amp; Field Services | Engemon IT</title>
+<meta name="description" content="Service Desk e Field Services integrados para garantir suporte ágil, cobertura nacional e total visibilidade da sua operação de TI.">
+<meta property="og:title" content="Service Desk &amp; Field Services | Engemon IT">
+<meta property="og:description" content="Suporte ágil, cobertura nacional e total visibilidade da sua operação de TI.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WVC5G9F5');</script>
+<!-- End Google Tag Manager -->
+
+<style>
+  @font-face { font-family:'Hanken Grotesk'; src:url('fonts/HankenGrotesk-VariableFont_wght.ttf') format('truetype'); font-weight:100 900; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Hanken Grotesk'; src:url('fonts/HankenGrotesk-Italic-VariableFont_wght.ttf') format('truetype'); font-weight:100 900; font-style:italic; font-display:swap; }
+  *,*::before,*::after { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:'Hanken Grotesk',system-ui,sans-serif; color:#262626; background:#fff; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:inherit; }
+  @keyframes engPulse { 0%{box-shadow:0 0 0 0 rgba(31,157,107,.55)} 70%{box-shadow:0 0 0 7px rgba(31,157,107,0)} 100%{box-shadow:0 0 0 0 rgba(31,157,107,0)} }
+  @keyframes engSpin { to{transform:rotate(360deg)} }
+  @keyframes engPop { 0%{transform:scale(0)} 60%{transform:scale(1.18)} 100%{transform:scale(1)} }
+  @keyframes engFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  @keyframes engGrid { to{background-position:44px 44px} }
+  @keyframes engHeroIn { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:none} }
+  .hero-anim { opacity:0; animation:engHeroIn .8s cubic-bezier(.16,1,.3,1) forwards; }
+  .hero-anim-1 { animation-delay:.15s; }
+  .hero-anim-2 { animation-delay:.35s; }
+  .hero-anim-3 { animation-delay:.55s; }
+  @media (prefers-reduced-motion: reduce){ .hero-anim{ animation:none; opacity:1; } }
+
+  /* CTA do hero: brilho contínuo */
+  @keyframes engGlow { 0%,100%{box-shadow:0 0 0 0 rgba(0,159,223,.0),0 8px 24px rgba(0,159,223,.35)} 50%{box-shadow:0 0 0 6px rgba(0,159,223,.0),0 8px 30px rgba(0,159,223,.65)} }
+  @keyframes engShine { 0%{left:-60%} 60%,100%{left:140%} }
+  .cta-glow { position:relative; overflow:hidden; animation:engGlow 2.4s ease-in-out infinite; }
+  .cta-glow::after { content:""; position:absolute; top:0; left:-60%; width:45%; height:100%; background:linear-gradient(120deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.45) 50%,rgba(255,255,255,0) 100%); transform:skewX(-20deg); animation:engShine 2.8s ease-in-out infinite; pointer-events:none; }
+  @media (prefers-reduced-motion: reduce){ .cta-glow{ animation:none; } .cta-glow::after{ animation:none; display:none; } }
+
+  /* carrossel de cases */
+  #case-prev:hover, #case-next:hover { background:#009FDF !important; color:#fff !important; }
+  @media (max-width:860px){
+    .case-slide { grid-template-columns:1fr !important; }
+    .case-slide > div:first-child { min-height:240px !important; }
+    .case-slide > div:last-child { padding:30px 28px 32px !important; }
+    #case-prev { left:6px !important; }
+    #case-next { right:6px !important; }
+  }
+
+  /* seção dores: animação dos cards */
+  .pain-pop { opacity:0; transform:translateY(40px) scale(.82); }
+  .pain-pop.in { animation:painPop .62s cubic-bezier(.2,1.1,.3,1.15) forwards; }
+  @keyframes painPop { 0%{opacity:0;transform:translateY(40px) scale(.82)} 60%{opacity:1;transform:translateY(-6px) scale(1.03)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+  @media (prefers-reduced-motion: reduce){
+    .pain-pop, .pain-pop.in { animation:none !important; opacity:1; transform:none; }
+  }
+
+  /* hover states (substituem o atributo style-hover do Claude Design) */
+  .nav-cta:hover { background:#007FBF !important; }
+  .btn-primary:hover { background:#007FBF !important; border-color:#007FBF !important; }
+  .btn-ghost-light:hover { background:rgba(255,255,255,.1) !important; border-color:#fff !important; }
+  .pain-card:hover { box-shadow:0 14px 38px rgba(4,53,84,.30) !important; transform:translateY(-6px); }
+  .stage-card:hover { border-color:#009FDF !important; box-shadow:0 14px 38px rgba(4,53,84,.16) !important; transform:translateY(-4px); }
+  .stage-card.stage-field:hover { border-color:#E57623 !important; }
+  .btn-solid:hover { background:#007FBF !important; }
+  .btn-outline:hover { background:#009FDF !important; color:#fff !important; }
+  .cred-card:hover { transform:translateY(-5px); box-shadow:0 14px 32px rgba(4,53,84,.14) !important; }
+  .btn-reset:hover { background:#009FDF !important; color:#fff !important; }
+  .submit-btn:hover:not(:disabled) { background:#C45F10 !important; }
+
+  @media (max-width:880px){
+    .hero-grid, .contato-grid { grid-template-columns:1fr !important; }
+    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .nav-links { display:none !important; }
+  }
+  @media (max-width:540px){
+    .stats-grid { grid-template-columns:1fr !important; }
+    .form-grid { grid-template-columns:1fr !important; }
+  }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVC5G9F5" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!-- Leadster -->
+<script>(function(a,b,c,d){try{var e=b.head||b.getElementsByTagName("head")[0];var f=b.createElement("script");f.setAttribute("src",c);f.setAttribute("charset","UTF-8");f.defer=true;a.neuroleadId=d;e.appendChild(f)}catch(g){}})(window,document,"https://cdn.leadster.com.br/neurolead/neurolead.min.js","YLrM3zSWiEbhnEtF6DHUMn4PK")</script>
+<!-- End Leadster -->
+
+<div id="root" style="font-family:'Hanken Grotesk',system-ui,sans-serif;color:#262626;background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;">
+
+  <!-- ===================== NAV ===================== -->
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(4,53,84,.08);">
+    <div style="padding:0 24px;">
+      <div style="max-width:1200px;margin:0 auto;height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <a href="#inicio" style="display:flex;align-items:center;flex-shrink:0;"><img src="assets/logo-horizontal-colorido.png" alt="Engemon IT" style="height:34px;display:block;" /></a>
+      <div class="nav-links" style="display:flex;align-items:center;gap:30px;">
+        <a href="#dores" data-navlink="dores" style="text-decoration:none;font-size:14px;font-weight:700;color:#262626;transition:color .2s;">Desafios</a>
+        <a href="#solucao" data-navlink="solucao" style="text-decoration:none;font-size:14px;font-weight:700;color:#262626;transition:color .2s;">Solução</a>
+        <a href="#resultados" data-navlink="resultados" style="text-decoration:none;font-size:14px;font-weight:700;color:#262626;transition:color .2s;">Resultados</a>
+        <a href="#cases" data-navlink="cases" style="text-decoration:none;font-size:14px;font-weight:700;color:#262626;transition:color .2s;">Cases</a>
+        <a href="#contato" class="nav-cta" style="text-decoration:none;background:#009FDF;color:#fff;border-radius:4px;padding:11px 22px;font-size:13.5px;font-weight:700;white-space:nowrap;transition:background .2s;">Solicitar diagnóstico</a>
+      </div>
+    </div>
+    </div>
+    <div id="scroll-progress" style="position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,#009FDF,#E57623);transition:width .1s linear;"></div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="inicio" style="position:relative;background:#043554;overflow:hidden;padding:132px 24px 80px;scroll-margin-top:92px;">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:44px 44px;animation:engGrid 6s linear infinite;opacity:.6;"></div>
+    <svg width="560" height="420" viewBox="0 0 340 255" fill="none" style="position:absolute;right:-80px;top:-40px;opacity:.9;" aria-hidden="true"><path d="M30 40 L290 40 L260 115 L290 215 L30 215 L60 140 L30 40Z" stroke="rgba(0,159,223,0.16)" stroke-width="2"/><path d="M30 40 L260 115" stroke="rgba(0,159,223,0.16)" stroke-width="2"/></svg>
+    <div class="hero-grid" style="position:relative;z-index:1;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;">
+      <div>
+        <h1 class="hero-anim hero-anim-1" style="font-size:clamp(44px,5.6vw,76px);font-weight:200;line-height:1.07;letter-spacing:-.02em;color:#fff;margin:0 0 26px;">Transforme chamados em <span style="font-weight:800;color:#33B5E8;">produtividade</span>.</h1>
+        <p class="hero-anim hero-anim-2" style="font-size:21px;line-height:1.6;color:rgba(255,255,255,.78);max-width:560px;margin:0 0 40px;">Service Desk e Field Services integrados para garantir suporte ágil, cobertura nacional e total visibilidade da sua operação.</p>
+        <div class="hero-anim hero-anim-3" style="display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="#contato" class="btn-primary cta-glow" style="background:#009FDF;color:#fff;border:2px solid #009FDF;border-radius:4px;padding:15px 30px;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s,border-color .2s;">Solicitar diagnóstico gratuito</a>
+          <a href="#cases" class="btn-ghost-light" style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,.42);border-radius:4px;padding:15px 30px;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s,border-color .2s;">Conhecer cases</a>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <div style="position:absolute;z-index:0;inset:-14px;background:radial-gradient(circle at 70% 30%,rgba(0,159,223,.28),transparent 60%);filter:blur(8px);"></div>
+        <div style="position:relative;background:#fff;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,.34);padding:22px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+            <div style="display:flex;align-items:center;gap:9px;"><span style="width:9px;height:9px;border-radius:50%;background:#1F9D6B;animation:engPulse 2s infinite;"></span><span style="font-size:13px;font-weight:700;color:#043554;">Central de Operações</span><span style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1F9D6B;">Ao vivo</span></div>
+            <span id="dash-now" style="font-size:12px;color:#98A2B3;font-variant-numeric:tabular-nums;">--:--:--</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+            <div style="background:#FDF0E6;border-radius:10px;padding:12px 13px;">
+              <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#C45F10;margin-bottom:6px;">Abertos</div>
+              <div id="dash-open" style="font-size:26px;font-weight:700;color:#262626;line-height:1;font-variant-numeric:tabular-nums;">6</div>
+            </div>
+            <div style="background:#E6F6FD;border-radius:10px;padding:12px 13px;">
+              <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#007FBF;margin-bottom:6px;">Resolvidos</div>
+              <div id="dash-resolved" style="font-size:26px;font-weight:700;color:#262626;line-height:1;font-variant-numeric:tabular-nums;">1.247</div>
+            </div>
+            <div style="background:#E7F6EF;border-radius:10px;padding:12px 13px;">
+              <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#1F9D6B;margin-bottom:6px;">SLA</div>
+              <div id="dash-sla" style="font-size:26px;font-weight:700;color:#262626;line-height:1;font-variant-numeric:tabular-nums;">96%</div>
+            </div>
+          </div>
+          <div style="background:#F5F7FA;border-radius:10px;padding:13px 14px 8px;margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;color:#667085;margin-bottom:8px;">Chamados resolvidos · últimos minutos</div>
+            <svg viewBox="0 0 100 40" preserveAspectRatio="none" style="width:100%;height:64px;display:block;">
+              <defs><linearGradient id="engArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#009FDF" stop-opacity="0.28"/><stop offset="100%" stop-color="#009FDF" stop-opacity="0"/></linearGradient></defs>
+              <polygon id="chart-area" points="" fill="url(#engArea)"></polygon>
+              <polyline id="chart-line" points="" fill="none" stroke="#009FDF" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></polyline>
+            </svg>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-size:11px;font-weight:700;color:#667085;">Fila de atendimento</span>
+            <span style="font-size:11px;color:#98A2B3;">tempo real</span>
+          </div>
+          <div id="dash-feed" style="display:flex;flex-direction:column;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DORES ===================== -->
+  <section id="dores" style="background:#fff;padding:104px 24px;scroll-margin-top:88px;overflow:hidden;">
+    <div style="max-width:1240px;margin:0 auto;">
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);text-align:center;margin-bottom:56px;">
+        <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#009FDF;margin-bottom:14px;">As dores que travam sua operação</div>
+        <h2 style="font-size:clamp(28px,3.4vw,44px);font-weight:700;letter-spacing:-.02em;color:#262626;line-height:1.15;max-width:760px;margin:0 auto;text-wrap:balance;">Sua equipe resolve problemas ou apenas reage a eles?</h2>
+      </div>
+
+      <div id="dores-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;">
+          <div class="pain-pop" style="">
+            <div class="pain-card" style="background:#043554;border-radius:8px;border-top:3px solid #009FDF;box-shadow:0 4px 20px rgba(4,53,84,.18);padding:28px;height:100%;transition:box-shadow .22s ease,transform .22s ease;">
+              <div style="width:50px;height:50px;border-radius:8px;background:rgba(0,159,223,.20);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#33B5E8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></div>
+              <h3 style="font-size:18px;font-weight:700;color:#fff;margin:0 0 9px;line-height:1.3;">Chamados repetitivos consumindo tempo da equipe</h3>
+              <p style="font-size:14px;color:rgba(255,255,255,.74);line-height:1.6;margin:0;">Automatize e reduza demandas operacionais.</p>
+            </div>
+          </div>
+          <div class="pain-pop" style="">
+            <div class="pain-card" style="background:#043554;border-radius:8px;border-top:3px solid #009FDF;box-shadow:0 4px 20px rgba(4,53,84,.18);padding:28px;height:100%;transition:box-shadow .22s ease,transform .22s ease;">
+              <div style="width:50px;height:50px;border-radius:8px;background:rgba(0,159,223,.20);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#33B5E8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg></div>
+              <h3 style="font-size:18px;font-weight:700;color:#fff;margin:0 0 9px;line-height:1.3;">Atendimento sem cobertura nacional</h3>
+              <p style="font-size:14px;color:rgba(255,255,255,.74);line-height:1.6;margin:0;">Suporte padronizado em qualquer região do Brasil.</p>
+            </div>
+          </div>
+          <div class="pain-pop" style="">
+            <div class="pain-card" style="background:#043554;border-radius:8px;border-top:3px solid #009FDF;box-shadow:0 4px 20px rgba(4,53,84,.18);padding:28px;height:100%;transition:box-shadow .22s ease,transform .22s ease;">
+              <div style="width:50px;height:50px;border-radius:8px;background:rgba(0,159,223,.20);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#33B5E8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+              <h3 style="font-size:18px;font-weight:700;color:#fff;margin:0 0 9px;line-height:1.3;">Equipamentos parados aguardando manutenção</h3>
+              <p style="font-size:14px;color:rgba(255,255,255,.74);line-height:1.6;margin:0;">Gestão de peças e técnicos em campo para reduzir indisponibilidade.</p>
+            </div>
+          </div>
+          <div class="pain-pop" style="">
+            <div class="pain-card" style="background:#043554;border-radius:8px;border-top:3px solid #009FDF;box-shadow:0 4px 20px rgba(4,53,84,.18);padding:28px;height:100%;transition:box-shadow .22s ease,transform .22s ease;">
+              <div style="width:50px;height:50px;border-radius:8px;background:rgba(0,159,223,.20);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#33B5E8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+              <h3 style="font-size:18px;font-weight:700;color:#fff;margin:0 0 9px;line-height:1.3;">Falta de visibilidade dos indicadores</h3>
+              <p style="font-size:14px;color:rgba(255,255,255,.74);line-height:1.6;margin:0;">Dashboards e acompanhamento em tempo real.</p>
+            </div>
+          </div>
+          <div class="pain-pop" style="">
+            <div class="pain-card" style="background:#043554;border-radius:8px;border-top:3px solid #009FDF;box-shadow:0 4px 20px rgba(4,53,84,.18);padding:28px;height:100%;transition:box-shadow .22s ease,transform .22s ease;">
+              <div style="width:50px;height:50px;border-radius:8px;background:rgba(0,159,223,.20);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#33B5E8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <h3 style="font-size:18px;font-weight:700;color:#fff;margin:0 0 9px;line-height:1.3;">Times remotos e de campo desconectados</h3>
+              <p style="font-size:14px;color:rgba(255,255,255,.74);line-height:1.6;margin:0;">Uma única operação integrada.</p>
+            </div>
+          </div>
+          <div class="pain-pop" style="">
+            <div class="pain-card" style="background:#043554;border-radius:8px;border-top:3px solid #009FDF;box-shadow:0 4px 20px rgba(4,53,84,.18);padding:28px;height:100%;transition:box-shadow .22s ease,transform .22s ease;">
+              <div style="width:50px;height:50px;border-radius:8px;background:rgba(0,159,223,.20);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:#33B5E8;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></div>
+              <h3 style="font-size:18px;font-weight:700;color:#fff;margin:0 0 9px;line-height:1.3;">Dificuldade para contratar especialistas</h3>
+              <p style="font-size:14px;color:rgba(255,255,255,.74);line-height:1.6;margin:0;">Equipe pronta para escalar conforme sua demanda.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- ===================== COMO RESOLVE ===================== -->
+  <section id="solucao" style="position:relative;background:#043554;padding:104px 24px;scroll-margin-top:88px;overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:url('assets/tech-soldering.jpg');background-size:cover;background-position:center;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,53,84,.90),rgba(4,53,84,.95));"></div>
+    <div style="position:relative;z-index:1;max-width:1200px;margin:0 auto;">
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);text-align:center;margin-bottom:56px;">
+        <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#33B5E8;margin-bottom:14px;">Como a Engemon resolve</div>
+        <h2 style="font-size:clamp(28px,3.4vw,44px);font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.15;max-width:840px;margin:0 auto;text-wrap:balance;">Uma operação única do primeiro contato até a solução em campo</h2>
+      </div>
+      <div style="display:flex;align-items:stretch;gap:0;flex-wrap:wrap;justify-content:center;">
+        <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);flex:1 1 300px;max-width:360px;">
+          <div class="stage-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.08);padding:30px;height:100%;border:1.5px solid transparent;transition:border-color .22s ease,box-shadow .22s ease,transform .22s ease;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+              <div style="width:48px;height:48px;border-radius:10px;background:#043554;display:flex;align-items:center;justify-content:center;color:#fff;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 0 1 18 0"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/><rect x="2" y="11" width="4" height="8" rx="1"/><rect x="18" y="11" width="4" height="8" rx="1"/></svg></div>
+              <div><div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;color:#98A2B3;">01</div><div style="font-size:19px;font-weight:700;color:#262626;">Service Desk</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#009FDF;flex-shrink:0;"></span>Atendimento N1, N2 e N3</span>
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#009FDF;flex-shrink:0;"></span>Atendimento multilíngue</span>
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#009FDF;flex-shrink:0;"></span>Gestão de chamados</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;padding:0 6px;color:#33B5E8;flex:0 0 auto;align-self:center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+        <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1) .12s,transform .7s cubic-bezier(.16,1,.3,1) .12s;flex:1 1 300px;max-width:360px;">
+          <div class="stage-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.08);padding:30px;height:100%;border:1.5px solid transparent;transition:border-color .22s ease,box-shadow .22s ease,transform .22s ease;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+              <div style="width:48px;height:48px;border-radius:10px;background:#009FDF;display:flex;align-items:center;justify-content:center;color:#fff;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 9 4-18 3 9h4"/></svg></div>
+              <div><div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;color:#98A2B3;">02</div><div style="font-size:19px;font-weight:700;color:#262626;">Gestão Inteligente</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#009FDF;flex-shrink:0;"></span>Monitoramento</span>
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#009FDF;flex-shrink:0;"></span>Dashboards &amp; Analytics</span>
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#009FDF;flex-shrink:0;"></span>Gestão de SLA</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;padding:0 6px;color:#33B5E8;flex:0 0 auto;align-self:center;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></div>
+        <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1) .24s,transform .7s cubic-bezier(.16,1,.3,1) .24s;flex:1 1 300px;max-width:360px;">
+          <div class="stage-card stage-field" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.08);padding:30px;height:100%;border:1.5px solid transparent;transition:border-color .22s ease,box-shadow .22s ease,transform .22s ease;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+              <div style="width:48px;height:48px;border-radius:10px;background:#E57623;display:flex;align-items:center;justify-content:center;color:#fff;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></div>
+              <div><div style="font-size:10.5px;font-weight:700;letter-spacing:.1em;color:#98A2B3;">03</div><div style="font-size:19px;font-weight:700;color:#262626;">Field Services</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#E57623;flex-shrink:0;"></span>Técnicos distribuídos nacionalmente</span>
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#E57623;flex-shrink:0;"></span>Gestão de peças</span>
+              <span style="display:flex;align-items:center;gap:9px;font-size:14px;color:#3D3D3D;"><span style="width:6px;height:6px;border-radius:50%;background:#E57623;flex-shrink:0;"></span>Atendimento presencial especializado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);text-align:center;margin-top:48px;">
+        <a href="#contato" class="btn-solid" style="display:inline-flex;align-items:center;gap:9px;background:#009FDF;color:#fff;border-radius:4px;padding:15px 32px;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s;">Quero entender como funciona<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTADOS ===================== -->
+  <section id="resultados" style="position:relative;background:#009FDF;overflow:hidden;padding:104px 24px;scroll-margin-top:88px;">
+    <svg width="480" height="360" viewBox="0 0 340 255" fill="none" style="position:absolute;left:-90px;bottom:-70px;opacity:.9;" aria-hidden="true"><path d="M30 40 L290 40 L260 115 L290 215 L30 215 L60 140 L30 40Z" stroke="rgba(255,255,255,0.12)" stroke-width="2"/><path d="M30 40 L260 115" stroke="rgba(255,255,255,0.12)" stroke-width="2"/></svg>
+    <div style="position:relative;z-index:1;max-width:1200px;margin:0 auto;">
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);text-align:center;margin-bottom:60px;">
+        <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.7);margin-bottom:14px;">Resultados que comprovam</div>
+        <h2 style="font-size:clamp(28px,3.4vw,44px);font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.15;margin:0;">Números que sustentam operações críticas</h2>
+      </div>
+      <div id="stats-grid" class="stats-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:48px 32px;">
+        <div style="text-align:center;"><div style="font-size:clamp(40px,5vw,66px);font-weight:200;color:#fff;letter-spacing:-.02em;line-height:1;"><span data-counter="35" style="font-variant-numeric:tabular-nums;">0</span><span style="color:#B3E4F7;">+</span></div><div style="font-size:14.5px;color:rgba(255,255,255,.82);margin-top:10px;">anos de mercado</div></div>
+        <div style="text-align:center;"><div style="font-size:clamp(40px,5vw,66px);font-weight:200;color:#fff;letter-spacing:-.02em;line-height:1;"><span data-counter="3200" data-sep="1" style="font-variant-numeric:tabular-nums;">0</span><span style="color:#B3E4F7;">+</span></div><div style="font-size:14.5px;color:rgba(255,255,255,.82);margin-top:10px;">colaboradores</div></div>
+        <div style="text-align:center;"><div style="font-size:clamp(40px,5vw,66px);font-weight:200;color:#fff;letter-spacing:-.02em;line-height:1;"><span data-counter="700" style="font-variant-numeric:tabular-nums;">0</span><span style="color:#B3E4F7;"> mil+</span></div><div style="font-size:14.5px;color:rgba(255,255,255,.82);margin-top:10px;">chamados de Service Desk em 2025</div></div>
+        <div style="text-align:center;"><div style="font-size:clamp(40px,5vw,66px);font-weight:200;color:#fff;letter-spacing:-.02em;line-height:1;"><span data-counter="150" style="font-variant-numeric:tabular-nums;">0</span><span style="color:#B3E4F7;"> mil+</span></div><div style="font-size:14.5px;color:rgba(255,255,255,.82);margin-top:10px;">chamados de Field Service em 2025</div></div>
+        <div style="text-align:center;"><div style="font-size:clamp(40px,5vw,66px);font-weight:200;color:#fff;letter-spacing:-.02em;line-height:1;"><span data-counter="94" style="font-variant-numeric:tabular-nums;">0</span><span style="color:#B3E4F7;">%</span></div><div style="font-size:14.5px;color:rgba(255,255,255,.82);margin-top:10px;">SLA geral</div></div>
+        <div style="text-align:center;"><div style="font-size:clamp(40px,5vw,66px);font-weight:200;color:#fff;letter-spacing:-.02em;line-height:1;"><span data-counter="87" style="font-variant-numeric:tabular-nums;">0</span></div><div style="font-size:14.5px;color:rgba(255,255,255,.82);margin-top:10px;">NPS global</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CASES ===================== -->
+  <section id="cases" style="background:#fff;padding:104px 24px;scroll-margin-top:88px;">
+    <div style="max-width:1140px;margin:0 auto;">
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);text-align:center;margin-bottom:52px;">
+        <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#009FDF;margin-bottom:14px;">Cases reais</div>
+        <h2 style="font-size:clamp(28px,3.4vw,44px);font-weight:700;letter-spacing:-.02em;color:#262626;line-height:1.15;max-width:720px;margin:0 auto;text-wrap:balance;">Resultados entregues para operações de grande escala</h2>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);">
+        <div id="cases-carousel" style="position:relative;">
+          <!-- viewport -->
+          <div style="overflow:hidden;border:1.5px solid #EAECF0;border-radius:16px;box-shadow:0 8px 30px rgba(4,53,84,.08);background:#fff;">
+            <div id="cases-track" style="display:flex;transition:transform .6s cubic-bezier(.16,1,.3,1);will-change:transform;">
+
+              <!-- SLIDE 1 - Santa Catarina -->
+              <div class="case-slide" style="flex:0 0 100%;display:grid;grid-template-columns:1.1fr 1fr;align-items:stretch;">
+                <div style="position:relative;min-height:420px;"><img src="assets/cases/santa-catarina.jpg" alt="Centro Médico Santa Catarina — Hospital Santa Isabel" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;" /></div>
+                <div style="padding:44px 44px 40px;display:flex;flex-direction:column;justify-content:center;">
+                  <div style="font-size:22px;font-weight:800;color:#043554;letter-spacing:-.01em;margin-bottom:18px;">Rede Santa Catarina</div>
+                  <p style="font-size:17px;line-height:1.6;color:#3D3D3D;margin:0 0 22px;font-weight:500;">"Com a Engemon IT, centralizamos o suporte de toda a rede em uma operação única. O tempo de resposta caiu drasticamente e nossas unidades passaram a contar com atendimento padronizado e previsível."</p>
+                  <div style="margin-bottom:26px;">
+                    <div style="font-size:14.5px;font-weight:700;color:#262626;">Diretoria de TI</div>
+                    <div style="font-size:13.5px;color:#667085;">Rede Santa Catarina · varejo em larga escala</div>
+                  </div>
+                  <div style="display:flex;gap:30px;border-top:1px solid #EAECF0;padding-top:24px;">
+                    <div><div style="font-size:34px;font-weight:800;color:#009FDF;letter-spacing:-.02em;line-height:1;">50+</div><div style="font-size:13px;color:#667085;margin-top:6px;">profissionais na<br/>equipe dedicada</div></div>
+                    <div><div style="font-size:34px;font-weight:800;color:#009FDF;letter-spacing:-.02em;line-height:1;">10 mil+</div><div style="font-size:13px;color:#667085;margin-top:6px;">chamados atendidos<br/>por mês</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SLIDE 2 - DPSP -->
+              <div class="case-slide" style="flex:0 0 100%;display:grid;grid-template-columns:1.1fr 1fr;align-items:stretch;">
+                <div style="position:relative;min-height:420px;"><img src="assets/cases/dpsp.jpg" alt="Grupo DPSP — Drogarias Pacheco e Drogaria São Paulo" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;" /></div>
+                <div style="padding:44px 44px 40px;display:flex;flex-direction:column;justify-content:center;">
+                  <div style="font-size:22px;font-weight:800;color:#043554;letter-spacing:-.01em;margin-bottom:18px;">Grupo DPSP</div>
+                  <p style="font-size:17px;line-height:1.6;color:#3D3D3D;margin:0 0 22px;font-weight:500;">"A cobertura nacional da Engemon foi decisiva para sustentar a operação das nossas mais de 1.500 unidades. O tempo médio de solução despencou e ganhamos previsibilidade em toda a malha de lojas."</p>
+                  <div style="margin-bottom:26px;">
+                    <div style="font-size:14.5px;font-weight:700;color:#262626;">Gerência de Infraestrutura</div>
+                    <div style="font-size:13.5px;color:#667085;">Grupo DPSP · Drogarias Pacheco e Drogaria São Paulo</div>
+                  </div>
+                  <div style="display:flex;gap:30px;border-top:1px solid #EAECF0;padding-top:24px;">
+                    <div><div style="font-size:34px;font-weight:800;color:#009FDF;letter-spacing:-.02em;line-height:1;">1.500+</div><div style="font-size:13px;color:#667085;margin-top:6px;">unidades<br/>atendidas</div></div>
+                    <div><div style="font-size:34px;font-weight:800;color:#1F9D6B;letter-spacing:-.02em;line-height:1;">33h → 4h</div><div style="font-size:13px;color:#667085;margin-top:6px;">redução do tempo<br/>médio de solução</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SLIDE 3 - Pirelli -->
+              <div class="case-slide" style="flex:0 0 100%;display:grid;grid-template-columns:1.1fr 1fr;align-items:stretch;">
+                <div style="position:relative;min-height:420px;"><img src="assets/cases/pirelli.jpg" alt="Pirelli — operação de atendimento" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;" /></div>
+                <div style="padding:44px 44px 40px;display:flex;flex-direction:column;justify-content:center;">
+                  <div style="font-size:22px;font-weight:800;color:#043554;letter-spacing:-.01em;margin-bottom:18px;">Pirelli</div>
+                  <p style="font-size:17px;line-height:1.6;color:#3D3D3D;margin:0 0 22px;font-weight:500;">"Precisávamos de uma operação trilíngue para dar suporte a toda a América Latina. A Engemon estruturou uma equipe dedicada que entende nossa realidade e atende com a mesma qualidade em três idiomas."</p>
+                  <div style="margin-bottom:26px;">
+                    <div style="font-size:14.5px;font-weight:700;color:#262626;">Coordenação de TI LATAM</div>
+                    <div style="font-size:13.5px;color:#667085;">Pirelli · operação trilíngue na América Latina</div>
+                  </div>
+                  <div style="display:flex;gap:30px;border-top:1px solid #EAECF0;padding-top:24px;">
+                    <div><div style="font-size:34px;font-weight:800;color:#009FDF;letter-spacing:-.02em;line-height:1;">30+</div><div style="font-size:13px;color:#667085;margin-top:6px;">profissionais na<br/>equipe dedicada</div></div>
+                    <div><div style="font-size:34px;font-weight:800;color:#C45F10;letter-spacing:-.02em;line-height:1;">3 idiomas</div><div style="font-size:13px;color:#667085;margin-top:6px;">operação trilíngue<br/>na América Latina</div></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- setas -->
+          <button id="case-prev" aria-label="Case anterior" style="position:absolute;top:50%;left:-22px;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid #EAECF0;box-shadow:0 4px 16px rgba(4,53,84,.14);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#043554;z-index:3;transition:background .2s,transform .2s;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <button id="case-next" aria-label="Próximo case" style="position:absolute;top:50%;right:-22px;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:#fff;border:1.5px solid #EAECF0;box-shadow:0 4px 16px rgba(4,53,84,.14);cursor:pointer;display:flex;align-items:center;justify-content:center;color:#043554;z-index:3;transition:background .2s,transform .2s;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+
+          <!-- dots -->
+          <div id="case-dots" style="display:flex;justify-content:center;gap:10px;margin-top:26px;">
+            <button class="case-dot" data-dot="0" aria-label="Ir para case 1" style="width:30px;height:6px;border-radius:9999px;border:none;background:#009FDF;cursor:pointer;padding:0;transition:background .3s,width .3s;"></button>
+            <button class="case-dot" data-dot="1" aria-label="Ir para case 2" style="width:10px;height:6px;border-radius:9999px;border:none;background:#D0D5DD;cursor:pointer;padding:0;transition:background .3s,width .3s;"></button>
+            <button class="case-dot" data-dot="2" aria-label="Ir para case 3" style="width:10px;height:6px;border-radius:9999px;border:none;background:#D0D5DD;cursor:pointer;padding:0;transition:background .3s,width .3s;"></button>
+          </div>
+        </div>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);text-align:center;margin-top:44px;">
+        <a href="#contato" class="btn-outline" style="display:inline-flex;align-items:center;gap:9px;background:transparent;color:#009FDF;border:2px solid #009FDF;border-radius:4px;padding:14px 30px;font-size:15px;font-weight:700;text-decoration:none;transition:background .2s,color .2s;">Quero alcançar resultados semelhantes</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CREDIBILIDADE ===================== -->
+  <section id="credibilidade" style="position:relative;background:#043554;padding:104px 24px;scroll-margin-top:88px;overflow:hidden;">
+    <div style="position:absolute;inset:0;background-image:url('assets/tech-circuit.jpg');background-size:cover;background-position:center;"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,53,84,.90),rgba(4,53,84,.95));"></div>
+    <div style="position:relative;z-index:1;max-width:1080px;margin:0 auto;">
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);text-align:center;margin-bottom:48px;">
+        <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#33B5E8;margin-bottom:14px;">Credibilidade</div>
+        <h2 style="font-size:clamp(28px,3.4vw,44px);font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.15;margin:0 0 16px;">Confiabilidade construída em cada atendimento</h2>
+        <p style="font-size:16.5px;color:rgba(255,255,255,.78);line-height:1.65;max-width:620px;margin:0 auto;">Processos auditados, segurança da informação e excelência operacional reconhecida pelo mercado.</p>
+      </div>
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;">
+        <div class="cred-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.06);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:transform .22s ease,box-shadow .22s ease;">
+          <div style="height:72px;display:flex;align-items:center;justify-content:center;"><img src="assets/certs/iso-9001.png" alt="Certificação ISO 9001" style="max-height:72px;max-width:130px;object-fit:contain;display:block;" /></div>
+          <div style="font-size:12.5px;font-weight:700;color:#667085;text-align:center;">Qualidade</div>
+        </div>
+        <div class="cred-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.06);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:transform .22s ease,box-shadow .22s ease;">
+          <div style="height:72px;display:flex;align-items:center;justify-content:center;"><img src="assets/certs/iso-14001.png" alt="Certificação ISO 14001" style="max-height:72px;max-width:130px;object-fit:contain;display:block;" /></div>
+          <div style="font-size:12.5px;font-weight:700;color:#667085;text-align:center;">Meio ambiente</div>
+        </div>
+        <div class="cred-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.06);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:transform .22s ease,box-shadow .22s ease;">
+          <div style="height:72px;display:flex;align-items:center;justify-content:center;"><img src="assets/certs/iso-27001.png" alt="Certificação ISO 27001" style="max-height:72px;max-width:130px;object-fit:contain;display:block;" /></div>
+          <div style="font-size:12.5px;font-weight:700;color:#667085;text-align:center;">Segurança da informação</div>
+        </div>
+        <div class="cred-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.06);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:transform .22s ease,box-shadow .22s ease;">
+          <div style="height:72px;display:flex;align-items:center;justify-content:center;"><img src="assets/certs/glpi.png" alt="GLPI Network Silver Partner" style="max-height:72px;max-width:130px;object-fit:contain;display:block;" /></div>
+          <div style="font-size:12.5px;font-weight:700;color:#667085;text-align:center;">GLPI Silver Partner</div>
+        </div>
+        <div class="cred-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.06);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:transform .22s ease,box-shadow .22s ease;">
+          <div style="height:72px;display:flex;align-items:center;justify-content:center;"><img src="assets/certs/gptw.png" alt="Great Place To Work Certified" style="max-height:72px;max-width:130px;object-fit:contain;display:block;" /></div>
+          <div style="font-size:12.5px;font-weight:700;color:#667085;text-align:center;">Great Place To Work</div>
+        </div>
+        <div class="cred-card" style="background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(4,53,84,.06);padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;transition:transform .22s ease,box-shadow .22s ease;">
+          <div style="height:72px;display:flex;align-items:center;justify-content:center;"><img src="assets/certs/hdi.png" alt="HDI Support Center Certification" style="max-height:72px;max-width:130px;object-fit:contain;display:block;" /></div>
+          <div style="font-size:12.5px;font-weight:700;color:#667085;text-align:center;">HDI Support Center</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONVERSÃO FINAL ===================== -->
+  <section id="contato" style="position:relative;background:#fff;overflow:hidden;padding:104px 24px;scroll-margin-top:88px;">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(4,53,84,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(4,53,84,.025) 1px,transparent 1px);background-size:44px 44px;opacity:.7;"></div>
+    <svg width="520" height="390" viewBox="0 0 340 255" fill="none" style="position:absolute;right:-90px;bottom:-80px;opacity:.5;" aria-hidden="true"><path d="M30 40 L290 40 L260 115 L290 215 L30 215 L60 140 L30 40Z" stroke="rgba(0,159,223,0.12)" stroke-width="2"/><path d="M30 40 L260 115" stroke="rgba(0,159,223,0.12)" stroke-width="2"/></svg>
+    <div class="contato-grid" style="position:relative;z-index:1;max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:start;">
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);padding-top:8px;">
+        <div style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:#009FDF;margin-bottom:16px;">Diagnóstico gratuito</div>
+        <h2 style="font-size:clamp(30px,3.6vw,46px);font-weight:700;letter-spacing:-.02em;color:#262626;line-height:1.12;margin:0 0 20px;">Vamos avaliar sua operação?</h2>
+        <p style="font-size:16.5px;color:#667085;line-height:1.7;margin:0 0 32px;">Descubra onde estão os gargalos do seu Service Desk e do seu atendimento em campo e receba recomendações práticas para aumentar eficiência, reduzir indisponibilidades e melhorar a experiência dos usuários.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:13px;color:#3D3D3D;font-size:15px;"><span style="width:30px;height:30px;border-radius:50%;background:#E7F6EF;display:flex;align-items:center;justify-content:center;color:#1F9D6B;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Análise dos seus indicadores atuais</div>
+          <div style="display:flex;align-items:center;gap:13px;color:#3D3D3D;font-size:15px;"><span style="width:30px;height:30px;border-radius:50%;background:#E7F6EF;display:flex;align-items:center;justify-content:center;color:#1F9D6B;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Mapa de gargalos e oportunidades</div>
+          <div style="display:flex;align-items:center;gap:13px;color:#3D3D3D;font-size:15px;"><span style="width:30px;height:30px;border-radius:50%;background:#E7F6EF;display:flex;align-items:center;justify-content:center;color:#1F9D6B;flex-shrink:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Recomendações práticas e acionáveis</div>
+        </div>
+      </div>
+
+      <div data-reveal style="opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.16,1,.3,1) .1s,transform .7s cubic-bezier(.16,1,.3,1) .1s;">
+        <div style="background:linear-gradient(160deg,#009FDF,#0077B6);border-radius:16px;box-shadow:0 20px 54px rgba(0,159,223,.35);padding:34px;">
+          <!-- FORM -->
+          <form id="lead-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+            <!-- Web3Forms: troque pela sua access key -->
+            <input type="hidden" name="access_key" value="305caba5-33b3-4d4e-9e4e-d2bdc2037517">
+            <input type="hidden" name="subject" value="Novo lead — LP Service Desk &amp; Field Services">
+            <input type="hidden" name="from_name" value="LP Service Desk &amp; Field Services">
+            <input type="hidden" name="redirect" value="false">
+            <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none !important;">
+            <input type="hidden" name="gclid" id="field-gclid" value="">
+            <input type="hidden" name="utm_source" id="field-utm_source" value="">
+            <input type="hidden" name="utm_medium" id="field-utm_medium" value="">
+            <input type="hidden" name="utm_campaign" id="field-utm_campaign" value="">
+            <input type="hidden" name="pagina" value="LP Service Desk e Field Services">
+
+            <h3 style="font-size:21px;font-weight:700;color:#fff;margin:0 0 4px;">Solicite seu diagnóstico</h3>
+            <p style="font-size:13.5px;color:rgba(255,255,255,.85);margin:0 0 24px;">Preencha os dados e nossa equipe entra em contato.</p>
+            <div class="form-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:6px;">Nome</label>
+                <input name="nome" data-field="nome" placeholder="Seu nome" autocomplete="name" style="width:100%;padding:12px 14px;font-family:inherit;font-size:15px;color:#262626;background:#fff;border:1.5px solid #D0D5DD;border-radius:8px;outline:none;transition:border-color .16s ease,box-shadow .16s ease;appearance:none;-webkit-appearance:none;" />
+                <div data-err="nome" style="font-size:12px;color:#E5484D;margin-top:5px;display:none;"></div>
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:6px;">Empresa</label>
+                <input name="empresa" data-field="empresa" placeholder="Nome da empresa" autocomplete="organization" style="width:100%;padding:12px 14px;font-family:inherit;font-size:15px;color:#262626;background:#fff;border:1.5px solid #D0D5DD;border-radius:8px;outline:none;transition:border-color .16s ease,box-shadow .16s ease;appearance:none;-webkit-appearance:none;" />
+                <div data-err="empresa" style="font-size:12px;color:#E5484D;margin-top:5px;display:none;"></div>
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:6px;">Cargo</label>
+                <input name="cargo" data-field="cargo" placeholder="Seu cargo" autocomplete="organization-title" style="width:100%;padding:12px 14px;font-family:inherit;font-size:15px;color:#262626;background:#fff;border:1.5px solid #D0D5DD;border-radius:8px;outline:none;transition:border-color .16s ease,box-shadow .16s ease;appearance:none;-webkit-appearance:none;" />
+                <div data-err="cargo" style="font-size:12px;color:#E5484D;margin-top:5px;display:none;"></div>
+              </div>
+              <div>
+                <label style="display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:6px;">Telefone</label>
+                <input name="telefone" data-field="telefone" placeholder="(11) 99999-9999" inputmode="tel" autocomplete="tel" style="width:100%;padding:12px 14px;font-family:inherit;font-size:15px;color:#262626;background:#fff;border:1.5px solid #D0D5DD;border-radius:8px;outline:none;transition:border-color .16s ease,box-shadow .16s ease;appearance:none;-webkit-appearance:none;" />
+                <div data-err="telefone" style="font-size:12px;color:#E5484D;margin-top:5px;display:none;"></div>
+              </div>
+              <div style="grid-column:1 / -1;">
+                <label style="display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:6px;">E-mail corporativo</label>
+                <input name="email" data-field="email" placeholder="voce@suaempresa.com.br" inputmode="email" autocomplete="email" style="width:100%;padding:12px 14px;font-family:inherit;font-size:15px;color:#262626;background:#fff;border:1.5px solid #D0D5DD;border-radius:8px;outline:none;transition:border-color .16s ease,box-shadow .16s ease;appearance:none;-webkit-appearance:none;" />
+                <div data-err="email" style="font-size:12px;color:#E5484D;margin-top:5px;display:none;"></div>
+              </div>
+              <div style="grid-column:1 / -1;">
+                <label style="display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:6px;">Qual o volume médio de chamados atendidos mensalmente?</label>
+                <select name="volume_chamados" data-field="volume_chamados" style="width:100%;padding:12px 14px;font-family:inherit;font-size:15px;color:#262626;background:#fff;border:1.5px solid #D0D5DD;border-radius:8px;outline:none;transition:border-color .16s ease,box-shadow .16s ease;cursor:pointer;appearance:auto;">
+                  <option value="">Selecione uma faixa</option>
+                  <option value="Menos de 500">Menos de 500</option>
+                  <option value="Entre 501 e 1.000">Entre 501 e 1.000</option>
+                  <option value="Entre 1.001 e 5.000">Entre 1.001 e 5.000</option>
+                  <option value="Entre 5.001 e 10.000">Entre 5.001 e 10.000</option>
+                  <option value="Mais de 10.000">Mais de 10.000</option>
+                  <option value="Não sei informar">Não sei informar</option>
+                </select>
+                <div data-err="volume_chamados" style="font-size:12px;color:#E5484D;margin-top:5px;display:none;"></div>
+              </div>
+              <div style="grid-column:1 / -1;">
+                <label style="display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:6px;">Mensagem <span style="font-weight:500;color:rgba(255,255,255,.7);">(opcional)</span></label>
+                <textarea name="mensagem" data-field="mensagem" rows="3" placeholder="Conte um pouco sobre sua operação ou necessidade" style="width:100%;padding:12px 14px;font-family:inherit;font-size:15px;color:#262626;background:#fff;border:1.5px solid #D0D5DD;border-radius:8px;outline:none;transition:border-color .16s ease,box-shadow .16s ease;resize:vertical;min-height:84px;"></textarea>
+              </div>
+            </div>
+            <button type="submit" id="submit-btn" class="submit-btn" style="width:100%;margin-top:22px;padding:15px 24px;background:#E57623;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s ease;display:flex;align-items:center;justify-content:center;min-height:50px;">
+              <span id="submit-label" style="display:inline-flex;align-items:center;gap:9px;">Solicitar diagnóstico gratuito<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+              <span id="submit-spinner" style="display:none;width:17px;height:17px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:engSpin .7s linear infinite;"></span>
+            </button>
+            <p style="text-align:center;font-size:12.5px;color:rgba(255,255,255,.8);margin:14px 0 0;">Nossa equipe entrará em contato em até 1 dia útil.</p>
+          </form>
+          <!-- SUCCESS -->
+          <div id="lead-success" style="display:none;text-align:center;padding:24px 8px;">
+            <div style="width:74px;height:74px;border-radius:50%;background:#E7F6EF;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;animation:engPop .5s cubic-bezier(.16,1,.3,1);"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#1F9D6B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+            <h3 style="font-size:24px;font-weight:700;color:#262626;margin:0 0 10px;">Solicitação recebida</h3>
+            <p style="font-size:15.5px;color:#667085;line-height:1.6;margin:0 auto 6px;max-width:360px;">Obrigado, <strong id="recap-nome" style="color:#043554;"></strong>. Recebemos os dados de <strong id="recap-empresa" style="color:#043554;"></strong>.</p>
+            <p style="font-size:14px;color:#98A2B3;margin:0 0 26px;">Nossa equipe entrará em contato em até 1 dia útil.</p>
+            <button type="button" id="reset-btn" class="btn-reset" style="background:transparent;color:#009FDF;border:2px solid #009FDF;border-radius:4px;padding:11px 24px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s,color .2s;">Enviar outra solicitação</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:#262626;padding:60px 24px 30px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap;margin-bottom:40px;">
+        <div style="max-width:300px;">
+          <img src="assets/logo-horizontal-negativo.png" alt="Engemon IT" style="height:30px;display:block;margin-bottom:18px;" />
+          <p style="font-size:13.5px;color:rgba(255,255,255,.5);line-height:1.7;margin:0;">Service Desk e Field Services integrados — suporte ágil, cobertura nacional e total visibilidade da sua operação.</p>
+        </div>
+        <div style="display:flex;gap:56px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#33B5E8;margin-bottom:14px;">Navegação</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <a href="#dores" style="font-size:13.5px;color:rgba(255,255,255,.5);text-decoration:none;">Desafios</a>
+              <a href="#solucao" style="font-size:13.5px;color:rgba(255,255,255,.5);text-decoration:none;">Solução</a>
+              <a href="#resultados" style="font-size:13.5px;color:rgba(255,255,255,.5);text-decoration:none;">Resultados</a>
+              <a href="#cases" style="font-size:13.5px;color:rgba(255,255,255,.5);text-decoration:none;">Cases</a>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#33B5E8;margin-bottom:14px;">Contato</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <a href="mailto:contato@engemon.com.br" style="font-size:13.5px;color:rgba(255,255,255,.5);text-decoration:none;">contato@engemon.com.br</a>
+              <span style="font-size:13.5px;color:rgba(255,255,255,.5);">Atendimento nacional</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+        <span style="font-size:12px;color:rgba(255,255,255,.32);">© 2026 Engemon IT. Todos os direitos reservados.</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.32);">Soluções muito além da tecnologia.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- captura de GCLID + UTMs (atribuição) ---------- */
+  (function(){
+    var qs = new URLSearchParams(window.location.search);
+    var map = { gclid:'field-gclid', utm_source:'field-utm_source', utm_medium:'field-utm_medium', utm_campaign:'field-utm_campaign' };
+    Object.keys(map).forEach(function(k){
+      var v = qs.get(k);
+      if (v) { try { localStorage.setItem('eng_'+k, v); } catch(e){} }
+      var stored = v || (function(){ try { return localStorage.getItem('eng_'+k); } catch(e){ return ''; } })() || '';
+      var el = document.getElementById(map[k]);
+      if (el) el.value = stored;
+    });
+  })();
+
+  /* ---------- scroll progress ---------- */
+  var progressEl = document.getElementById('scroll-progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var sc = window.scrollY || h.scrollTop || 0;
+    var p = max > 0 ? (sc / max) * 100 : 0;
+    if (progressEl) progressEl.style.width = p + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* ---------- reveal on scroll ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){ en.target.style.opacity='1'; en.target.style.transform='none'; io.unobserve(en.target); }
+    });
+  }, { threshold:0.12, rootMargin:'0px 0px -7% 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+
+  /* ---------- animação dos cards de dores em cascata ---------- */
+  (function(){
+    var grid = document.getElementById('dores-grid');
+    if (!grid) return;
+    var cards = grid.querySelectorAll('.pain-pop');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduce){
+      cards.forEach(function(c){ c.classList.add('in'); });
+      return;
+    }
+
+    var played = false;
+    var dObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting && !played){
+          played = true;
+          cards.forEach(function(c, i){
+            setTimeout(function(){ c.classList.add('in'); }, i * 120);
+          });
+          dObs.disconnect();
+        }
+      });
+    }, { threshold:0.2 });
+    dObs.observe(document.getElementById('dores'));
+  })();
+
+
+  /* ---------- contadores ---------- */
+  function animateCounters(){
+    document.querySelectorAll('[data-counter]').forEach(function(el){
+      if (el.dataset.done) return;
+      el.dataset.done = '1';
+      var target = parseInt(el.dataset.counter, 10);
+      var sep = el.dataset.sep === '1';
+      var dur = 1700, start = performance.now();
+      function step(now){
+        var p = Math.min(1, (now - start) / dur);
+        var e = 1 - Math.pow(1 - p, 3);
+        var val = Math.round(target * e);
+        el.textContent = sep ? val.toLocaleString('pt-BR') : String(val);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if (en.isIntersecting){ animateCounters(); cio.disconnect(); } });
+  }, { threshold:0.25 });
+  var grid = document.getElementById('stats-grid');
+  if (grid) cio.observe(grid);
+
+  /* ---------- nav ativa ---------- */
+  var nio = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){
+        document.querySelectorAll('[data-navlink]').forEach(function(a){
+          a.style.color = a.getAttribute('data-navlink') === en.target.id ? '#009FDF' : '#262626';
+        });
+      }
+    });
+  }, { rootMargin:'-45% 0px -50% 0px' });
+  document.querySelectorAll('section[id]').forEach(function(s){ nio.observe(s); });
+
+  /* ---------- carrossel de cases ---------- */
+  (function(){
+    var track = document.getElementById('cases-track');
+    if (!track) return;
+    var slides = track.querySelectorAll('.case-slide');
+    var dots = document.querySelectorAll('.case-dot');
+    var total = slides.length;
+    var idx = 0;
+    var timer = null;
+    var DELAY = 5000;
+
+    function render(){
+      track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+      dots.forEach(function(d, i){
+        var on = i === idx;
+        d.style.background = on ? '#009FDF' : '#D0D5DD';
+        d.style.width = on ? '30px' : '10px';
+      });
+    }
+    function go(n){ idx = (n + total) % total; render(); }
+    function next(){ go(idx + 1); }
+    function prev(){ go(idx - 1); }
+
+    function start(){ stop(); timer = setInterval(next, DELAY); }
+    function stop(){ if (timer){ clearInterval(timer); timer = null; } }
+    function restart(){ start(); }
+
+    document.getElementById('case-next').addEventListener('click', function(){ next(); restart(); });
+    document.getElementById('case-prev').addEventListener('click', function(){ prev(); restart(); });
+    dots.forEach(function(d){
+      d.addEventListener('click', function(){ go(parseInt(d.getAttribute('data-dot'),10)); restart(); });
+    });
+
+    // pausa ao passar o mouse
+    var wrap = document.getElementById('cases-carousel');
+    wrap.addEventListener('mouseenter', stop);
+    wrap.addEventListener('mouseleave', start);
+
+    // suporte a swipe (touch)
+    var x0 = null;
+    track.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; stop(); }, {passive:true});
+    track.addEventListener('touchend', function(e){
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40){ dx < 0 ? next() : prev(); }
+      x0 = null; start();
+    }, {passive:true});
+
+    // pausa quando a aba não está visível
+    document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+
+    render();
+    start();
+  })();
+
+  /* ---------- dashboard ao vivo ---------- */
+  var ticketPool = [['Falha de conexão VPN','Infra'],['Impressora offline · Loja 042','Field'],['Lentidão no ERP','Sistemas'],['Reset de senha · AD','Acessos'],['Troca de HD · Unidade SP','Field'],['Erro no PDV · Caixa 7','Sistemas'],['Configuração de e-mail','Suporte'],['Switch sem resposta · Filial RJ','Redes'],['Atualização de licença','Software'],['Notebook não liga · Diretoria','Field'],['Backup não concluído','Infra'],['Telefonia IP muda','Telecom']];
+  var idc = 0, tIdx = 0;
+  function seed(label, area, status){ idc++; return { id:idc, code:'#'+(48200+idc), label:label, area:area, status:status }; }
+  var feed = [ seed('Lentidão no ERP','Sistemas','andamento'), seed('Reset de senha · AD','Acessos','andamento'), seed('Impressora offline · Loja 042','Field','aberto'), seed('Backup não concluído','Infra','resolvido'), seed('Configuração de e-mail','Suporte','resolvido') ];
+  var mResolved = 1247, mOpen = 6, mSla = 96;
+  var chart = []; for (var i=0;i<16;i++) chart.push(42 + Math.round(Math.random()*50));
+
+  function statusCfg(st){
+    if (st==='aberto')   return { t:'Aberto', bg:'#FDF0E6', c:'#C45F10', dot:'#E57623' };
+    if (st==='andamento')return { t:'Em atendimento', bg:'#E6F6FD', c:'#007FBF', dot:'#009FDF' };
+    return { t:'Resolvido', bg:'#E7F6EF', c:'#1F9D6B', dot:'#1F9D6B' };
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function renderFeed(){
+    var html = feed.map(function(f){
+      var cfg = statusCfg(f.status);
+      var rowOpacity = f.status==='resolvido' ? 0.55 : 1;
+      var dotShadow = f.status==='andamento' ? '0 0 0 3px rgba(0,159,223,.18)' : 'none';
+      return '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 2px;border-bottom:1px solid #F0F2F5;opacity:'+rowOpacity+';transition:opacity .4s ease;">'
+        + '<div style="display:flex;align-items:center;gap:10px;min-width:0;">'
+        + '<span style="width:8px;height:8px;border-radius:50%;background:'+cfg.dot+';flex-shrink:0;box-shadow:'+dotShadow+';"></span>'
+        + '<div style="min-width:0;"><div style="font-size:13px;font-weight:700;color:#262626;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:175px;">'+esc(f.label)+'</div>'
+        + '<div style="font-size:11px;color:#98A2B3;">'+esc(f.code)+' · '+esc(f.area)+'</div></div></div>'
+        + '<span style="display:inline-block;padding:3px 10px;border-radius:9999px;font-size:10.5px;font-weight:700;background:'+cfg.bg+';color:'+cfg.c+';white-space:nowrap;flex-shrink:0;">'+cfg.t+'</span></div>';
+    }).join('');
+    document.getElementById('dash-feed').innerHTML = html;
+  }
+  function renderChart(){
+    var n = chart.length; if (n < 2) return;
+    var pts = chart.map(function(v,i){ var x=(i/(n-1))*100; var y=40-(v/100*34)-3; return x.toFixed(1)+','+y.toFixed(1); });
+    var line = pts.join(' ');
+    document.getElementById('chart-line').setAttribute('points', line);
+    document.getElementById('chart-area').setAttribute('points', '0,40 '+line+' 100,40');
+  }
+  function renderMetrics(){
+    document.getElementById('dash-open').textContent = mOpen;
+    document.getElementById('dash-resolved').textContent = mResolved.toLocaleString('pt-BR');
+    document.getElementById('dash-sla').textContent = mSla + '%';
+  }
+  function renderClock(){
+    document.getElementById('dash-now').textContent = new Date().toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  }
+  function tick(){
+    for (var i=feed.length-1;i>=0;i--){ if (feed[i].status==='andamento'){ feed[i].status='resolvido'; break; } }
+    for (var j=feed.length-1;j>=0;j--){ if (feed[j].status==='aberto'){ feed[j].status='andamento'; break; } }
+    var open = feed.filter(function(f){ return f.status!=='resolvido'; });
+    var resolved = feed.filter(function(f){ return f.status==='resolvido'; });
+    feed = open.concat(resolved);
+    var t = ticketPool[tIdx % ticketPool.length]; tIdx++; idc++;
+    feed.unshift({ id:idc, code:'#'+(48200+idc), label:t[0], area:t[1], status:'aberto' });
+    feed = feed.slice(0,5);
+    mResolved += (Math.random()<0.75 ? 1 : 2);
+    mOpen = Math.max(3, Math.min(11, mOpen + (Math.random()<0.5 ? 1 : -1)));
+    mSla = Math.max(93, Math.min(98, mSla + (Math.random()<0.6 ? 0 : (Math.random()<0.5 ? 1 : -1))));
+    chart = chart.concat([40 + Math.round(Math.random()*55)]).slice(-16);
+    renderFeed(); renderChart(); renderMetrics();
+  }
+  renderFeed(); renderChart(); renderMetrics(); renderClock();
+  setInterval(tick, 1900);
+  setInterval(renderClock, 1000);
+
+  /* ---------- formulário: validação + máscara + Web3Forms + Google Sheets ---------- */
+  // TODO: cole aqui a URL do Web App do Google Apps Script (ver instruções em google-apps-script/README-google-sheets.md)
+  var SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzLCBDDQD9qqwQGXFnn4I5L8gUF2r_RcYxgahrBRyW5a-heXBtk1vHVlRPkI1uJVbY/exec';
+  var form = document.getElementById('lead-form');
+  var fields = ['nome','empresa','cargo','email','telefone','volume_chamados'];
+  var freeDomains = ['gmail','hotmail','outlook','yahoo','yahoomail','ymail','icloud','live','bol','uol','terra','gmx','proton','protonmail','aol','yandex','msn','me','mail','zoho','globo','globomail','ig','r7','googlemail','hotmail','oi','oimail','pop','superig','ibest','click21','famiglia','itelefonica','gmai','gmial','hotnail','outllook','mac','rocketmail','fastmail','tutanota','tuta','hey','duck','pm','yahoo.com.br','msn.com'];
+  var touched = {};
+
+  function getEl(name){ return form.querySelector('[data-field="'+name+'"]'); }
+  function maskPhone(v){
+    var d = (v||'').replace(/\D/g,'').slice(0,11);
+    if (d.length===0) return '';
+    if (d.length<=2) return '('+d;
+    if (d.length<=6) return '('+d.slice(0,2)+') '+d.slice(2);
+    if (d.length<=10) return '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6);
+    return '('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7);
+  }
+  function computeError(name, val){
+    var v = (val||'').trim();
+    if (name==='nome') return !v ? 'Informe seu nome' : (v.length<3 ? 'Nome muito curto' : '');
+    if (name==='empresa') return !v ? 'Informe o nome da empresa' : '';
+    if (name==='cargo') return !v ? 'Informe seu cargo' : '';
+    if (name==='volume_chamados') return !v ? 'Selecione uma opção' : '';
+    if (name==='telefone'){ var d=v.replace(/\D/g,''); if(!d) return 'Informe seu telefone'; return d.length<10 ? 'Telefone incompleto' : ''; }
+    if (name==='email'){
+      if (!v) return 'Informe seu e-mail corporativo';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'E-mail inválido';
+      var root = v.split('@')[1].toLowerCase().split('.')[0];
+      if (freeDomains.indexOf(root) !== -1) return 'Use um e-mail corporativo (não Gmail, Hotmail, etc.)';
+      return '';
+    }
+    return '';
+  }
+  function paintField(name){
+    var el = getEl(name); if (!el) return;
+    var err = touched[name] ? computeError(name, el.value) : '';
+    el.style.borderColor = err ? '#E5484D' : '#D0D5DD';
+    el.style.boxShadow = err ? '0 0 0 4px rgba(229,72,77,.10)' : 'none';
+    var errEl = form.querySelector('[data-err="'+name+'"]');
+    if (errEl){ errEl.textContent = err; errEl.style.display = err ? 'block' : 'none'; }
+  }
+  fields.forEach(function(name){
+    var el = getEl(name); if (!el) return;
+    el.addEventListener('focus', function(){
+      el.style.borderColor = '#009FDF'; el.style.boxShadow = '0 0 0 4px rgba(0,159,223,.12)';
+    });
+    el.addEventListener('blur', function(){ touched[name]=true; paintField(name); });
+    el.addEventListener('input', function(){
+      if (name==='telefone'){ el.value = maskPhone(el.value); }
+      if (touched[name]) paintField(name);
+    });
+  });
+
+  // campo mensagem (opcional): apenas feedback visual de foco, sem validação
+  (function(){
+    var msg = form.querySelector('[data-field="mensagem"]');
+    if (!msg) return;
+    msg.addEventListener('focus', function(){ msg.style.borderColor = '#009FDF'; msg.style.boxShadow = '0 0 0 4px rgba(0,159,223,.12)'; });
+    msg.addEventListener('blur', function(){ msg.style.borderColor = '#D0D5DD'; msg.style.boxShadow = 'none'; });
+  })();
+
+  var submitting = false;
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if (submitting) return;
+    fields.forEach(function(f){ touched[f]=true; });
+    var hasErr = false;
+    fields.forEach(function(f){ paintField(f); if (computeError(f, getEl(f).value)) hasErr = true; });
+    if (hasErr){ var firstBad = fields.find(function(f){return computeError(f,getEl(f).value);}); if(firstBad) getEl(firstBad).focus(); return; }
+
+    submitting = true;
+    document.getElementById('submit-label').style.display = 'none';
+    document.getElementById('submit-spinner').style.display = 'inline-block';
+    var btn = document.getElementById('submit-btn'); btn.disabled = true; btn.style.cursor='default'; btn.style.background='#C45F10';
+
+    var nome = getEl('nome').value, empresa = getEl('empresa').value;
+    var data = new FormData(form);
+
+    // Envia para a planilha (Google Apps Script) em paralelo — não bloqueia nem interfere no fluxo principal
+    if (SHEETS_WEBHOOK_URL && SHEETS_WEBHOOK_URL.indexOf('COLE_AQUI') === -1){
+      try {
+        fetch(SHEETS_WEBHOOK_URL, { method:'POST', mode:'no-cors', body:new FormData(form) });
+      } catch(e){ /* silencioso: não deve afetar o envio principal */ }
+    }
+
+    fetch('https://api.web3forms.com/submit', { method:'POST', body:data, headers:{ 'Accept':'application/json' } })
+      .then(function(r){ return r.json(); })
+      .then(function(json){
+        if (json.success){
+          try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event:'lead_form_submit', form_name:'lp_service_desk_field' }); } catch(e){}
+          document.getElementById('recap-nome').textContent = (nome.split(' ')[0] || nome);
+          document.getElementById('recap-empresa').textContent = empresa;
+          form.style.display = 'none';
+          document.getElementById('lead-success').style.display = 'block';
+        } else {
+          throw new Error(json.message || 'Falha no envio');
+        }
+      })
+      .catch(function(){
+        alert('Não foi possível enviar agora. Tente novamente em instantes ou escreva para contato@engemon.com.br.');
+      })
+      .finally(function(){
+        submitting = false;
+        document.getElementById('submit-label').style.display = 'inline-flex';
+        document.getElementById('submit-spinner').style.display = 'none';
+        btn.disabled = false; btn.style.cursor='pointer'; btn.style.background='#E57623';
+      });
+  });
+
+  document.getElementById('reset-btn').addEventListener('click', function(){
+    form.reset(); touched = {};
+    fields.forEach(function(f){ var el=getEl(f); if(el){ el.style.borderColor='#D0D5DD'; el.style.boxShadow='none'; } var e=form.querySelector('[data-err="'+f+'"]'); if(e){e.style.display='none';} });
+    document.getElementById('lead-success').style.display='none';
+    form.style.display='block';
+  });
+})();
+</script>
+</body>
+</html>
