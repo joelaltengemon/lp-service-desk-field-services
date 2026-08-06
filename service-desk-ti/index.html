@@ -453,6 +453,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <input type="hidden" name="utm_source" id="field-utm_source" value="">
             <input type="hidden" name="utm_medium" id="field-utm_medium" value="">
             <input type="hidden" name="utm_campaign" id="field-utm_campaign" value="">
+            <input type="hidden" name="utm_content" id="field-utm_content" value="">
+            <input type="hidden" name="utm_term" id="field-utm_term" value="">
             <input type="hidden" name="pagina" value="LP Service Desk e Field Services">
 
             <h3 style="font-size:21px;font-weight:700;color:#fff;margin:0 0 4px;">Solicite seu diagnóstico</h3>
@@ -562,7 +564,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   /* ---------- captura de GCLID + UTMs (atribuição) ---------- */
   (function(){
     var qs = new URLSearchParams(window.location.search);
-    var map = { gclid:'field-gclid', utm_source:'field-utm_source', utm_medium:'field-utm_medium', utm_campaign:'field-utm_campaign' };
+    var map = { gclid:'field-gclid', utm_source:'field-utm_source', utm_medium:'field-utm_medium', utm_campaign:'field-utm_campaign', utm_content:'field-utm_content', utm_term:'field-utm_term' };
     Object.keys(map).forEach(function(k){
       var v = qs.get(k);
       if (v) { try { localStorage.setItem('eng_'+k, v); } catch(e){} }
