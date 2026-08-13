@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/haas-e-venda-de-hardware",
+      "destination": "https://engemon-care-cycle.vercel.app/"
+    },
+    {
+      "source": "/_haas/:path*",
+      "destination": "https://engemon-care-cycle.vercel.app/_haas/:path*"
+    }
+  ]
+}
