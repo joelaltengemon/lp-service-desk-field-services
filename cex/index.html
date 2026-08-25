@@ -231,6 +231,9 @@ var CFG = {
   // Chave gerada em web3forms.com para joel.altschuller@engemon.com.br
   web3formsKey: '01643975-2a67-4ea0-9e6a-264141028957',
 
+  // Apps Script: grava na planilha de leads e envia o e-mail com o link do material
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzbUdvAFX22YjIy0C7GBTvkiUNcQATCAuWkzOm-cu1PS8cYWRmQ9fDAORcX47gdh4BE/exec',
+
   // Para onde o lead vai depois de informar o e-mail
   destino: '/cex/material.html',
 
@@ -287,6 +290,20 @@ function enviar(){
 
   var ir=function(){location.href=CFG.destino;};
   var t=setTimeout(ir,2500); // não deixa a rede travar o acesso
+
+  // Apps Script: grava na planilha e dispara o e-mail com o link do material
+  if(CFG.appsScriptUrl){
+    fetch(CFG.appsScriptUrl,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // evita preflight CORS
+      body:JSON.stringify({
+        tipo:'lead',
+        email:v,
+        origem:document.referrer||'direto',
+        utm:location.search||'sem utm'
+      })
+    }).catch(function(){});
+  }
 
   if(!CFG.web3formsKey||CFG.web3formsKey.indexOf('COLE_AQUI')===0){clearTimeout(t);ir();return;}
 
