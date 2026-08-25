@@ -649,6 +649,9 @@ var CFG = {
   // Deixe vazio ('') para desligar o envio.
   web3formsKey: '01643975-2a67-4ea0-9e6a-264141028957',
 
+  // Apps Script: grava na planilha de leads e envia o e-mail com o link do material
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzbUdvAFX22YjIy0C7GBTvkiUNcQATCAuWkzOm-cu1PS8cYWRmQ9fDAORcX47gdh4BE/exec',
+
   // Nome da chave onde a landing page grava o e-mail no gate.
   emailKey: 'cex_lead_email',
 
@@ -680,6 +683,20 @@ var CFG = {
     b.disabled=true;b.textContent='Liberando...';
     try{localStorage.setItem(CFG.emailKey,v);}catch(x){}
     var t=setTimeout(abrir,2500);
+
+    // Apps Script: grava na planilha e dispara o e-mail com o link do material
+    if(CFG.appsScriptUrl){
+      fetch(CFG.appsScriptUrl,{
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'}, // evita preflight CORS
+        body:JSON.stringify({
+          tipo:'lead', email:v,
+          origem:document.referrer||'direto',
+          utm:location.search||'sem utm'
+        })
+      }).catch(function(){});
+    }
+
     if(!CFG.web3formsKey||CFG.web3formsKey.indexOf('COLE_AQUI')===0){clearTimeout(t);return abrir();}
     fetch('https://api.web3forms.com/submit',{method:'POST',
       headers:{'Content-Type':'application/json',Accept:'application/json'},
@@ -774,6 +791,23 @@ function enviar(score,lv,fracas){
   var email='';
   try{email=localStorage.getItem(CFG.emailKey)||'';}catch(e){}
   var respostas=P.map(function(p,i){return p[0]+': '+p[2][v[i]-1];}).join(' | ');
+
+  // Apps Script: grava o resultado do autodiagnóstico na planilha
+  if(CFG.appsScriptUrl){
+    fetch(CFG.appsScriptUrl,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // evita preflight CORS
+      body:JSON.stringify({
+        tipo:'diagnostico',
+        email:email||'nao informado',
+        nivel:lv[0]+' - '+lv[3],
+        pontuacao:score+'/24',
+        ponto_mais_fragil:fracas.join(', '),
+        respostas:respostas
+      })
+    }).catch(function(){});
+  }
+
   fetch('https://api.web3forms.com/submit',{
     method:'POST',
     headers:{'Content-Type':'application/json',Accept:'application/json'},
