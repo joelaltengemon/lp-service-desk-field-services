@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrando na live... | Engemon IT</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400..800&display=swap" rel="stylesheet">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9WRJWRP070"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9WRJWRP070');
+</script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:#062A45;color:#fff;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+.box{max-width:360px}
+.spin{width:44px;height:44px;border:4px solid #1D4E70;border-top-color:#E57623;border-radius:99px;
+  margin:0 auto 22px;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+h1{font-size:19px;font-weight:800;margin-bottom:8px}
+p{font-size:14px;color:#B9D4E6;line-height:1.5}
+a{color:#fff;text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="spin"></div>
+  <h1>Entrando na transmissão...</h1>
+  <p>Se não redirecionar em alguns segundos, <a id="fallback" href="#">clique aqui</a>.</p>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO — troque só esta linha se o link da live mudar
+   ===================================================================== */
+var YOUTUBE_URL = 'https://www.youtube.com/watch?v=lSdN_DKZXLM';
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySqhFpKBVnXxReuLZ5YUzGDfqt6KdQ4zhy4VLeZf9qOFWpPlELI2Y68MxLNUap1kFPbA/exec';
+/* ===================================================================== */
+
+(function(){
+  var params = new URLSearchParams(location.search);
+  var leadId = params.get('id');
+  var src = params.get('src') || (leadId ? 'email' : 'direto');
+
+  document.getElementById('fallback').href = YOUTUBE_URL;
+
+  // GA4 + Pixel: evento de acesso à live
+  try{
+    gtag('event', 'live_access', {lead_id:leadId||'sem_id', origem:src});
+  }catch(e){}
+
+  // Registra o acesso na planilha (não bloqueia o redirect)
+  if(APPS_SCRIPT_URL){
+    try{
+      fetch(APPS_SCRIPT_URL,{
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({tipo:'acesso', leadId:leadId||'sem_id', origem:src})
+      }).catch(function(){});
+    }catch(e){}
+  }
+
+  setTimeout(function(){ location.href = YOUTUBE_URL; }, 900);
+})();
+</script>
+</body>
+</html>
