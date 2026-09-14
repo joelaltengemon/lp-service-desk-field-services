@@ -105,11 +105,11 @@
   .field input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(11,42,74,.1);}
   .guess-input-wrap{position:relative;}
   .guess-input-wrap input{
-    font-size:32px; font-weight:800; padding:18px 62px 18px 18px; color:var(--navy);
-    border:2.5px solid var(--gold); background:#FFFDF6; letter-spacing:.02em;
-    box-shadow:0 6px 18px rgba(201,162,39,.18);
+    width:100%; font-size:32px; font-weight:800; padding:18px 62px 18px 18px; color:var(--navy);
+    border:2.5px solid var(--gold); background:#FFFDF6; letter-spacing:.02em; border-radius:10px;
+    box-shadow:0 6px 18px rgba(201,162,39,.18); font-family:inherit;
   }
-  .guess-input-wrap input:focus{border-color:var(--navy); box-shadow:0 0 0 4px rgba(11,42,74,.12);}
+  .guess-input-wrap input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 4px rgba(11,42,74,.12);}
   .guess-input-wrap input::placeholder{color:#C9BE9E;}
   .guess-unit{position:absolute; right:16px; top:50%; transform:translateY(-50%); font-weight:800; color:var(--ink-soft); font-size:15px;}
 
@@ -241,10 +241,10 @@
                 <div class="field" style="margin-bottom:0;">
                   <label for="palpite">Seu palpite, 5 dígitos (kg)</label>
                   <div class="guess-input-wrap">
-                    <input type="text" inputmode="numeric" id="palpite" name="palpite" placeholder="00,000" maxlength="6" required>
+                    <input type="text" inputmode="numeric" id="palpite" name="palpite" autocomplete="off" placeholder="12345" required>
                     <span class="guess-unit">kg</span>
                   </div>
-                  <div class="hint">Só números, a vírgula aparece sozinha. Ex: digite 12345 e vira 12,345.</div>
+                  <div class="hint">Digite só os números, a vírgula entra sozinha. Ex: 12345 vira 12,345.</div>
                 </div>
               </div>
             </div>
@@ -349,15 +349,20 @@
 
   const palpiteInput = document.getElementById('palpite');
 
-  function formatPalpiteInput(){
+  function formatDigits(raw){
+    if(raw.length <= 3) return raw;
+    return raw.slice(0, raw.length - 3) + ',' + raw.slice(-3);
+  }
+
+  palpiteInput.addEventListener('input', () => {
     const raw = palpiteInput.value.replace(/\D/g, '').slice(0, 5);
     palpiteInput.dataset.raw = raw;
-    if(raw.length === 0){ palpiteInput.value = ''; return; }
-    const dec = raw.length <= 3 ? raw.padStart(3, '0') : raw.slice(-3);
-    const intPart = raw.length <= 3 ? '0' : raw.slice(0, raw.length - 3);
-    palpiteInput.value = intPart + ',' + dec;
-  }
-  palpiteInput.addEventListener('input', formatPalpiteInput);
+    palpiteInput.value = formatDigits(raw);
+    const pos = palpiteInput.value.length;
+    requestAnimationFrame(() => {
+      try{ palpiteInput.setSelectionRange(pos, pos); }catch(err){}
+    });
+  });
 
   function validPalpite(){
     const raw = palpiteInput.dataset.raw || '';
