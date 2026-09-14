@@ -431,11 +431,11 @@
 
       if(data.status === 'duplicate'){
         showMsg('Este e-mail ou telefone já registrou um palpite. Redirecionando para o seu ranking.', 'info');
-        setTimeout(() => { window.location.href = 'ranking.html?id=' + encodeURIComponent(data.id); }, 1800);
+        setTimeout(() => { window.location.href = '/peso-da-ti/ranking.html?id=' + encodeURIComponent(data.id); }, 1800);
         return;
       }
       if(data.status === 'ok'){
-        window.location.href = 'ranking.html?id=' + encodeURIComponent(data.id);
+        window.location.href = '/peso-da-ti/ranking.html?id=' + encodeURIComponent(data.id);
         return;
       }
       throw new Error('Resposta inesperada');
