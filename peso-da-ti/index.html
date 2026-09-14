@@ -344,7 +344,10 @@
   const form = document.getElementById('pesoForm');
   const submitBtn = document.getElementById('submitBtn');
 
-  function showMsg(text, type){ msg.textContent = text; msg.className = 'formmsg show ' + type; }
+  function showMsg(text, type, showRankingLink){
+    msg.innerHTML = text + (showRankingLink ? ' <a href="/peso-da-ti/ranking.html" style="color:inherit; text-decoration:underline; font-weight:800; white-space:nowrap;">Ver ranking &rarr;</a>' : '');
+    msg.className = 'formmsg show ' + type;
+  }
   function hideMsg(){ msg.className = 'formmsg'; }
 
   const palpiteInput = document.getElementById('palpite');
@@ -440,7 +443,7 @@
       }
       throw new Error('Resposta inesperada');
     }catch(err){
-      showMsg('Não foi possível registrar seu palpite agora. Verifique a conexão e tente novamente.', 'error');
+      showMsg('Não conseguimos confirmar seu palpite na tela, mas ele pode já ter sido registrado. Confira no ranking, ou tente enviar de novo em alguns segundos.', 'error', true);
       submitBtn.disabled = false;
       submitBtn.textContent = 'Enviar e ver o ranking';
     }
