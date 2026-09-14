@@ -10,8 +10,9 @@
 <style>
   :root{
     --navy: #0B2A4A; --navy-deep:#071B31; --gold:#C9A227; --gold-light:#E4C669;
+    --silver:#9AA5B1; --bronze:#B5722E;
     --teal:#04B085; --paper:#F6F4EF; --paper-2:#EFEBE1; --ink:#14202E; --ink-soft:#56667A;
-    --line:#DDD7C8; --white:#FFFFFF; --radius:16px; --maxw:780px;
+    --line:#DDD7C8; --white:#FFFFFF; --radius:16px; --maxw:720px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{font-family:'Hanken Grotesk', sans-serif; background:var(--paper); color:var(--ink); line-height:1.5;}
@@ -24,24 +25,51 @@
   .topbar-brands img{height:20px; width:auto;}
   .topbar-event{font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--navy); font-weight:700;}
 
-  .head{background:var(--navy); color:var(--white); padding:36px 0 32px;}
-  .eyebrow{font-size:12px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; color:var(--gold-light); display:flex; align-items:center; gap:8px; margin-bottom:10px;}
-  h1{font-size:clamp(22px,3.2vw,28px); font-weight:800; margin-bottom:6px;}
-  .head p{color:rgba(255,255,255,.78); font-size:13.5px; max-width:56ch;}
+  .head{background:var(--navy); color:var(--white); padding:32px 0 28px; text-align:center;}
+  .eyebrow{font-size:12px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; color:var(--gold-light); display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:8px;}
+  h1{font-size:clamp(22px,3.2vw,28px); font-weight:800;}
 
-  main{padding:28px 0 60px;}
+  main{padding:28px 0 56px;}
 
+  /* posição da pessoa, em destaque */
   .mecard{
-    background:var(--white); border-radius:var(--radius); padding:22px; margin-bottom:24px;
-    box-shadow:0 18px 40px rgba(20,32,46,.1); border:1px solid var(--line); display:none;
+    background:var(--navy); color:var(--white); border-radius:var(--radius); padding:20px 22px;
+    margin-bottom:30px; display:none; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    box-shadow:0 18px 40px rgba(11,42,74,.25);
   }
-  .mecard.show{display:block;}
-  .mecard-top{display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:14px; flex-wrap:wrap;}
-  .mecard-name{font-size:16px; font-weight:800; color:var(--navy);}
-  .mecard-pos{background:#EEF3F8; color:var(--navy); font-weight:800; font-size:12.5px; padding:6px 13px; border-radius:999px;}
-  .barwrap{background:var(--paper-2); border-radius:999px; height:13px; overflow:hidden; margin-bottom:8px;}
-  .bar{height:100%; border-radius:999px; background:linear-gradient(90deg, var(--teal), var(--gold)); width:0%; transition:width 1s ease;}
-  .barlabel{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); font-weight:600;}
+  .mecard.show{display:flex;}
+  .mecard-label{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold-light); font-weight:700; margin-bottom:4px;}
+  .mecard-name{font-size:16px; font-weight:800;}
+  .mecard-right{text-align:right;}
+  .mecard-pos{font-size:26px; font-weight:800; color:var(--gold-light); line-height:1;}
+  .mecard-pct{font-size:12px; color:rgba(255,255,255,.75); font-weight:600; margin-top:2px;}
+
+  /* pódio */
+  .podium{display:flex; align-items:flex-end; justify-content:center; gap:10px; margin-bottom:34px;}
+  .podium-item{flex:1; max-width:150px; text-align:center;}
+  .podium-item.first{order:2;}
+  .podium-item.second{order:1;}
+  .podium-item.third{order:3;}
+
+  .medal{
+    width:40px; height:40px; border-radius:50%; margin:0 auto 8px; display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:16px; color:var(--white);
+  }
+  .podium-item.first .medal{width:50px; height:50px; font-size:19px; background:linear-gradient(135deg, var(--gold-light), var(--gold)); color:var(--navy-deep);}
+  .podium-item.second .medal{background:linear-gradient(135deg, #C7CFD6, var(--silver));}
+  .podium-item.third .medal{background:linear-gradient(135deg, #D69A5E, var(--bronze));}
+
+  .podium-name{font-weight:700; font-size:13px; color:var(--navy); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .podium-company{font-size:11px; color:var(--ink-soft); margin-bottom:6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .podium-pct{font-size:14px; font-weight:800; color:var(--navy); margin-bottom:8px;}
+
+  .podium-block{
+    background:var(--white); border:1px solid var(--line); border-radius:12px 12px 0 0;
+    display:flex; align-items:flex-start; justify-content:center; padding-top:10px; font-weight:800; font-size:22px; color:var(--ink-soft);
+  }
+  .podium-item.first .podium-block{height:76px; border-color:var(--gold); background:linear-gradient(180deg,#FFF7E0,#FFFFFF); color:var(--gold);}
+  .podium-item.second .podium-block{height:56px; color:var(--silver);}
+  .podium-item.third .podium-block{height:42px; color:var(--bronze);}
 
   .listhead{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; gap:12px; flex-wrap:wrap;}
   .listhead h2{font-size:15px; font-weight:800; color:var(--navy);}
@@ -50,17 +78,15 @@
   @keyframes pulse{0%{opacity:1;} 50%{opacity:.25;} 100%{opacity:1;}}
 
   .rank-row{
-    display:grid; grid-template-columns:30px 1fr 60px; gap:12px; align-items:center;
-    background:var(--white); border:1px solid var(--line); border-radius:12px; padding:12px 15px; margin-bottom:9px;
+    display:grid; grid-template-columns:28px 1fr 56px; gap:12px; align-items:center;
+    background:var(--white); border:1px solid var(--line); border-radius:12px; padding:11px 15px; margin-bottom:8px;
   }
   .rank-row.me{border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,162,39,.14);}
   .rank-num{font-weight:800; color:var(--ink-soft); font-size:13px;}
   .rank-row.me .rank-num{color:var(--navy);}
-  .rank-info .name{font-weight:700; font-size:14px; color:var(--ink);}
-  .rank-info .company{font-size:12px; color:var(--ink-soft);}
-  .rank-mini-bar{height:7px; border-radius:999px; background:var(--paper-2); overflow:hidden; margin-top:6px;}
-  .rank-mini-bar > div{height:100%; background:var(--navy); border-radius:999px;}
-  .rank-pct{font-size:12.5px; font-weight:800; color:var(--navy); text-align:right;}
+  .rank-info .name{font-weight:700; font-size:13.5px; color:var(--ink);}
+  .rank-info .company{font-size:11.5px; color:var(--ink-soft);}
+  .rank-pct{font-size:13px; font-weight:800; color:var(--navy); text-align:right;}
 
   .empty, .loading{text-align:center; color:var(--ink-soft); font-size:13.5px; padding:26px 0;}
 
@@ -89,19 +115,22 @@
     <div class="wrap">
       <div class="eyebrow">O Peso da TI, Ranking ao vivo</div>
       <h1>Quão perto você chegou?</h1>
-      <p>O ranking é atualizado automaticamente. Você não vê o palpite de mais ninguém, apenas a posição e o quanto cada participante chegou perto.</p>
     </div>
   </div>
 
   <main class="wrap">
     <div class="mecard" id="mecard">
-      <div class="mecard-top">
+      <div>
+        <div class="mecard-label">Sua posição</div>
         <div class="mecard-name" id="meNome">Você</div>
-        <div class="mecard-pos" id="mePos">--</div>
       </div>
-      <div class="barwrap"><div class="bar" id="meBar"></div></div>
-      <div class="barlabel"><span>Proximidade do peso real</span><span id="mePct">--</span></div>
+      <div class="mecard-right">
+        <div class="mecard-pos" id="mePos">--</div>
+        <div class="mecard-pct" id="mePct">de proximidade</div>
+      </div>
     </div>
+
+    <div class="podium" id="podium"></div>
 
     <div class="listhead">
       <h2>Ranking geral</h2>
@@ -150,28 +179,58 @@
       const me = document.getElementById('mecard');
       me.classList.add('show');
       document.getElementById('meNome').textContent = firstNameLastInitial(data.meuRegistro.nome) + ', ' + data.meuRegistro.empresa;
-      document.getElementById('mePos').textContent = '#' + data.meuRegistro.posicao + ' de ' + data.total;
-      document.getElementById('meBar').style.width = data.meuRegistro.proximidade + '%';
+      document.getElementById('mePos').textContent = '#' + data.meuRegistro.posicao;
       document.getElementById('mePct').textContent = data.meuRegistro.proximidade + '% de proximidade';
     }
 
+    renderPodium(list.slice(0, 3));
+
+    const rest = list.slice(3);
     const container = document.getElementById('rankList');
     if(list.length === 0){
       container.innerHTML = '<div class="empty">Ainda não há palpites registrados. Seja o primeiro.</div>';
       return;
     }
+    if(rest.length === 0){
+      container.innerHTML = '';
+      return;
+    }
 
-    container.innerHTML = list.map(item => `
+    container.innerHTML = rest.map(item => `
       <div class="rank-row ${myId && item.id === myId ? 'me' : ''}">
         <div class="rank-num">${item.posicao}</div>
         <div class="rank-info">
           <div class="name">${firstNameLastInitial(item.nome)}</div>
           <div class="company">${item.empresa || ''}</div>
-          <div class="rank-mini-bar"><div style="width:${item.proximidade}%;"></div></div>
         </div>
         <div class="rank-pct">${item.proximidade}%</div>
       </div>
     `).join('');
+  }
+
+  function renderPodium(top3){
+    const podium = document.getElementById('podium');
+    if(top3.length === 0){ podium.innerHTML = ''; return; }
+
+    const slots = [
+      { item: top3[1], cls: 'second', rank: 2 },
+      { item: top3[0], cls: 'first', rank: 1 },
+      { item: top3[2], cls: 'third', rank: 3 }
+    ];
+
+    podium.innerHTML = slots.map(slot => {
+      if(!slot.item) return `<div class="podium-item ${slot.cls}"></div>`;
+      const isMe = myId && slot.item.id === myId;
+      return `
+        <div class="podium-item ${slot.cls}">
+          <div class="medal">${slot.rank}º</div>
+          <div class="podium-name">${firstNameLastInitial(slot.item.nome)}${isMe ? ' (você)' : ''}</div>
+          <div class="podium-company">${slot.item.empresa || ''}</div>
+          <div class="podium-pct">${slot.item.proximidade}%</div>
+          <div class="podium-block">${slot.rank}</div>
+        </div>
+      `;
+    }).join('');
   }
 
   loadRanking();
