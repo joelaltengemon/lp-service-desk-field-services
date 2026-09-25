@@ -86,9 +86,18 @@ main{max-width:1320px;margin:0 auto;padding:22px 20px 80px}
 .chip-f.on{background:var(--azul);border-color:var(--azul);color:#fff}
 .chip-f.on.laranja{background:var(--laranja);border-color:var(--laranja)}
 select.am{padding:9px 12px;border:1.5px solid var(--linha);border-radius:10px;background:var(--surf);font-weight:600}
+.view-toggle{display:flex;border:1.5px solid var(--linha);border-radius:10px;overflow:hidden;flex:0 0 auto;background:var(--surf)}
+.view-toggle button{padding:9px 12px;color:var(--suave);display:flex;align-items:center}
+.view-toggle button.on{background:var(--azul);color:#fff}
+.view-toggle button:not(.on):hover{background:var(--cinza-claro)}
+
+/* ---------- ICONES ---------- */
+.ic-empresa{flex:0 0 auto;color:var(--azul-esc)}
+.ic-pessoa{flex:0 0 auto;color:var(--suave)}
 
 /* ---------- CARDS ---------- */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;align-items:start}
+.grid.modo-lista{grid-template-columns:minmax(0,1fr);gap:0}
 .card{background:var(--surf);border:1px solid var(--linha);border-radius:var(--r);padding:16px 16px 10px;
   box-shadow:var(--sombra);display:flex;flex-direction:column;border-top:3px solid var(--linha);min-width:0}
 .card *{min-width:0}
@@ -97,7 +106,7 @@ select.am{padding:9px 12px;border:1.5px solid var(--linha);border-radius:10px;ba
 .card[data-grupo="2"]{border-top-color:var(--azul)}
 .card[data-grupo="3"]{border-top-color:#C7D7E6}
 .card[data-grupo="4"]{border-top-color:#CBD5E1}
-.card h3{margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.3px;line-height:1.25}
+.card h3{margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.3px;line-height:1.25;display:flex;align-items:center;gap:7px}
 .card .linha-topo{display:flex;align-items:flex-start;gap:10px;justify-content:space-between}
 .tag{font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:4px 8px;border-radius:6px;white-space:nowrap}
 .tag.g1{background:var(--laranja-claro);color:var(--laranja-esc)}
@@ -115,8 +124,9 @@ select.am{padding:9px 12px;border:1.5px solid var(--linha);border-radius:10px;ba
 .contatos li:last-child .contato{border-bottom:0}
 .contato:hover{background:var(--azul-claro)}
 .contato .info{flex:1;min-width:0;display:block}
-.contato .n{display:block;font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.contato .c{display:block;font-size:12px;color:var(--suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.contato .n{display:flex;align-items:center;gap:5px;font-weight:700;font-size:14px;overflow:hidden}
+.contato .n .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.contato .c{display:block;font-size:12px;color:var(--suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-left:18px}
 .badge{font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px;white-space:nowrap}
 .badge.novo{background:var(--cinza-claro);color:#94A3B8}
 .badge.andamento{background:var(--azul-claro);color:var(--azul-esc)}
@@ -128,6 +138,27 @@ select.am{padding:9px 12px;border:1.5px solid var(--linha);border-radius:10px;ba
 .pin.morno{background:var(--azul)}
 .pin.frio{background:#CBD5E1}
 .vazio{text-align:center;padding:60px 20px;color:var(--suave);font-weight:600}
+
+/* ---------- LISTA ---------- */
+.linha-empresa{background:var(--surf);border:1px solid var(--linha);border-radius:12px;padding:12px 14px;
+  margin-bottom:10px;border-left:4px solid var(--linha)}
+.linha-empresa[data-grupo="1"]{border-left-color:var(--laranja)}
+.linha-empresa[data-grupo="2"]{border-left-color:var(--azul)}
+.linha-empresa[data-grupo="3"]{border-left-color:#C7D7E6}
+.linha-empresa[data-grupo="4"]{border-left-color:#CBD5E1}
+.cab-empresa{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cab-empresa .nome-empresa{font-weight:800;font-size:15px;color:var(--tinta);letter-spacing:-.2px;overflow-wrap:anywhere}
+.cab-empresa .meta-empresa{font-size:12px;color:var(--suave);font-weight:600;margin-left:auto}
+.contatos-lista{list-style:none;margin:8px 0 0;padding:0;border-top:1px solid var(--linha)}
+.contato-lista{width:100%;display:flex;align-items:center;gap:9px;padding:9px 2px;text-align:left;
+  border-bottom:1px solid var(--linha);transition:background .12s}
+.contatos-lista li:last-child .contato-lista{border-bottom:0}
+.contato-lista:hover{background:var(--azul-claro)}
+.contato-lista .n{font-weight:700;font-size:13.5px;color:var(--tinta);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;flex:0 1 220px;display:flex;align-items:center;gap:5px}
+.contato-lista .n .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.contato-lista .c{font-size:12px;color:var(--suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto}
+.contato-lista .badge{margin-left:auto;flex:0 0 auto}
 
 /* ---------- DRAWER ---------- */
 .fundo{position:fixed;inset:0;background:rgba(18,38,63,.45);z-index:50;opacity:0;pointer-events:none;
@@ -170,6 +201,23 @@ textarea{min-height:78px;resize:vertical}
 .hist{margin-top:14px;font-size:12.5px;color:var(--suave);font-weight:600}
 .hist ul{list-style:none;margin:8px 0 0;padding:0}
 .hist li{padding:7px 0;border-top:1px dashed var(--linha);color:var(--tinta-2);font-weight:500}
+.timeline{list-style:none;margin:0 0 6px;padding:0}
+.timeline li{border:1px solid var(--linha);border-radius:10px;padding:11px 12px;margin-bottom:8px}
+.timeline .topo{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.timeline .quando{font-size:11.5px;color:var(--suave);font-weight:600;margin-left:auto;white-space:nowrap}
+.timeline .autor{font-size:11.5px;color:var(--suave);font-weight:600}
+.timeline .obs{font-size:13.5px;color:var(--tinta-2);line-height:1.4;margin:6px 0 0}
+.timeline .canais-lidas{font-size:11.5px;color:var(--suave);margin-top:5px}
+.timeline .passo{font-size:12.5px;color:var(--tinta-2);margin-top:7px;background:var(--cinza-claro);border-radius:8px;padding:6px 9px}
+.timeline .icones{display:flex;gap:2px;margin-left:4px}
+.icone-mini{width:24px;height:24px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;color:var(--suave);flex:0 0 auto}
+.icone-mini:hover{background:var(--cinza-claro);color:var(--tinta)}
+.icone-mini.perigo:hover{background:#FDECE0;color:#C0392B}
+.timeline .editado{font-size:10.5px;color:#94A3B8;font-style:italic;margin-top:5px}
+.sem-hist{font-size:13px;color:var(--suave);padding:2px 0 14px}
+.modo-edicao{background:var(--laranja-claro);border-radius:10px;padding:9px 12px;font-size:13px;font-weight:600;
+  color:#7A3B08;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.modo-edicao button{margin-left:auto;font-weight:700;text-decoration:underline;font-size:12.5px}
 .ok-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--tinta);
   color:#fff;padding:11px 20px;border-radius:30px;font-weight:600;font-size:14px;z-index:90;opacity:0;
   transition:opacity .2s,transform .2s;pointer-events:none}
@@ -193,6 +241,8 @@ textarea{min-height:78px;resize:vertical}
   .chips::-webkit-scrollbar{display:none}
   .busca{flex:1 1 100%}
   .acoes{grid-template-columns:repeat(4,1fr)}
+  .contato-lista .c{display:none}
+  .cab-empresa .meta-empresa{display:none}
 }
 @media(max-width:420px){
   .kpis{grid-template-columns:repeat(2,1fr)}
@@ -248,6 +298,18 @@ textarea{min-height:78px;resize:vertical}
       </div>
       <button class="chip-f" id="chip-pendentes">Sem registro</button>
       <select class="am hidden" id="sel-am"></select>
+      <div class="view-toggle" id="view-toggle">
+        <button type="button" id="btn-view-cards" class="on" aria-label="Ver em cards" title="Cards">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button type="button" id="btn-view-lista" aria-label="Ver em lista" title="Lista">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/>
+            <circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg>
+        </button>
+      </div>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -291,7 +353,13 @@ textarea{min-height:78px;resize:vertical}
       <p id="d-abridor"></p>
     </div>
 
-    <p class="form-tit">Registro da abordagem</p>
+    <div class="hist hidden" id="d-hist"></div>
+
+    <div class="modo-edicao hidden" id="modo-edicao">
+      Editando interação anterior
+      <button type="button" id="btn-cancelar-edicao">cancelar</button>
+    </div>
+    <p class="form-tit" id="form-tit-registro">Nova interação</p>
     <div class="campo">
       <label for="d-status">Status</label>
       <select id="d-status"></select>
@@ -314,10 +382,9 @@ textarea{min-height:78px;resize:vertical}
         <input id="d-data" type="date">
       </div>
     </div>
-    <div class="hist hidden" id="d-hist"></div>
   </div>
   <footer>
-    <button class="btn btn-cta" id="btn-salvar">Salvar registro</button>
+    <button class="btn btn-cta" id="btn-salvar">Salvar interação</button>
   </footer>
 </aside>
 
@@ -366,11 +433,14 @@ const DADOS = {"empresas":[{"id":"alcides-nucitelli--itau-unibanco","nome":"Ita�
 const LS_CONTA = "engemon.portal.conta";
 const LS_REG   = "engemon.portal.registros";
 const LS_FILA  = "engemon.portal.fila";
+const LS_VIEW  = "engemon.portal.view";
 
 let conta = null;
-let registros = {};          // id do contato -> registro
-let fila = [];               // registros pendentes de envio
-let atual = null;            // contato aberto no drawer
+let registros = {};          // id do contato -> array de interacoes (mais recente primeiro)
+let fila = [];                // interacoes pendentes de envio (cada item tem .acao: salvar|editar|excluir)
+let atual = null;             // contato aberto no drawer
+let editando = null;          // idRegistro em edicao (somente admin), ou null = nova interacao
+let modoView = "cards";        // "cards" ou "lista"
 let filtro = {q:"", grupo:"todos", pendentes:false, am:"todos"};
 
 const $ = s => document.querySelector(s);
@@ -400,10 +470,23 @@ function entrar(c){
   $("#quem-nome").textContent = c.nome;
   filtro.am = "todos";
   montarSelectAM();
+  modoView = localStorage.getItem(LS_VIEW) || "cards";
+  $("#btn-view-cards").classList.toggle("on", modoView === "cards");
+  $("#btn-view-lista").classList.toggle("on", modoView === "lista");
   carregarLocal();
   render();
   sincronizar();
 }
+
+function definirView(v){
+  modoView = v;
+  localStorage.setItem(LS_VIEW, v);
+  $("#btn-view-cards").classList.toggle("on", v === "cards");
+  $("#btn-view-lista").classList.toggle("on", v === "lista");
+  render();
+}
+$("#btn-view-cards").onclick = () => definirView("cards");
+$("#btn-view-lista").onclick = () => definirView("lista");
 
 $("#btn-sair").addEventListener("click", () => {
   localStorage.removeItem(LS_CONTA);
@@ -440,6 +523,20 @@ function montarSelectAM(){
 function carregarLocal(){
   try { registros = JSON.parse(localStorage.getItem(LS_REG) || "{}"); } catch(e){ registros = {}; }
   try { fila = JSON.parse(localStorage.getItem(LS_FILA) || "[]"); } catch(e){ fila = []; }
+  // migracao: formato antigo guardava um unico objeto por contato, nao uma lista.
+  Object.keys(registros).forEach(id => {
+    if (!Array.isArray(registros[id])) registros[id] = registros[id] ? [registros[id]] : [];
+  });
+}
+function agruparRegistros(lista){
+  const mapa = {};
+  (lista || []).forEach(e => {
+    if (!e || !e.id) return;
+    if (!mapa[e.id]) mapa[e.id] = [];
+    mapa[e.id].push(e);
+  });
+  Object.keys(mapa).forEach(id => mapa[id].sort((a, b) => String(b.criadoEm || "").localeCompare(String(a.criadoEm || ""))));
+  return mapa;
 }
 function salvarLocal(){
   localStorage.setItem(LS_REG, JSON.stringify(registros));
@@ -463,10 +560,7 @@ async function sincronizar(){
     const r = await fetch(url);
     const j = await r.json();
     if (j && j.ok && j.registros){
-      j.registros.forEach(reg => {
-        const local = registros[reg.id];
-        if (!local || (reg.atualizadoEm || "") >= (local.atualizadoEm || "")) registros[reg.id] = reg;
-      });
+      registros = agruparRegistros(j.registros);
       if (j.leads && j.leads.empresas && j.leads.empresas.length){
         DADOS.empresas = j.leads.empresas;
       }
@@ -479,18 +573,18 @@ async function sincronizar(){
 
 async function enviarFila(){
   if (!API_URL || !fila.length) return;
-  const pendentes = fila.slice();
-  for (const reg of pendentes){
+  while (fila.length){
+    const reg = fila[0];
     try {
       await fetch(API_URL, {
         method:"POST",
         headers:{"Content-Type":"text/plain;charset=utf-8"},
         body: JSON.stringify(Object.assign({acao:"salvar", senha:conta.senha}, reg))
       });
-      fila = fila.filter(x => !(x.id === reg.id && x.atualizadoEm === reg.atualizadoEm));
+      fila.shift();
+      salvarLocal();
     } catch(e){ break; }
   }
-  salvarLocal();
 }
 
 /* =====================================================================
@@ -499,8 +593,19 @@ async function enviarFila(){
 function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, m =>
   ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])); }
 
-function statusDe(id){ return (registros[id] && registros[id].status) || "Sem registro"; }
+function statusDe(id){ const l = registros[id]; return (l && l[0] && l[0].status) || "Sem registro"; }
 function clsStatus(v){ const s = STATUS.find(x => x.v === v); return s ? s.cls : "novo"; }
+
+function icEmpresa(){
+  return '<svg class="ic-empresa" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/>' +
+    '<path d="M9 21v-4h6v4"/><path d="M9 8h1M14 8h1M9 12h1M14 12h1"/></svg>';
+}
+function icPessoa(){
+  return '<svg class="ic-pessoa" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/>' +
+    '<path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>';
+}
 
 function render(){
   const lista = empresasDaConta();
@@ -529,11 +634,12 @@ function render(){
     <div class="kpi azul"><b>${comReg}</b><span>Com registro</span></div>
     <div class="kpi dest"><b>${reunioes}</b><span>Reuniões</span></div>`;
 
-  // Cards
-  $("#grid").innerHTML = visiveis.map(cardHTML).join("");
+  // Cards ou lista, conforme o modo escolhido
+  $("#grid").classList.toggle("modo-lista", modoView === "lista");
+  $("#grid").innerHTML = visiveis.map(modoView === "lista" ? listaHTML : cardHTML).join("");
   $("#vazio").classList.toggle("hidden", visiveis.length > 0);
 
-  $$(".contato").forEach(b => b.onclick = () => abrir(b.dataset.emp, b.dataset.id));
+  $$(".contato, .contato-lista").forEach(b => b.onclick = () => abrir(b.dataset.emp, b.dataset.id));
 }
 
 function cardHTML(emp){
@@ -545,7 +651,7 @@ function cardHTML(emp){
   return `
   <article class="card" data-grupo="${emp.grupo}">
     <div class="linha-topo">
-      <h3>${esc(emp.nome)}</h3>
+      <h3>${icEmpresa()}<span>${esc(emp.nome)}</span></h3>
       <span class="tag g${emp.grupo}">${rotulos[emp.grupo]}</span>
     </div>
     <p class="meta">${metas.join(" &middot; ")}</p>
@@ -559,7 +665,7 @@ function cardHTML(emp){
         return `<li><button class="contato" data-emp="${esc(emp.id)}" data-id="${esc(ct.id)}">
           <span class="pin ${ct.temp}"></span>
           <span class="info">
-            <span class="n">${esc(ct.nome)}</span>
+            <span class="n">${icPessoa()}<span class="txt">${esc(ct.nome)}</span></span>
             <span class="c">${esc(ct.cargo || ct.nivel)}</span>
           </span>
           <span class="badge ${clsStatus(st)}">${esc(st === "Sem registro" ? ct.nivel : st)}</span>
@@ -567,6 +673,33 @@ function cardHTML(emp){
       }).join("")}
     </ul>
   </article>`;
+}
+
+function listaHTML(emp){
+  const metas = [];
+  if (emp.faturamento) metas.push(esc(emp.faturamento));
+  if (emp.colaboradores) metas.push(esc(emp.colaboradores) + " colaboradores");
+  const rotulos = {1:"Prioridade 1", 2:"Prioridade 2", 3:"Fila geral", 4:"Baixa prioridade"};
+  return `
+  <div class="linha-empresa" data-grupo="${emp.grupo}">
+    <div class="cab-empresa">
+      ${icEmpresa()}
+      <span class="nome-empresa">${esc(emp.nome)}</span>
+      <span class="tag g${emp.grupo}">${rotulos[emp.grupo]}</span>
+      <span class="meta-empresa">${metas.join(" &middot; ")}</span>
+    </div>
+    <ul class="contatos-lista">
+      ${emp.contatos.map(ct => {
+        const st = statusDe(ct.id);
+        return `<li><button class="contato-lista" data-emp="${esc(emp.id)}" data-id="${esc(ct.id)}">
+          <span class="pin ${ct.temp}"></span>
+          <span class="n">${icPessoa()}<span class="txt">${esc(ct.nome)}</span></span>
+          <span class="c">${esc(ct.cargo || ct.nivel)}</span>
+          <span class="badge ${clsStatus(st)}">${esc(st === "Sem registro" ? ct.nivel : st)}</span>
+        </button></li>`;
+      }).join("")}
+    </ul>
+  </div>`;
 }
 
 /* filtros */
@@ -599,8 +732,8 @@ function abrir(empId, ctId){
   const achado = acharContato(empId, ctId);
   if (!achado) return;
   atual = achado;
+  editando = null;
   const {emp, ct} = achado;
-  const reg = registros[ct.id] || {};
 
   $("#d-nome").textContent = ct.nome;
   $("#d-cargo").textContent = [ct.cargo, emp.nome].filter(Boolean).join(" · ");
@@ -619,25 +752,98 @@ function abrir(empId, ctId){
   $("#d-gancho").textContent = ct.gancho;
   $("#d-abridor").textContent = ct.abridor;
 
-  $("#d-status").innerHTML = STATUS.map(s =>
-    `<option value="${esc(s.v)}"${(reg.status || "Sem registro") === s.v ? " selected" : ""}>${esc(s.v)}</option>`).join("");
-  const canais = reg.canais || [];
-  $("#d-canais").innerHTML = CANAIS.map(c =>
-    `<button type="button" class="canal${canais.indexOf(c) >= 0 ? " on" : ""}" data-canal="${esc(c)}">${esc(c)}</button>`).join("");
-  $$("#d-canais .canal").forEach(b => b.onclick = () => b.classList.toggle("on"));
-  $("#d-obs").value = reg.obs || "";
-  $("#d-passo").value = reg.proximoPasso || "";
-  $("#d-data").value = reg.dataProximo || "";
-
-  const hist = $("#d-hist");
-  if (reg.atualizadoEm){
-    hist.classList.remove("hidden");
-    hist.innerHTML = `Último registro por ${esc(reg.contaNome || reg.conta || "")} em ${esc(dataBR(reg.atualizadoEm))}`;
-  } else hist.classList.add("hidden");
+  $("#modo-edicao").classList.add("hidden");
+  $("#form-tit-registro").textContent = "Nova interação";
+  renderTimeline(registros[ct.id] || []);
+  preencherForm(null);
 
   $("#drawer").classList.add("on");
   $("#fundo").classList.add("on");
   $("#drawer").setAttribute("aria-hidden", "false");
+}
+
+function renderTimeline(lista){
+  const hist = $("#d-hist");
+  hist.classList.remove("hidden");
+  if (!lista || !lista.length){
+    hist.innerHTML = '<p class="sem-hist">Nenhuma interação registrada ainda.</p>';
+    return;
+  }
+  hist.innerHTML = `<ul class="timeline">${lista.map(entradaHTML).join("")}</ul>`;
+  if (conta.perfil === "admin"){
+    $$("#d-hist [data-editar]").forEach(b => b.onclick = () => iniciarEdicao(b.dataset.editar));
+    $$("#d-hist [data-excluir]").forEach(b => b.onclick = () => excluirEntrada(b.dataset.excluir));
+  }
+}
+
+function entradaHTML(e){
+  const canais = (e.canais || []).join(", ");
+  const icones = conta.perfil === "admin" ? `
+    <span class="icones">
+      <button type="button" class="icone-mini" data-editar="${esc(e.idRegistro)}" title="Editar" aria-label="Editar interação">✎</button>
+      <button type="button" class="icone-mini perigo" data-excluir="${esc(e.idRegistro)}" title="Excluir" aria-label="Excluir interação">🗑</button>
+    </span>` : "";
+  return `<li data-idregistro="${esc(e.idRegistro)}">
+    <div class="topo">
+      <span class="badge ${clsStatus(e.status)}">${esc(e.status)}</span>
+      <span class="autor">${esc(e.contaNome || e.conta || "")}</span>
+      <span class="quando">${esc(dataBR(e.criadoEm))}</span>
+      ${icones}
+    </div>
+    ${e.obs ? `<p class="obs">${esc(e.obs)}</p>` : ""}
+    ${canais ? `<p class="canais-lidas">Canais: ${esc(canais)}</p>` : ""}
+    ${e.proximoPasso ? `<p class="passo">Próximo passo: ${esc(e.proximoPasso)}${e.dataProximo ? " · " + esc(dataBR(e.dataProximo)) : ""}</p>` : ""}
+    ${e.editadoEm ? `<p class="editado">Editado por ${esc(e.editadoPor || "")} em ${esc(dataBR(e.editadoEm))}</p>` : ""}
+  </li>`;
+}
+
+function preencherForm(e){
+  const lista = (atual && registros[atual.ct.id]) || [];
+  const statusPadrao = (lista[0] && lista[0].status) || "Sem registro";
+  const base = e || {};
+  $("#d-status").innerHTML = STATUS.map(s =>
+    `<option value="${esc(s.v)}"${(base.status || statusPadrao) === s.v ? " selected" : ""}>${esc(s.v)}</option>`).join("");
+  const canais = base.canais || [];
+  $("#d-canais").innerHTML = CANAIS.map(c =>
+    `<button type="button" class="canal${canais.indexOf(c) >= 0 ? " on" : ""}" data-canal="${esc(c)}">${esc(c)}</button>`).join("");
+  $$("#d-canais .canal").forEach(b => b.onclick = () => b.classList.toggle("on"));
+  $("#d-obs").value = base.obs || "";
+  $("#d-passo").value = base.proximoPasso || "";
+  $("#d-data").value = base.dataProximo || "";
+}
+
+function iniciarEdicao(idRegistro){
+  if (!atual) return;
+  const lista = registros[atual.ct.id] || [];
+  const e = lista.find(x => x.idRegistro === idRegistro);
+  if (!e) return;
+  editando = idRegistro;
+  preencherForm(e);
+  $("#modo-edicao").classList.remove("hidden");
+  $("#form-tit-registro").textContent = "Editando interação";
+}
+
+function cancelarEdicao(){
+  editando = null;
+  $("#modo-edicao").classList.add("hidden");
+  $("#form-tit-registro").textContent = "Nova interação";
+  preencherForm(null);
+}
+$("#btn-cancelar-edicao").onclick = cancelarEdicao;
+
+async function excluirEntrada(idRegistro){
+  if (!atual || conta.perfil !== "admin") return;
+  if (!confirm("Excluir esta interação? Essa ação não pode ser desfeita.")) return;
+  const ctId = atual.ct.id;
+  const lista = registros[ctId] || [];
+  registros[ctId] = lista.filter(x => x.idRegistro !== idRegistro);
+  fila.push({acao:"excluir", idRegistro, id: ctId});
+  salvarLocal();
+  renderTimeline(registros[ctId]);
+  render();
+  if (editando === idRegistro) cancelarEdicao();
+  toast("Interação excluída");
+  if (API_URL){ marcarSync("Enviando"); await enviarFila(); marcarSync(fila.length ? "Pendente de envio" : "Sincronizado", fila.length > 0); }
 }
 
 function link(el, href){
@@ -667,7 +873,37 @@ $$(".copiar").forEach(b => b.onclick = () => {
 $("#btn-salvar").onclick = async () => {
   if (!atual) return;
   const {emp, ct} = atual;
-  const reg = {
+  const campos = {
+    grupo: ct.grupo,
+    status: $("#d-status").value,
+    canais: $$("#d-canais .canal.on").map(b => b.dataset.canal),
+    obs: $("#d-obs").value.trim(),
+    proximoPasso: $("#d-passo").value.trim(),
+    dataProximo: $("#d-data").value
+  };
+  const lista = registros[ct.id] || (registros[ct.id] = []);
+
+  if (editando){
+    const idx = lista.findIndex(x => x.idRegistro === editando);
+    if (idx >= 0){
+      const agora = new Date().toISOString();
+      const entrada = Object.assign({}, lista[idx], campos, {
+        editadoEm: agora, editadoPor: conta.nome
+      });
+      lista[idx] = entrada;
+      fila.push(Object.assign({acao:"editar"}, entrada));
+      salvarLocal();
+      render();
+      fechar();
+      toast("Interação atualizada");
+      if (API_URL){ marcarSync("Enviando"); await enviarFila(); marcarSync(fila.length ? "Pendente de envio" : "Sincronizado", fila.length > 0); }
+      return;
+    }
+    editando = null;
+  }
+
+  const entrada = Object.assign({
+    idRegistro: ct.id + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7),
     id: ct.id,
     conta: conta.email,
     contaNome: conta.nome,
@@ -677,20 +913,14 @@ $("#btn-salvar").onclick = async () => {
     cargo: ct.cargo,
     email: ct.email,
     celular: ct.celular,
-    grupo: ct.grupo,
-    status: $("#d-status").value,
-    canais: $$("#d-canais .canal.on").map(b => b.dataset.canal),
-    obs: $("#d-obs").value.trim(),
-    proximoPasso: $("#d-passo").value.trim(),
-    dataProximo: $("#d-data").value,
-    atualizadoEm: new Date().toISOString()
-  };
-  registros[ct.id] = reg;
-  fila.push(reg);
+    criadoEm: new Date().toISOString()
+  }, campos);
+  lista.unshift(entrada);
+  fila.push(Object.assign({acao:"salvar"}, entrada));
   salvarLocal();
   render();
   fechar();
-  toast("Registro salvo");
+  toast("Interação registrada");
   if (API_URL){ marcarSync("Enviando"); await enviarFila(); marcarSync(fila.length ? "Pendente de envio" : "Sincronizado", fila.length > 0); }
 };
 
