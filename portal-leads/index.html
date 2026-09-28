@@ -632,8 +632,7 @@ textarea{min-height:84px;resize:vertical}
         <span id="resumo-n"></span>
         <button type="button" class="link hidden" id="btn-limpar">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Limpar filtros</button>
-        <span class="dir"><button type="button" class="link hidden" data-exportar>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Exportar Excel</button></span>
+
       </div>
       <div class="grid" id="grid"></div>
       <div class="tabela-wrap hidden" id="tabela-wrap"><table class="tabela" id="tabela"></table></div>
@@ -652,7 +651,7 @@ textarea{min-height:84px;resize:vertical}
           <button type="button" class="link" id="btn-atualizar">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8M21 3v5h-5"/></svg>Atualizar</button>
           <button type="button" class="btn btn-sec btn-sm" data-exportar>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Exportar Excel</button></span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span id="exp-rot">Exportar Excel</span></button></span>
       </div>
 
       <div class="kpis kpis-6" id="g-kpis"></div>
@@ -775,6 +774,10 @@ textarea{min-height:84px;resize:vertical}
             <input id="d-data" type="date">
           </div>
         </div>
+        <div class="campo hidden" id="campo-oport">
+          <label for="d-oport">Número ou link da oportunidade no Salesforce</label>
+          <input id="d-oport" type="text" placeholder="Ex.: OPP-2026-0142 (opcional)">
+        </div>
       </div>
     </div>
   </div>
@@ -818,26 +821,30 @@ const CORES_AV = ["#0090CF","#E57623","#1E9E6A","#6D5BD0","#D0527F","#0A6C8F","#
 
 const TZ = "America/Sao_Paulo";
 const A_ABORDAR = "A abordar";
+/* O portal cobre a prospecção até a criação da oportunidade no Salesforce (pedido ao pré-vendas).
+   Dali em diante (proposta, negociação, ganho) o acompanhamento é no Salesforce. */
+const OPORTUNIDADE = "Oportunidade no Salesforce";
 const STATUS_FORM = ["Tentando contato","Contato feito","Reunião agendada","Reunião realizada",
-                     "Proposta enviada","Negócio ganho","Sem interesse","Não abordar"];
+                     OPORTUNIDADE,"Sem interesse","Não abordar"];
 const STATUS_TODOS = [A_ABORDAR].concat(STATUS_FORM);
 const CLS_STATUS = {"A abordar":"novo","Tentando contato":"andamento","Contato feito":"andamento",
-  "Reunião agendada":"reuniao","Reunião realizada":"reuniao","Proposta enviada":"ganho","Negócio ganho":"ganho",
+  "Reunião agendada":"reuniao","Reunião realizada":"reuniao","Oportunidade no Salesforce":"ganho",
   "Sem interesse":"fim","Não abordar":"fim"};
-const FINAIS = ["Negócio ganho","Sem interesse","Não abordar"];
-const ST_REUNIAO_MAIS = ["Reunião agendada","Reunião realizada","Proposta enviada","Negócio ganho"];
+const FINAIS = [OPORTUNIDADE,"Sem interesse","Não abordar"];
+const ST_REUNIAO_MAIS = ["Reunião agendada","Reunião realizada",OPORTUNIDADE];
 const ST_CONTATO_MAIS = ["Contato feito"].concat(ST_REUNIAO_MAIS);
-const ST_PROPOSTA_MAIS = ["Proposta enviada","Negócio ganho"];
+const ST_OPORT = [OPORTUNIDADE];
+/* status de versões anteriores do portal */
+const STATUS_ANTIGOS = {"Proposta enviada":OPORTUNIDADE, "Negócio ganho":OPORTUNIDADE};
 /* Etapas atuais (situação): escala ordinal em azul, cinza claro = não começou, cinza = encerrado */
 const ETAPAS = [
   {k:"abordar",   label:"A abordar",  cor:"#DCE4EC", st:["A abordar"]},
   {k:"contato",   label:"Em contato", cor:"#9FD6F1", st:["Tentando contato","Contato feito"]},
   {k:"reuniao",   label:"Reunião",    cor:"#33B3E6", st:["Reunião agendada","Reunião realizada"]},
-  {k:"proposta",  label:"Proposta",   cor:"#007CB0", st:["Proposta enviada"]},
-  {k:"ganho",     label:"Ganho",      cor:"#0A4C6A", st:["Negócio ganho"]},
+  {k:"oport",     label:"Oportunidade", cor:"#0A4C6A", st:[OPORTUNIDADE]},
   {k:"encerrado", label:"Encerrado",  cor:"#8C99AA", st:["Sem interesse","Não abordar"]}
 ];
-const RAMPA_FUNIL = ["#4DB7E6","#1FA6E0","#0090CF","#0081BA","#0072A6","#0A4C6A"];
+const RAMPA_FUNIL = ["#4DB7E6","#1FA6E0","#0090CF","#0072A6","#0A4C6A"];
 
 /* Icones */
 const SVG = (w, corpo, extra) => `<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"${extra || ""}>${corpo}</svg>`;
@@ -908,12 +915,12 @@ const TEMP = {quente:"Lead quente", morno:"Lead morno", frio:"Lead frio"};
    --------------------------------------------------------------------- */
 const CADENCIAS = {
   quente: {nome:"Cadência quente", desc:"para quem já conversou com a Engemon no evento", passos:[
-    {canal:"WhatsApp", dia:0, titulo:"WhatsApp de retomada", curto:"WhatsApp",
-     dica:"Retome a conversa do evento. Mensagem curta, citando o que foi falado, e proponha 20 minutos.",
-     modelo:"{abertura}\n\nAqui é {eu}, da Engemon IT. Faz sentido marcarmos 20 minutos esta semana para continuar essa conversa?"},
-    {canal:"E-mail", dia:1, titulo:"E-mail 1: resumo e convite", curto:"E-mail 1",
-     dica:"Formalize por e-mail o que foi conversado e sugira dois horários.",
-     modelo:"Assunto: Continuando nossa conversa do {evento}\n\nOi {primeiro}, tudo bem?\n\nFoi muito bom o contato com o time da Engemon IT no {evento}. Para darmos sequência, sugiro 20 minutos para entender o cenário da {empresa} e mostrar como apoiamos operações de service desk, field services e gestão de ativos.\n\nTenho disponibilidade na terça ou quinta pela manhã. Algum desses horários funciona para você?\n\nAbraço,\n{eu}\nEngemon IT"},
+    {canal:"E-mail", dia:0, titulo:"E-mail 1: retomada do evento", curto:"E-mail 1",
+     dica:"Retome por e-mail o que foi conversado no evento e sugira dois horários para 20 minutos.",
+     modelo:"Assunto: Continuando nossa conversa do {evento}\n\n{abertura}\n\nSou {eu}, da Engemon IT. Para darmos sequência, sugiro 20 minutos para entender o cenário da {empresa} e mostrar como apoiamos operações de service desk, field services e gestão de ativos.\n\nTenho disponibilidade na terça ou quinta pela manhã. Algum desses horários funciona para você?\n\nAbraço,\n{eu}\nEngemon IT"},
+    {canal:"WhatsApp", dia:1, titulo:"WhatsApp de reforço", curto:"WhatsApp",
+     dica:"Mensagem curta avisando do e-mail e reforçando o convite.",
+     modelo:"Oi {primeiro}, tudo bem? Aqui é {eu}, da Engemon IT. Te mandei um e-mail retomando nossa conversa do {evento}. Faz sentido marcarmos 20 minutos esta semana?"},
     {canal:"LinkedIn", dia:2, titulo:"Conexão no LinkedIn", curto:"LinkedIn",
      dica:"Visite o perfil e envie convite de conexão com nota curta (até 300 caracteres).",
      modelo:"Oi {primeiro}, sou {eu}, da Engemon IT. Seguimos em contato depois do {evento}. Vai ser um prazer trocar ideias por aqui."},
@@ -1222,7 +1229,7 @@ $("#sync").addEventListener("click", () => sincronizar());
    6. REGRAS DE NEGOCIO
    ===================================================================== */
 function entradasDe(id){ return registros[id] || []; }
-function normStatus(s){ return (!s || s === "Sem registro" || s === A_ABORDAR) ? "Tentando contato" : s; }
+function normStatus(s){ return (!s || s === "Sem registro" || s === A_ABORDAR) ? "Tentando contato" : (STATUS_ANTIGOS[s] || s); }
 function statusDe(id){ const l = entradasDe(id); return l.length ? normStatus(l[0].status) : A_ABORDAR; }
 function abordado(id){ return entradasDe(id).length > 0; }
 function chegouA(id, lista){ return entradasDe(id).some(e => lista.indexOf(normStatus(e.status)) >= 0); }
@@ -1265,9 +1272,10 @@ function proximaAcao(ct){
   const manualDue = u && u.dataProximo ? String(u.dataProximo).slice(0, 10) : "";
   let a;
   if (FINAIS.indexOf(st) >= 0){
-    a = {tipo:"fim", titulo: st === "Negócio ganho" ? "Negócio ganho" : "Lead encerrado"};
+    a = st === OPORTUNIDADE ? {tipo:"fim", titulo:"Oportunidade criada no Salesforce", sub:"O acompanhamento agora segue no Salesforce, com o time de pré-vendas."}
+                            : {tipo:"fim", titulo:"Lead encerrado", sub:"Sem ações pendentes para este lead."};
   } else if (ST_REUNIAO_MAIS.indexOf(st) >= 0){
-    const padrao = {"Reunião agendada":"Realizar a reunião", "Reunião realizada":"Enviar proposta", "Proposta enviada":"Acompanhar a proposta"}[st];
+    const padrao = {"Reunião agendada":"Realizar a reunião", "Reunião realizada":"Abrir oportunidade no Salesforce"}[st];
     a = {tipo:"manual", titulo: (u && u.proximoPasso) || padrao, curto: (u && u.proximoPasso) || padrao, due: manualDue};
   } else {
     const pr = progresso(ct);
@@ -1479,7 +1487,7 @@ function renderLeads(){
   const nAb = todos.filter(x => abordado(x.ct.id)).length;
   const nFu = todos.filter(x => followUp(x.ct)).length;
   const nP12 = todos.filter(x => !abordado(x.ct.id) && Number(x.ct.grupo) <= 2).length;
-  const nReun = todos.filter(x => chegouA(x.ct.id, ST_REUNIAO_MAIS)).length;
+  const nReun = todos.filter(x => ST_REUNIAO_MAIS.indexOf(statusDe(x.ct.id)) >= 0).length;
   const nome = APELIDO[conta.nome] || conta.nome.split(" ")[0];
   const quem = admin() ? "A equipe tem" : "Você tem";
   const partes = [];
@@ -1497,7 +1505,8 @@ function renderLeads(){
     <div class="kpi"><span class="ic">${IC.pessoas}</span><div><b>${todos.length}</b><span>Contatos</span></div></div>
     <button type="button" class="kpi clicavel" data-atalho="abordados" style="--kb:var(--verde-claro);--kc:var(--verde)"><span class="ic">${IC.checkC}</span>
       <div><b>${nAb}</b><span>Abordados · <em>${pct(nAb, todos.length)}%</em></span></div><span class="ir">${IC.direita}</span></button>
-    <div class="kpi" style="--kb:var(--laranja-claro);--kc:var(--laranja-esc)"><span class="ic">${IC.agenda}</span><div><b>${nReun}</b><span>Com reunião</span></div></div>`;
+    <button type="button" class="kpi clicavel" data-atalho="reuniao" title="Reunião agendada, realizada ou oportunidade aberta" style="--kb:var(--laranja-claro);--kc:var(--laranja-esc)"><span class="ic">${IC.agenda}</span>
+      <div><b>${nReun}</b><span>Com reunião</span></div><span class="ir">${IC.direita}</span></button>`;
 
   const visiveis = base.map(emp => {
     const cs = emp.contatos.filter(ct => passa(emp, ct));
@@ -1521,6 +1530,7 @@ function atalho(tipo){
   if (tipo === "followup") filtro.acao = "followup";
   if (tipo === "abordados") filtro.acao = "abordados";
   if (tipo === "p12"){ filtro.acao = "abordar"; filtro.grupo.add("1"); filtro.grupo.add("2"); }
+  if (tipo === "reuniao") ST_REUNIAO_MAIS.forEach(v => filtro.status.add(v));
   render();
   const tb = $(".toolbar");
   if (tb) window.scrollTo({top: Math.max(0, tb.getBoundingClientRect().top + window.scrollY - 80), behavior:"smooth"});
@@ -1662,7 +1672,7 @@ function contatosGestao(){
   return out;
 }
 function metricas(lista){
-  const m = {leads:lista.length, abordados:0, contato:0, reunioes:0, propostas:0, ganhos:0, followups:0, p12:0, ultima:"", etapas:{}};
+  const m = {leads:lista.length, abordados:0, contato:0, reunioes:0, oport:0, followups:0, p12:0, ultima:"", etapas:{}};
   ETAPAS.forEach(e => m.etapas[e.k] = 0);
   lista.forEach(({ct}) => {
     const l = entradasDe(ct.id);
@@ -1670,8 +1680,7 @@ function metricas(lista){
     if (l.length) m.abordados++;
     if (chegouA(ct.id, ST_CONTATO_MAIS)) m.contato++;
     if (chegouA(ct.id, ST_REUNIAO_MAIS)) m.reunioes++;
-    if (chegouA(ct.id, ST_PROPOSTA_MAIS)) m.propostas++;
-    if (st === "Negócio ganho") m.ganhos++;
+    if (chegouA(ct.id, ST_OPORT)) m.oport++;
     if (followUp(ct)) m.followups++;
     if (!l.length && Number(ct.grupo) <= 2) m.p12++;
     m.etapas[etapaDe(st)]++;
@@ -1699,22 +1708,23 @@ function renderGestao(){
 
   const lista = contatosGestao();
   const tot = metricas(lista);
+  $("#exp-rot").textContent = `Exportar Excel (${plural(lista.length, "contato", "contatos")})`;
   const escopo = gFiltro.am.size ? (gFiltro.am.size === 1 ? Array.from(gFiltro.am)[0] : plural(gFiltro.am.size, "account", "accounts")) : "toda a equipe";
   $("#g-hero").innerHTML = `Visão de <b>${esc(escopo)}</b>: <b>${pct(tot.abordados, tot.leads)}%</b> dos leads já abordados, ` +
-    `<b>${plural(tot.reunioes, "reunião", "reuniões")}</b> conquistadas e <b class="hl">${plural(tot.followups, "follow-up vencido", "follow-ups vencidos")}</b>.`;
+    `<b>${plural(tot.reunioes, "reunião", "reuniões")}</b>, <b>${plural(tot.oport, "oportunidade", "oportunidades")}</b> no Salesforce e <b class="hl">${plural(tot.followups, "follow-up vencido", "follow-ups vencidos")}</b>.`;
 
   $("#g-kpis").innerHTML = `
     <div class="kpi"><span class="ic">${IC.pessoas}</span><div><b>${tot.leads}</b><span>Contatos na base</span></div></div>
     <div class="kpi" style="--kb:var(--verde-claro);--kc:var(--verde)"><span class="ic">${IC.checkC}</span><div><b>${tot.abordados}</b><span>Abordados · <em>${pct(tot.abordados, tot.leads)}%</em></span></div></div>
     <div class="kpi" style="--kb:var(--laranja-claro);--kc:var(--laranja-esc)"><span class="ic">${IC.agenda}</span><div><b>${tot.reunioes}</b><span>Chegaram a reunião</span></div></div>
-    <div class="kpi" style="--kb:#ECE9F9;--kc:#4a3aa7"><span class="ic">${IC.doc}</span><div><b>${tot.propostas}</b><span>Com proposta</span></div></div>
-    <div class="kpi" style="--kb:var(--verde-claro);--kc:var(--verde)"><span class="ic">${IC.trofeu}</span><div><b>${tot.ganhos}</b><span>Negócios ganhos</span></div></div>
+    <div class="kpi" style="--kb:#ECE9F9;--kc:#4a3aa7"><span class="ic">${IC.doc}</span><div><b>${tot.oport}</b><span>Oportunidades no Salesforce</span></div></div>
+    <div class="kpi" style="--kb:var(--verde-claro);--kc:var(--verde)"><span class="ic">${IC.trofeu}</span><div><b>${pct(tot.oport, tot.abordados)}%</b><span>Conversão em oportunidade</span></div></div>
     <button type="button" class="kpi clicavel" ${drillAttr({acao:"followup"})} style="--kb:#FDE8E4;--kc:var(--vermelho)"><span class="ic">${IC.alarme}</span>
       <div><b>${tot.followups}</b><span>Follow-ups vencidos</span></div><span class="ir">${IC.direita}</span></button>`;
 
   /* funil (etapa alcancada) */
   const est = [["Na base", tot.leads], ["Abordados", tot.abordados], ["Contato feito", tot.contato],
-               ["Reunião", tot.reunioes], ["Proposta", tot.propostas], ["Ganho", tot.ganhos]];
+               ["Reunião", tot.reunioes], ["Oportunidade", tot.oport]];
   $("#g-funil").innerHTML = est.map(([r, n], i) => {
     const conv = i === 0 ? "" : `${pct(n, est[i - 1][1])}% da etapa anterior`;
     return `<div class="fn"><span class="r">${r}</span>
@@ -1741,7 +1751,7 @@ function renderGestao(){
     return `<div class="spark" data-tip="${tot14}|${tot14 === 1 ? "interação" : "interações"} nos últimos 14 dias">${vals.map(v => `<i class="${v ? "" : "z"}" style="height:${v ? Math.max(12, v / mx * 100) : 8}%"></i>`).join("")}</div>`;
   };
   $("#g-contas").innerHTML = `<thead><tr><th>Account</th><th class="num">Leads</th><th class="num">Abordados</th>
-    <th>Cobertura</th><th>Situação atual</th><th class="num">Reuniões</th><th class="num">Propostas</th>
+    <th>Cobertura</th><th>Situação atual</th><th class="num">Reuniões</th><th class="num quebra">Oportu&shy;nidades</th>
     <th class="num quebra" title="Prioridade 1 e 2 sem nenhuma interação">P1 e P2 a abordar</th>
     <th class="num quebra" title="Próxima ação para hoje ou atrasada">Follow-up vencido</th><th class="quebra">Ritmo 14 dias</th><th class="quebra">Última atividade</th></tr></thead>
     <tbody>${ams.map(am => {
@@ -1750,7 +1760,7 @@ function renderGestao(){
         <td>${pessoaAm(am, 30)}</td>
         <td class="num">${m.leads}</td><td class="num">${m.abordados}</td>
         <td>${cobertura(m)}</td><td>${pilhaHTML(m)}</td>
-        <td class="num">${m.reunioes}</td><td class="num">${m.propostas}</td>
+        <td class="num">${m.reunioes}</td><td class="num">${m.oport}</td>
         <td class="num">${drillN(m.p12, {am, grupos:[1, 2], acao:"abordar"})}</td>
         <td class="num">${drillN(m.followups, {am, acao:"followup"})}</td>
         <td>${spark(porAm[am])}</td>
@@ -1758,7 +1768,7 @@ function renderGestao(){
       </tr>`;
     }).join("")}</tbody>
     <tfoot><tr><td>Total</td><td class="num">${tot.leads}</td><td class="num">${tot.abordados}</td><td>${cobertura(tot)}</td>
-    <td>${pilhaHTML(tot)}</td><td class="num">${tot.reunioes}</td><td class="num">${tot.propostas}</td>
+    <td>${pilhaHTML(tot)}</td><td class="num">${tot.reunioes}</td><td class="num">${tot.oport}</td>
     <td class="num">${tot.p12}</td><td class="num">${tot.followups}</td><td>${spark(lista)}</td>
     <td>${tot.ultima ? esc(fmtCurto(tot.ultima)) : ""}</td></tr></tfoot>`;
 
@@ -1769,13 +1779,13 @@ function renderGestao(){
   const linhaOrigem = (rotHTML, sub, drill) => {
     const m = metricas(sub);
     return `<tr class="clica" ${drillAttr(drill)}><td class="forte">${rotHTML}</td><td class="num">${m.leads}</td>
-      <td class="num">${m.abordados}</td><td>${cobertura(m)}</td><td class="num">${m.reunioes}</td></tr>`;
+      <td class="num">${m.abordados}</td><td>${cobertura(m)}</td><td class="num">${m.reunioes}</td><td class="num">${m.oport}</td></tr>`;
   };
   $("#g-origem").innerHTML = `<thead><tr><th>Origem</th><th class="num">Leads</th><th class="num">Abordados</th>
-    <th>Cobertura</th><th class="num">Reuniões</th></tr></thead><tbody>
+    <th>Cobertura</th><th class="num">Reuniões</th><th class="num">Oportunidades</th></tr></thead><tbody>
     ${EVENTOS.map(e => linhaOrigem(`<span class="ev" style="--c:${e.cor}">${esc(e.v)}</span>`,
         lista.filter(x => eventosDe(x.emp, x.ct).indexOf(e.v) >= 0), {evento:e.v})).join("")}
-    <tr class="grupo-linha"><td colspan="5">Abordados pessoalmente no evento</td></tr>
+    <tr class="grupo-linha"><td colspan="6">Abordados pessoalmente no evento</td></tr>
     ${ABORDAGENS.map(a => linhaOrigem(`<span class="ab">${IC.fala}${esc(a.chip)}</span> ${esc(a.sub)}`,
         lista.filter(x => abordagensDe(x.ct).indexOf(a.v) >= 0), {abordado:a.v})).join("")}
     </tbody>`;
@@ -1953,7 +1963,7 @@ function renderFila(lista){
   const totalFila = itens.reduce((s, i) => s + i.n, 0) + semCanal;
   $("#g-fila").innerHTML = `<div class="fila-lista">${itens.map(i => `<div class="fila-it">${cic(i.c, 28)}<span>${esc(CANAL[i.c].curto === "Ligar" ? "Ligações" : i.c)}</span>
       <span class="trilho">${i.n ? `<i style="--c:${CANAL[i.c].cor};width:${i.n / max * 100}%" data-tip="${i.n}|${esc(i.c)} para fazer"></i>` : ""}</span><span class="num">${i.n}</span></div>`).join("")}
-    <div class="fila-it">${cic("", 28)}<span>Outros passos</span><span class="trilho">${semCanal ? `<i style="--c:#94A3B8;width:${semCanal / max * 100}%" data-tip="${semCanal}|reuniões, propostas e passos definidos"></i>` : ""}</span><span class="num">${semCanal}</span></div></div>
+    <div class="fila-it">${cic("", 28)}<span>Outros passos</span><span class="trilho">${semCanal ? `<i style="--c:#94A3B8;width:${semCanal / max * 100}%" data-tip="${semCanal}|reuniões e passos definidos"></i>` : ""}</span><span class="num">${semCanal}</span></div></div>
     <p class="fila-nota"><b>${plural(totalFila, "retorno", "retornos")}</b> vencendo hoje ou atrasados, e <b>${plural(primeiros, "lead", "leads")}</b> aguardando o primeiro contato.</p>`;
 }
 
@@ -2038,7 +2048,7 @@ function preencherModelo(txt, emp, ct){
     .replace(/\{primeiro\}/g, (ct.nome || "").split(" ")[0])
     .replace(/\{empresa\}/g, emp.nome)
     .replace(/\{evento\}/g, ev ? ev.nome : "evento")
-    .replace(/\{eu\}/g, conta.nome)
+    .replace(/\{eu\}/g, emp.am && emp.am !== SEM_AM ? emp.am : conta.nome)
     .replace(/\{abertura\}/g, ct.abridor || ("Oi " + (ct.nome || "").split(" ")[0] + ", tudo bem?"));
 }
 
@@ -2100,7 +2110,7 @@ function renderProximaAcao(){
   const box = $("#d-acao");
   if (a.tipo === "fim"){
     box.innerHTML = `<div class="pa" style="${varsCanal("")}"><div class="pa-fim">${cic("", 36)}<div><b>${esc(a.titulo)}</b>
-      <div style="color:var(--suave);font-size:13.5px;font-weight:600">Sem ações pendentes para este lead.</div></div></div></div>`;
+      <div style="color:var(--suave);font-size:13.5px;font-weight:600">${esc(a.sub || "")}</div></div></div></div>`;
     return;
   }
   const p = abordado(ct.id) ? prazoTxt(a.due) : {txt:"primeiro contato", cls:"hoje"};
@@ -2149,18 +2159,19 @@ function renderResponsavel(){
   const sec = $("#d-sec-resp");
   sec.classList.toggle("hidden", !admin());
   if (!admin()) return;
-  const {emp, ct} = atual;
+  const {emp} = atual;
   const liberado = !API_URL || versaoServidor >= 3;
+  const daEmpresa = contatosDaEmpresa(emp.nome);
+  const outros = Array.from(new Set(daEmpresa.map(x => x.emp.am))).filter(a => a !== emp.am);
   $("#d-resp").innerHTML = `<div class="resp">${avatar(emp.am, 42)}<div class="quem-resp"><b>${esc(emp.am)}</b>
-      <small>${plural(emp.contatos.length, "contato", "contatos")} da ${esc(emp.nome)} com este account</small></div>
+      <small>Responsável pela conta ${esc(emp.nome)} · ${plural(daEmpresa.length, "contato", "contatos")}${outros.length ? " (parte está com " + esc(outros.join(", ")) + ")" : ""}</small></div>
       <button type="button" class="btn btn-sec btn-sm" id="btn-trocar" ${liberado ? "" : "disabled"}>${IC.troca}Trocar</button></div>
     ${liberado ? "" : `<p class="aviso-inline">${versaoServidor ? "Atualize o Code.gs no Apps Script para liberar a troca de account." : "Aguardando a sincronização para liberar a troca."}</p>`}
     <div class="troca hidden" id="troca">
-      <p class="sub-tit">Transferir para</p>
+      <p class="sub-tit">Transferir a conta ${esc(emp.nome)} para</p>
       <div class="troca-lista">${AMS_VALIDOS.filter(a => a !== emp.am).map(a => `<label class="troca-op">
         <input type="radio" name="novo-am" value="${esc(a)}">${avatar(a, 30)}<span>${esc(a)}</span></label>`).join("")}</div>
-      ${emp.contatos.length > 1 ? `<label class="troca-check"><input type="checkbox" id="troca-todos" checked>
-        Transferir os ${emp.contatos.length} contatos da ${esc(emp.nome)}</label>` : ""}
+      <p class="aviso-inline">Todos os ${plural(daEmpresa.length, "contato", "contatos")} da ${esc(emp.nome)} passam para o novo account, com o histórico completo.</p>
       <div class="troca-acoes"><button type="button" class="btn btn-sec btn-sm" id="btn-troca-cancelar">Cancelar</button>
         <button type="button" class="btn btn-azul btn-sm" id="btn-troca-ok" disabled>${IC.check}Confirmar troca</button></div>
     </div>`;
@@ -2268,20 +2279,26 @@ function moverContatos(ids, novoAm){
   });
   DADOS.empresas = DADOS.empresas.filter(e => e.contatos.length);
 }
+/* A conta (empresa) é a unidade de carteira: todos os contatos da empresa ficam com o mesmo account. */
+function contatosDaEmpresa(nome){
+  const alvo = norm(nome).trim();
+  const out = [];
+  DADOS.empresas.forEach(emp => { if (norm(emp.nome).trim() === alvo) emp.contatos.forEach(ct => out.push({emp, ct})); });
+  return out;
+}
 async function confirmarTroca(){
   if (!atual || !admin()) return;
   const sel = document.querySelector('input[name="novo-am"]:checked');
   if (!sel) return;
   const novoAm = sel.value;
-  const {emp, ct} = atual;
-  const todos = $("#troca-todos") ? $("#troca-todos").checked : false;
-  const ids = todos ? emp.contatos.map(c => c.id) : [ct.id];
+  const {emp} = atual;
+  const ids = contatosDaEmpresa(emp.nome).map(x => x.ct.id);
   moverContatos(ids, novoAm);
   fila.push({acao:"reatribuir", ids, novoAm, empresa:emp.nome});
   salvarLocal();
   render();
   reabrirAtual();
-  toast(`${plural(ids.length, "contato transferido", "contatos transferidos")} para ${novoAm}`);
+  toast(`Conta ${emp.nome} transferida para ${novoAm} (${plural(ids.length, "contato", "contatos")})`);
   await enviarAgora();
 }
 
@@ -2317,6 +2334,7 @@ function entradaHTML(e){
       ${canais.length ? `<span class="canais-lidas">${canais.map(c => `<span class="canal-mini" style="${varsCanal(c)}"><i>${(CANAL[c] || NEUTRO).ic}</i>${esc(c)}</span>`).join("")}</span>` : ""}</div>
     ${e.obs ? `<p class="obs">${esc(e.obs)}</p>` : ""}
     ${e.proximoPasso || e.dataProximo ? `<p class="passo"><b>Próximo passo${e.dataProximo ? " em " + esc(fmtData(e.dataProximo)) : ""}:</b> ${esc(e.proximoPasso || "")}</p>` : ""}
+    ${e.oportunidade ? `<p class="passo"><b>Oportunidade no Salesforce:</b> ${esc(e.oportunidade)}</p>` : ""}
     ${e.editadoEm ? `<p class="editado">Editado por ${esc(e.editadoPor || "")} em ${esc(fmtDataHora(e.editadoEm))}</p>` : ""}
   </li>`;
 }
@@ -2332,7 +2350,11 @@ function preencherForm(e){
   $("#d-obs").value = e ? (e.obs || "") : "";
   $("#d-passo").value = e ? (e.proximoPasso || "") : "";
   $("#d-data").value = e && e.dataProximo ? String(e.dataProximo).slice(0, 10) : "";
+  $("#d-oport").value = e ? (e.oportunidade || "") : "";
+  mostrarCampoOport();
 }
+function mostrarCampoOport(){ $("#campo-oport").classList.toggle("hidden", $("#d-status").value !== OPORTUNIDADE); }
+$("#d-status").addEventListener("change", mostrarCampoOport);
 
 function iniciarEdicao(idRegistro){
   if (!atual) return;
@@ -2391,7 +2413,8 @@ $("#btn-salvar").onclick = async () => {
     canais: $$("#d-canais .canal.on").map(b => b.dataset.canal),
     obs: $("#d-obs").value.trim(),
     proximoPasso: $("#d-passo").value.trim(),
-    dataProximo: $("#d-data").value
+    dataProximo: $("#d-data").value,
+    oportunidade: $("#d-status").value === OPORTUNIDADE ? $("#d-oport").value.trim() : ""
   };
   const lista = registros[ct.id] || (registros[ct.id] = []);
   if (editando){
@@ -2407,7 +2430,7 @@ $("#btn-salvar").onclick = async () => {
     }
     editando = null;
   }
-  if (!campos.canais.length && !campos.obs){ toast("Marque o canal usado ou descreva o que foi conversado"); return; }
+  if (!campos.canais.length && !campos.obs && campos.status !== OPORTUNIDADE){ toast("Marque o canal usado ou descreva o que foi conversado"); return; }
   const entrada = novaEntrada(emp, ct, campos);
   lista.unshift(entrada);
   fila.push(Object.assign({acao:"salvar"}, entrada));
@@ -2447,8 +2470,9 @@ function montarPlanilhas(){
     "E-mail","Celular","LinkedIn","Abordado por","Temperatura","Status","Interações","Última interação","Última interação por",
     "Próxima ação","Prazo da próxima ação","Próximo passo registrado","Gancho","Origem do gancho","Sugestão de abertura"]];
   const ints = [["Data e hora","Account do lead","Registrado por","Empresa","Contato","Status","Canais","O que foi conversado",
-    "Próximo passo","Data do próximo passo","Editado em","Editado por"]];
-  DADOS.empresas.forEach(emp => emp.contatos.forEach(ct => {
+    "Próximo passo","Data do próximo passo","Oportunidade Salesforce","Editado em","Editado por"]];
+  const lista = contatosGestao();   /* respeita os filtros de Account e Evento da aba Gestão */
+  lista.forEach(({emp, ct}) => {
     const l = entradasDe(ct.id);
     const u = l[0];
     const a = proximaAcao(ct);
@@ -2460,16 +2484,18 @@ function montarPlanilhas(){
       ct.gancho || "", ct.origem || "", ct.abridor || ""]);
     l.slice().reverse().forEach(e => ints.push([dataHoraExcel(e.criadoEm), emp.am, e.contaNome || e.conta || "", emp.nome, ct.nome,
       normStatus(e.status), (e.canais || []).join(", "), e.obs || "", e.proximoPasso || "", e.dataProximo ? fmtData(e.dataProximo) : "",
-      e.editadoEm ? dataHoraExcel(e.editadoEm) : "", e.editadoPor || ""]));
-  }));
-  const res = [["Account","Leads","Abordados","Cobertura","Chegaram a reunião","Com proposta","Negócios ganhos","Follow-ups vencidos","P1 e P2 a abordar"]];
+      e.oportunidade || "", e.editadoEm ? dataHoraExcel(e.editadoEm) : "", e.editadoPor || ""]));
+  });
+  const res = [["Account","Leads","Abordados","Cobertura","Chegaram a reunião","Oportunidades no Salesforce","Conversão em oportunidade","Follow-ups vencidos","P1 e P2 a abordar"]];
   const porAm = {};
-  DADOS.empresas.forEach(emp => emp.contatos.forEach(ct => (porAm[emp.am] = porAm[emp.am] || []).push({emp, ct})));
+  lista.forEach(x => (porAm[x.emp.am] = porAm[x.emp.am] || []).push(x));
   Object.keys(porAm).sort().forEach(am => {
     const m = metricas(porAm[am]);
-    res.push([am, m.leads, m.abordados, m.leads ? m.abordados / m.leads : 0, m.reunioes, m.propostas, m.ganhos, m.followups, m.p12]);
+    res.push([am, m.leads, m.abordados, m.leads ? m.abordados / m.leads : 0, m.reunioes, m.oport, m.abordados ? m.oport / m.abordados : 0, m.followups, m.p12]);
   });
+  const desc = s => s.size ? Array.from(s).join(", ") : "Todos";
   const sobre = [["Portal de Leads | Eventos 2026 | Engemon IT"], [""], ["Exportado por", conta.nome], ["Exportado em", fmtDataHora(new Date().toISOString())],
+    ["Filtro de account", desc(gFiltro.am)], ["Filtro de evento", desc(gFiltro.evento)],
     ["Contatos", cont.length - 1], ["Interações", ints.length - 1], [""],
     ["Atenção", "Este arquivo contém dados pessoais (nome, e-mail, celular). Uso interno da Engemon IT. Não compartilhe fora da empresa."],
     ["", "É uma fotografia do momento da exportação: alterações feitas aqui não voltam para o portal."]];
@@ -2479,7 +2505,8 @@ async function exportarExcel(){
   if (!admin()) return;
   toast("Gerando arquivo...");
   const p = montarPlanilhas();
-  const nomeArq = "Portal_Leads_Eventos_2026_" + hojeSP();
+  const sufixo = gFiltro.am.size === 1 ? "_" + Array.from(gFiltro.am)[0].replace(/\s+/g, "_") : (gFiltro.am.size || gFiltro.evento.size ? "_filtrado" : "");
+  const nomeArq = "Portal_Leads_Eventos_2026" + sufixo + "_" + hojeSP();
   try {
     const X = await carregarXLSX();
     const wb = X.utils.book_new();
@@ -2491,9 +2518,9 @@ async function exportarExcel(){
       X.utils.book_append_sheet(wb, ws, nome);
     };
     addAba(p.cont, [18,30,14,14,14,26,28,30,14,32,18,34,26,12,18,11,18,18,30,14,30,60,30,60], "Contatos");
-    addAba(p.ints, [18,18,18,30,28,18,22,60,30,16,18,18], "Interações");
-    addAba(p.res, [22,8,11,11,18,13,15,18,17], "Resumo por account", ws => {
-      for (let r = 1; r < p.res.length; r++){ const c = ws[X.utils.encode_cell({r, c:3})]; if (c) c.z = "0%"; }
+    addAba(p.ints, [18,18,18,30,28,24,22,60,30,16,24,18,18], "Interações");
+    addAba(p.res, [22,8,11,11,18,26,24,18,17], "Resumo por account", ws => {
+      for (let r = 1; r < p.res.length; r++) [3, 6].forEach(k => { const c = ws[X.utils.encode_cell({r, c:k})]; if (c) c.z = "0%"; });
     });
     addAba(p.sobre, [16, 110], "Sobre");
     X.writeFile(wb, nomeArq + ".xlsx");
