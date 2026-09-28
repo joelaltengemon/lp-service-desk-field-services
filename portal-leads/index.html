@@ -855,7 +855,11 @@ const CONTAS = [
   {email:"viviane.oller@engemon.com.br",    nome:"Viviane Oller",    senha:"Eng@VO@2026", am:"Viviane Oller",    perfil:"am"},
   {email:"karina.medeiros@engemon.com.br",  nome:"Karina Medeiros",  senha:"Eng@KM@2026", am:"Karina Medeiros",  perfil:"am"},
   {email:"alcides.nucitelli@engemon.com.br",nome:"Alcides Nucitelli",senha:"Eng@AN@2026", am:"Alcides Nucitelli",perfil:"am"},
-  {email:"lindaura.oliveira@engemon.com.br",nome:"Lindaura Oliveira",senha:"Eng@LO@2026", am:"Lindaura Oliveira",perfil:"am"}
+  {email:"lindaura.oliveira@engemon.com.br",nome:"Lindaura Oliveira",senha:"Eng@LO@2026", am:"Lindaura Oliveira",perfil:"am"},
+  {email:"pedro.carvalho@engemon.com.br",   nome:"Pedro Carvalho",    senha:"Eng@PC@2026", am:"",                perfil:"leitor"},
+  {email:"izabella.santos@engemon.com.br",  nome:"Izabella Santos Vinhati", senha:"Eng@IV@2026", am:"",          perfil:"leitor"},
+  {email:"lucas.ramires@engemon.com.br",    nome:"Lucas Ramires",     senha:"Eng@LR@2026", am:"",                perfil:"leitor"},
+  {email:"charles.sperandio@engemon.com.br",nome:"Charles Sperandio", senha:"Eng@CS@2026", am:"",                perfil:"leitor"}
 ];
 const APELIDO = {"Edisleide Azevedo":"Leide"};
 const SEM_AM = "Sem AM designado";
@@ -1046,6 +1050,10 @@ function lsGet(k, d){ try { const v = localStorage.getItem(k); return v == null 
 function lsSet(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
 function lsDel(k){ try { localStorage.removeItem(k); } catch(e){} }
 const admin = () => conta && conta.perfil === "admin";
+/* Visualizador: enxerga tudo igual admin (todas as contas, Gestão, exportação), mas nao
+   pode registrar, editar, excluir ou reatribuir nada. */
+const leitor = () => conta && conta.perfil === "leitor";
+const visaoTotal = () => admin() || leitor();
 
 /* =====================================================================
    3. UTILITARIOS
@@ -1152,10 +1160,10 @@ function entrar(c){
   $("#in-busca").value = "";
   modoView = lsGet(LS_VIEW, "cards");
   if (["cards","tabela"].indexOf(modoView) < 0) modoView = "cards";
-  aba = admin() ? lsGet(LS_ABA, "leads") : "leads";
+  aba = visaoTotal() ? lsGet(LS_ABA, "leads") : "leads";
   if (["leads","gestao"].indexOf(aba) < 0) aba = "leads";
-  $("#abas").classList.toggle("hidden", !admin());
-  $$("[data-exportar]").forEach(b => b.classList.toggle("hidden", !admin()));
+  $("#abas").classList.toggle("hidden", !visaoTotal());
+  $$("[data-exportar]").forEach(b => b.classList.toggle("hidden", !visaoTotal()));
   carregarLocal();
   montarFiltros();
   montarFiltrosGestao();
@@ -1177,7 +1185,7 @@ function aplicarAba(){
   $("#view-leads").classList.toggle("hidden", aba !== "leads");
   $("#view-gestao").classList.toggle("hidden", aba !== "gestao");
   $$("#abas button").forEach(b => b.classList.toggle("on", b.dataset.aba === aba));
-  if (admin()) lsSet(LS_ABA, aba);
+  if (visaoTotal()) lsSet(LS_ABA, aba);
   render();
 }
 $$("#abas button").forEach(b => b.onclick = () => { aba = b.dataset.aba; aplicarAba(); window.scrollTo({top:0}); });
@@ -1235,7 +1243,7 @@ async function sincronizar(){
   marcarSync("Sincronizando");
   try {
     await enviarFila();
-    const alvo = admin() ? "todos" : conta.email;
+    const alvo = visaoTotal() ? "todos" : conta.email;
     const url = API_URL + "?acao=registros&conta=" + encodeURIComponent(alvo) + "&senha=" + encodeURIComponent(conta.senha);
     const r = await fetchComTimeout(url);
     const j = await r.json();
@@ -1307,7 +1315,7 @@ function listaAMs(){
   return Array.from(new Set(DADOS.empresas.map(e => e.am))).sort((a, b) =>
     (a === SEM_AM) - (b === SEM_AM) || a.localeCompare(b));
 }
-function baseDaConta(){ return admin() ? DADOS.empresas : DADOS.empresas.filter(e => e.am === conta.am); }
+function baseDaConta(){ return visaoTotal() ? DADOS.empresas : DADOS.empresas.filter(e => e.am === conta.am); }
 
 /* ---------- Clientes e relacionamento ----------
    Conta de relacionamento = cliente atual da Engemon IT ou marcada em verde no farol da Leide.
@@ -1536,7 +1544,7 @@ function montarFiltros(){
       {v:"prosp", label:"Prospecção", html:`<span class="dot" style="--c:#009FDF"></span><span>Prospecção</span>`},
       {v:"rel", label:REL_TXT, html:`<span class="rel-tag">${IC.aperto}Relacionamento</span>`}]}
   ];
-  if (admin()) defs.push({key:"am", label:"Account", opcoes:opcoesAM});
+  if (visaoTotal()) defs.push({key:"am", label:"Account", opcoes:opcoesAM});
   defs.forEach(d => criarDD(host, Object.assign({
     grupo:"leads",
     set:() => filtro[d.key],
@@ -1549,7 +1557,7 @@ function montarFiltrosGestao(){
   const host = $("#g-filtros-dd");
   host.innerHTML = "";
   DDS = DDS.filter(d => d.cfg.grupo !== "gestao");
-  if (!admin()) return;
+  if (!visaoTotal()) return;
   criarDD(host, {grupo:"gestao", key:"am", label:"Account", opcoes:opcoesAM, set:() => gFiltro.am, onChange:render});
   criarDD(host, {grupo:"gestao", key:"evento", label:"Evento", opcoes:opcoesEvento, set:() => gFiltro.evento, onChange:render});
 }
@@ -1566,7 +1574,7 @@ function render(){
   if (!conta) return;
   cacheAcao = new Map();
   cacheRel = null;
-  if (aba === "gestao" && admin()) renderGestao();
+  if (aba === "gestao" && visaoTotal()) renderGestao();
   else renderLeads();
 }
 
@@ -1597,7 +1605,7 @@ function renderLeads(){
   const nP12 = todos.filter(x => !abordado(x.ct.id) && !rel(x.ct) && Number(x.ct.grupo) <= 2).length;
   const nReun = todos.filter(x => ST_REUNIAO_MAIS.indexOf(statusDe(x.ct.id)) >= 0).length;
   const nome = APELIDO[conta.nome] || conta.nome.split(" ")[0];
-  const quem = admin() ? "A equipe tem" : "Você tem";
+  const quem = visaoTotal() ? "A equipe tem" : "Você tem";
   const partes = [];
   if (nFu) partes.push(`<b class="hl">${plural(nFu, "follow-up", "follow-ups")}</b> para hoje`);
   if (nP12) partes.push(`<b>${plural(nP12, "lead prioritário", "leads prioritários")}</b> ainda sem abordagem`);
@@ -1623,7 +1631,7 @@ function renderLeads(){
   const nCt = visiveis.reduce((s, e) => s + e.contatos.length, 0);
   $("#resumo-n").innerHTML = `<b>${plural(nCt, "contato", "contatos")}</b> em ${plural(visiveis.length, "empresa", "empresas")}`;
   $("#btn-limpar").classList.toggle("hidden", !filtroAtivo());
-  $("#btn-exp-leads").classList.toggle("hidden", !(admin() && modoView === "tabela" && nCt > 0));
+  $("#btn-exp-leads").classList.toggle("hidden", !(visaoTotal() && modoView === "tabela" && nCt > 0));
   $("#exp-rot-leads").textContent = `Exportar Excel (${plural(nCt, "contato", "contatos")})`;
 
   const cards = modoView === "cards";
@@ -1679,7 +1687,7 @@ function cardHTML(emp){
       ${emp.origem ? `<div class="g-origem">${IC.raio}${esc(emp.origem)}</div>` : ""}
       ${esc(emp.gancho)}${emp.ganchoUnico ? "" : " <b>Veja o gancho de cada contato.</b>"}</div>
     <ul class="contatos">${emp.contatos.map(ct => contatoCardHTML(emp, ct)).join("")}</ul>
-    ${admin() ? `<div class="card-pe">${pessoaAm(emp.am, 24)}<span style="margin-left:auto">${plural(emp.contatos.length, "contato", "contatos")}</span></div>` : ""}
+    ${visaoTotal() ? `<div class="card-pe">${pessoaAm(emp.am, 24)}<span style="margin-left:auto">${plural(emp.contatos.length, "contato", "contatos")}</span></div>` : ""}
   </article>`;
 }
 
@@ -1716,7 +1724,7 @@ function chaveOrdem(col, x){
   return "";
 }
 function renderTabela(visiveis){
-  const cols = COLS.filter(c => !c.admin || admin());
+  const cols = COLS.filter(c => !c.admin || visaoTotal());
   const linhas = [];
   visiveis.forEach(emp => emp.contatos.forEach(ct => linhas.push({emp, ct})));
   if (ordem.col){
@@ -1740,7 +1748,7 @@ function renderTabela(visiveis){
       <td data-l="Empresa"><div class="t-emp">${IC.empresaP}<span>${esc(emp.nome)}</span></div></td>
       <td data-l="Evento">${eventosHTML(eventosDe(emp, ct)) || '<span class="t-vazio">-</span>'}</td>
       <td data-l="Prioridade"><span class="tag g${esc(ct.grupo)}" title="${esc(GRUPOS[ct.grupo] || "")}">${GRUPOS_CURTO[ct.grupo] || ""}</span></td>
-      ${admin() ? `<td data-l="Account">${pessoaAm(emp.am, 26, "t")}</td>` : ""}
+      ${visaoTotal() ? `<td data-l="Account">${pessoaAm(emp.am, 26, "t")}</td>` : ""}
       <td data-l="Status">${statusCt(ct)}</td>
       <td data-l="Última interação">${u ? `<div class="t-data" title="${esc(fmtDataHora(u.criadoEm))}">${esc(fmtCurto(u.criadoEm))}</div><div class="t-sub">${esc(u.contaNome || "")}</div>` : '<span class="t-vazio">Nunca</span>'}</td>
       <td class="t-cheia" data-l="Próxima ação">${chipAcao(ct) || '<span class="t-vazio">-</span>'}</td>
@@ -2201,6 +2209,7 @@ function renderDrawer(manterScroll){
   $("#d-abridor").textContent = ct.abridor;
 
   renderProximaAcao();
+  $("#d-form-sec").classList.toggle("hidden", leitor());
   $("#d-sec-cad").classList.toggle("hidden", rel(ct));
   $("#d-abridor").closest(".bloco").classList.toggle("hidden", rel(ct));
   renderCadencia();
@@ -2257,7 +2266,7 @@ function renderProximaAcao(){
       <div class="pa-acoes">
         <button type="button" class="btn btn-sec btn-sm" data-copia-txt="msg">${IC.copiar}Copiar mensagem</button>
         ${dado && dado.v ? `<button type="button" class="btn btn-sec btn-sm" data-copia-txt="${esc(dado.v)}">${IC.copiar}${esc(dado.rot)}</button>` : ""}
-        <button type="button" class="btn btn-azul btn-sm" id="btn-feito">${IC.check}Marcar como feito</button>
+        ${leitor() ? "" : `<button type="button" class="btn btn-azul btn-sm" id="btn-feito">${IC.check}Marcar como feito</button>`}
       </div>
     </div></div>`;
 }
@@ -2278,24 +2287,24 @@ function renderCadencia(){
 
 function renderResponsavel(){
   const sec = $("#d-sec-resp");
-  sec.classList.toggle("hidden", !admin());
-  if (!admin()) return;
+  sec.classList.toggle("hidden", !visaoTotal());
+  if (!visaoTotal()) return;
   const {emp} = atual;
   const liberado = !API_URL || versaoServidor >= 3;
   const daEmpresa = contatosDaEmpresa(emp.nome);
   const outros = Array.from(new Set(daEmpresa.map(x => x.emp.am))).filter(a => a !== emp.am);
   $("#d-resp").innerHTML = `<div class="resp">${avatar(emp.am, 42)}<div class="quem-resp"><b>${esc(emp.am)}</b>
       <small>Responsável pela conta ${esc(emp.nome)} · ${plural(daEmpresa.length, "contato", "contatos")}${outros.length ? " (parte está com " + esc(outros.join(", ")) + ")" : ""}</small></div>
-      <button type="button" class="btn btn-sec btn-sm" id="btn-trocar" ${liberado ? "" : "disabled"}>${IC.troca}Trocar</button></div>
-    ${liberado ? "" : `<p class="aviso-inline">${versaoServidor ? "Atualize o Code.gs no Apps Script para liberar a troca de account." : "Aguardando a sincronização para liberar a troca."}</p>`}
-    <div class="troca hidden" id="troca">
+      ${admin() ? `<button type="button" class="btn btn-sec btn-sm" id="btn-trocar" ${liberado ? "" : "disabled"}>${IC.troca}Trocar</button>` : ""}</div>
+    ${admin() && !liberado ? `<p class="aviso-inline">${versaoServidor ? "Atualize o Code.gs no Apps Script para liberar a troca de account." : "Aguardando a sincronização para liberar a troca."}</p>` : ""}
+    ${admin() ? `<div class="troca hidden" id="troca">
       <p class="sub-tit">Transferir a conta ${esc(emp.nome)} para</p>
       <div class="troca-lista">${AMS_VALIDOS.filter(a => a !== emp.am).map(a => `<label class="troca-op">
         <input type="radio" name="novo-am" value="${esc(a)}">${avatar(a, 30)}<span>${esc(a)}</span></label>`).join("")}</div>
       <p class="aviso-inline">Todos os ${plural(daEmpresa.length, "contato", "contatos")} da ${esc(emp.nome)} passam para o novo account, com o histórico completo.</p>
       <div class="troca-acoes"><button type="button" class="btn btn-sec btn-sm" id="btn-troca-cancelar">Cancelar</button>
         <button type="button" class="btn btn-azul btn-sm" id="btn-troca-ok" disabled>${IC.check}Confirmar troca</button></div>
-    </div>`;
+    </div>` : ""}`;
 }
 
 $("#drawer").addEventListener("click", async e => {
@@ -2640,7 +2649,7 @@ function montarPlanilhas(origem){
   return {cont, ints, res, sobre};
 }
 async function exportarExcel(origem){
-  if (!admin()) return;
+  if (!visaoTotal()) return;
   toast("Gerando arquivo...");
   const p = montarPlanilhas(origem);
   const sufixo = origem === "leads"
