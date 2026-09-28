@@ -55,6 +55,7 @@ async function buscarComCookies(urlInicial, opcoesIniciais){
 export default async function handler(req, res) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");
+  const inicio = Date.now();
 
   try {
     let alvo, opcoes;
@@ -74,8 +75,10 @@ export default async function handler(req, res) {
 
     const r = await buscarComCookies(alvo, opcoes);
     const texto = await r.text();
+    console.log("[portal-leads-sync] ok em " + (Date.now() - inicio) + "ms, status " + r.status + ", " + texto.length + " bytes");
     res.status(200).send(texto);
   } catch (e) {
+    console.error("[portal-leads-sync] falhou em " + (Date.now() - inicio) + "ms: " + String(e));
     res.status(200).send(JSON.stringify({ok: false, erro: "falha na ponte do portal: " + String(e)}));
   }
 }
