@@ -14,13 +14,17 @@
   --azul:#009FDF; --azul-esc:#007CB0; --laranja:#E57623; --laranja-esc:#C45F12;
   --tinta:#12263F; --tinta-2:#475569; --suave:#64748B; --mudo:#94A3B8;
   --bg:#F2F6FA; --surf:#FFFFFF; --linha:#E3EAF2; --linha-2:#EEF2F6; --azul-claro:#EAF3FB; --laranja-claro:#FDECE0;
-  --verde:#1E9E6A; --verde-claro:#E6F5EE; --cinza-claro:#F1F5F9; --vermelho:#C0392B;
+  --verde:#1E9E6A; --verde-claro:#E6F5EE; --rel:#6D4FC2; --rel-claro:#F0ECFB; --cinza-claro:#F1F5F9; --vermelho:#C0392B;
   --r:16px; --sombra:0 1px 2px rgba(18,38,63,.05), 0 8px 24px rgba(18,38,63,.06);
   --sombra-hover:0 2px 4px rgba(18,38,63,.06), 0 14px 32px rgba(18,38,63,.10);
   --sombra-alta:0 16px 48px rgba(18,38,63,.18);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
+/* navegacao 100% vertical: nada pode empurrar a pagina para os lados */
+html{overflow-x:hidden}
+body{overflow-x:hidden;max-width:100%}
+@supports (overflow:clip){body{overflow-x:clip}}
 body{font-family:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);
   color:var(--tinta);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5;overflow-x:hidden}
 button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
@@ -76,6 +80,43 @@ svg{flex:0 0 auto}
 .sair{display:inline-flex;align-items:center;gap:6px;border:1.5px solid rgba(255,255,255,.5);color:#fff;border-radius:10px;
   padding:6px 11px;font-size:13px;font-weight:700}
 .sair:hover{background:rgba(255,255,255,.14)}
+a.sair{text-decoration:none}
+.guia-btn{background:#fff;color:var(--azul-esc,#0079AE);border-color:#fff}
+.guia-btn:hover{background:#E8F6FD}
+.mat-fundo{position:fixed;inset:0;background:rgba(10,30,50,.45);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
+.mat-fundo.on{display:flex}
+.mat{background:var(--surf);border-radius:20px;width:min(560px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;overflow-x:hidden;box-shadow:var(--sombra-alta)}
+.mat-topo{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 6px}
+.mat-topo h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.3px}
+.mat-topo button{font-size:26px;line-height:1;color:var(--suave);padding:2px 6px}
+.mat-corpo{padding:8px 22px 22px}
+.mat-guia{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:var(--azul-claro);text-decoration:none;color:var(--tinta);margin-bottom:18px}
+.mat-guia .ic{width:42px;height:42px;border-radius:12px;background:var(--azul);color:#fff;display:grid;place-items:center;flex:0 0 auto}
+.mat-guia b{display:block;font-size:15px}
+.mat-guia span{font-size:13px;color:var(--suave);font-weight:600}
+.mat-guia .vai{margin-left:auto;color:var(--azul-esc)}
+.mat-sub{font-size:11.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--mudo);margin:0 0 8px}
+.mat-lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.mat-lista li{display:flex;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--linha);border-radius:12px}
+.mat-lista .rede{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;background:var(--c);flex:0 0 auto}
+.mat-lista .rede svg{width:17px;height:17px}
+.mat-lista .tx{flex:1;min-width:0}
+.mat-lista .tx b{display:block;font-size:14px;line-height:1.3}
+.mat-lista .tx small{display:block;font-size:12px;color:var(--suave);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mat-lista .ac{display:flex;gap:6px;flex:0 0 auto}
+.mat-lista .ac a,.mat-lista .ac button{font-size:12.5px;font-weight:700;padding:7px 10px;border-radius:9px;border:1.5px solid var(--linha);color:var(--tinta);background:var(--surf);display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+.mat-lista .ac button{background:var(--azul);border-color:var(--azul);color:#fff}
+.mat-lista .ac button.ok{background:var(--verde);border-color:var(--verde)}
+@media(max-width:760px){
+  .mat-fundo{align-items:flex-end;padding:0}
+  .mat{width:100%;border-radius:20px 20px 0 0;max-height:88dvh}
+  .mat-lista li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px 12px}
+  .mat-lista .ac{grid-column:1 / -1}
+  .mat-lista .tx small{white-space:normal;word-break:break-all}
+  .mat-lista .ac a,.mat-lista .ac button{flex:1;justify-content:center;padding:9px 10px}
+}
+.login-guia{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:13px;font-weight:700;color:#0079AE;text-decoration:none;justify-content:center;width:100%}
+.login-guia:hover{text-decoration:underline}
 .sync{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:6px;color:#fff;cursor:pointer}
 .sync:hover{background:rgba(255,255,255,.28)}
 .sync::before{content:"";width:7px;height:7px;border-radius:50%;background:#7CF0B5}
@@ -190,6 +231,16 @@ main{max-width:1360px;margin:0 auto;padding:26px 32px 96px}
 .st.reuniao{--sc:#E57623}
 .st.ganho{--sc:#1E9E6A}
 .st.fim{--sc:#94A3B8;color:var(--suave)}
+.st.rel{--sc:var(--rel);color:var(--rel)}
+.rel-tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--rel);background:var(--rel-claro);padding:3px 9px;border-radius:20px;white-space:nowrap}
+.rel-tag svg{width:13px;height:13px}
+.acao-chip.rel{--b:var(--rel-claro);--t:var(--rel);--c:var(--rel)}
+.pa.rel{--c:var(--rel);--b:var(--rel-claro);--t:var(--rel)}
+.pa.rel .cic-solo{background:var(--rel);color:#fff}
+.rel-lista{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.rel-lista li{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--tinta-2)}
+.rel-lista li b{color:var(--tinta)}
+.rel-lista .n{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--rel-claro);color:var(--rel);font-weight:800;font-size:12px;display:grid;place-items:center}
 .badge{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;display:inline-block}
 .badge.novo{background:var(--cinza-claro);color:#7A8BA0}
 .badge.andamento{background:var(--azul-claro);color:var(--azul-esc)}
@@ -273,8 +324,8 @@ main{max-width:1360px;margin:0 auto;padding:26px 32px 96px}
 .fundo{position:fixed;inset:0;background:rgba(18,38,63,.45);z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}
 .fundo.on{opacity:1;pointer-events:auto}
 .drawer{position:fixed;top:0;right:0;height:100dvh;width:min(540px,100%);background:var(--bg);z-index:60;transform:translateX(100%);
-  transition:transform .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:var(--sombra-alta)}
-.drawer.on{transform:translateX(0)}
+  transition:transform .25s cubic-bezier(.4,0,.2,1),visibility 0s linear .25s;visibility:hidden;display:flex;flex-direction:column;box-shadow:var(--sombra-alta)}
+.drawer.on{transform:translateX(0);visibility:visible;transition:transform .25s cubic-bezier(.4,0,.2,1)}
 .drawer header{padding:20px 22px 16px;background:var(--surf);border-bottom:1px solid var(--linha);display:flex;gap:14px;align-items:flex-start}
 .drawer header .av-ct{--s:50px}
 .drawer header > div{min-width:0;flex:1}
@@ -521,9 +572,31 @@ textarea{min-height:84px;resize:vertical}
   .marca .titulo{font-size:14px}
   .toolbar{position:static;padding-top:4px}
   .view-toggle button span{display:none}
-  .filtros{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px 2px}
-  .filtros::-webkit-scrollbar{display:none}
-  .filtros-dd{flex-wrap:nowrap}
+  .filtros{flex-direction:column;align-items:stretch;gap:10px}
+  .filtros .sep{display:none}
+  .seg{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .seg button{justify-content:center;padding:9px 8px}
+  .filtros-dd{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .filtros-dd .dd{min-width:0}
+  .filtros-dd .dd-btn{width:100%;justify-content:space-between;min-width:0}
+  .filtros-dd .dd-rot{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .resumo .dir{margin-left:0;width:100%}
+  .resumo .dir .btn{width:100%;justify-content:center}
+  /* tabela vira lista vertical no celular */
+  .tabela-wrap{overflow:visible;background:transparent;border:0;box-shadow:none}
+  .tabela thead{display:none}
+  .tabela,.tabela tbody{display:block;width:100%;min-width:0}
+  .tabela tbody tr:hover td{background:transparent}
+  .tabela tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px 12px;background:var(--surf);border:1px solid var(--linha);
+    border-radius:var(--r);box-shadow:var(--sombra);padding:14px;margin-bottom:12px}
+  .tabela td{display:block;padding:0;border:0;min-width:0;white-space:normal;background:transparent}
+  .tabela td[data-l]::before{content:attr(data-l);display:block;font-size:11px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;color:var(--mudo);margin-bottom:4px}
+  .tabela td.t-cheia{grid-column:1 / -1}
+  .tabela td:first-child{position:static;box-shadow:none}
+  .tabela .t-ct > div{min-width:0}
+  .tabela .t-nome{max-width:none;white-space:normal;font-size:15px}
+  .tabela .t-sub{max-width:none;white-space:normal;flex-wrap:wrap}
+  .tabela .pessoa-am span{overflow:hidden;text-overflow:ellipsis}
   .dd-painel{position:fixed;left:10px;right:10px;top:auto;bottom:10px;max-width:none;min-width:0;padding:12px}
   .dd-topo{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 10px;font-weight:800}
   .dd-topo button{font-size:24px;line-height:1;color:var(--suave)}
@@ -568,6 +641,7 @@ textarea{min-height:84px;resize:vertical}
     </div>
     <p class="erro" id="erro-login"></p>
     <button class="btn btn-cta" type="submit">Entrar</button>
+    <a class="login-guia" href="guia.pdf" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg>Primeira vez? Veja o guia rápido</a>
   </form>
 </section>
 
@@ -581,6 +655,7 @@ textarea{min-height:84px;resize:vertical}
     </div>
     <div class="quem">
       <button type="button" class="sync" id="sync" title="Clique para buscar os dados mais recentes da planilha">Sincronizado</button>
+      <button type="button" class="sair guia-btn" id="btn-guia" title="Guia rápido e links para compartilhar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span>Materiais</span></button>
       <span class="eu" id="eu"></span>
       <button class="sair" id="btn-sair" title="Sair"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Sair</span></button>
     </div>
@@ -632,6 +707,7 @@ textarea{min-height:84px;resize:vertical}
         <span id="resumo-n"></span>
         <button type="button" class="link hidden" id="btn-limpar">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>Limpar filtros</button>
+        <span class="dir"><button type="button" class="btn btn-sec btn-sm hidden" id="btn-exp-leads" data-exportar="leads"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span id="exp-rot-leads">Exportar Excel</span></button></span>
 
       </div>
       <div class="grid" id="grid"></div>
@@ -788,6 +864,18 @@ textarea{min-height:84px;resize:vertical}
   </footer>
 </aside>
 
+<div class="mat-fundo" id="mat-fundo" role="dialog" aria-modal="true" aria-labelledby="mat-tit">
+  <div class="mat">
+    <div class="mat-topo"><h2 id="mat-tit">Materiais</h2><button type="button" id="mat-fechar" aria-label="Fechar">&times;</button></div>
+    <div class="mat-corpo">
+      <a class="mat-guia" href="guia.pdf" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg></span>
+        <div><b>Guia rápido (PDF)</b><span>Como usar o portal, pautas, cases e prints</span></div><span class="vai">&rarr;</span></a>
+      <p class="mat-sub">Links para compartilhar com o lead</p>
+      <ul class="mat-lista" id="mat-lista"></ul>
+    </div>
+  </div>
+</div>
+
 <div class="tip" id="tip" role="tooltip"></div>
 <div class="ok-toast" id="toast" role="status"></div>
 
@@ -878,6 +966,7 @@ const IC = {
   whats:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 1 1 12 20Zm4.4-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.4-.5.2-.4v-.4l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.5 1 2.6c.1.2 1.8 2.8 4.4 3.9 1.7.7 2.3.8 3.1.7.5-.1 1.4-.6 1.6-1.2.2-.6.2-1 .1-1.1l-.6-.2Z"/></svg>',
   linkedin: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.75-1.95 4 0 4.4 2.5 4.4 5.8V21H18v-5.6c0-1.35-.02-3.1-1.9-3.1-1.9 0-2.2 1.48-2.2 3v5.7h-4V9Z"/></svg>',
   presencial: SVG(18, '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/>'),
+  aperto:SVG(22,'<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>'),
   download: SVG(15, '<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>')
 };
 
@@ -987,9 +1076,9 @@ let versaoServidor = 0;
 let DDS = [];
 let cacheAcao = new Map();
 
-const CHAVES = ["status","evento","abordado","grupo","am"];
+const CHAVES = ["status","evento","abordado","grupo","tipo","am"];
 function novoFiltro(){
-  return {q:"", acao:"todos", status:new Set(), evento:new Set(), abordado:new Set(), grupo:new Set(), am:new Set()};
+  return {q:"", acao:"todos", status:new Set(), evento:new Set(), abordado:new Set(), grupo:new Set(), tipo:new Set(), am:new Set()};
 }
 
 const $ = s => document.querySelector(s);
@@ -1242,6 +1331,37 @@ function listaAMs(){
 }
 function baseDaConta(){ return admin() ? DADOS.empresas : DADOS.empresas.filter(e => e.am === conta.am); }
 
+/* ---------- Clientes e relacionamento ----------
+   Conta de relacionamento = cliente atual da Engemon IT ou marcada em verde no farol da Leide.
+   Regra: qualquer contato da empresa com "Cliente" ou "Relacionamento" na coluna Sinais da planilha
+   marca a empresa inteira. Os clientes atuais abaixo entram sempre, mesmo sem marcacao na planilha. */
+/* Clientes atuais + empresas do farol verde da Leide que nao tem o contato marcado na planilha (Alpargatas: o contato marcado nao veio ao evento). */
+const CLIENTES_ENGEMON = /\b(pirelli|dpsp|drogaria sao paulo|drogarias pacheco|yamaha|rede santa catarina|congregacao de santa catarina|patria investimentos|alpargatas)\b/;
+const SINAIS_REL = ["cliente", "relacionamento", "cliente ou relacionamento"];
+let cacheRel = null;
+function chaveEmp(nome){ return norm(nome).replace(/[^a-z0-9]+/g, " ").trim(); }
+function relIds(){
+  if (cacheRel) return cacheRel;
+  const marcadas = new Set();
+  DADOS.empresas.forEach(e => {
+    if (e.contatos.some(c => (c.sinais || []).some(x => SINAIS_REL.indexOf(norm(x).trim()) >= 0))) marcadas.add(chaveEmp(e.nome));
+  });
+  cacheRel = new Set();
+  DADOS.empresas.forEach(e => {
+    const k = chaveEmp(e.nome);
+    if (marcadas.has(k) || CLIENTES_ENGEMON.test(k)) e.contatos.forEach(c => cacheRel.add(c.id));
+  });
+  return cacheRel;
+}
+function rel(ct){ return relIds().has(ct.id); }
+const REL_TXT = "Cliente ou relacionamento";
+function relTag(){ return `<span class="rel-tag" title="${REL_TXT}: alinhe com a Leide antes de qualquer contato">${IC.aperto}Relacionamento</span>`; }
+/* Status exibido: conta de relacionamento sem interacao aparece como "Relacionamento", nao como "A abordar". */
+function statusCt(ct){
+  if (rel(ct) && !abordado(ct.id)) return `<span class="st rel">Relacionamento</span>`;
+  return statusHTML(statusDe(ct.id));
+}
+
 /* ---------- Cadencia e proxima acao ---------- */
 function cadenciaDe(ct){ return (abordagensDe(ct).length || ct.temp === "quente") ? CADENCIAS.quente : CADENCIAS.padrao; }
 function canalPossivel(canal, ct){
@@ -1277,6 +1397,9 @@ function proximaAcao(ct){
   } else if (ST_REUNIAO_MAIS.indexOf(st) >= 0){
     const padrao = {"Reunião agendada":"Realizar a reunião", "Reunião realizada":"Abrir oportunidade no Salesforce"}[st];
     a = {tipo:"manual", titulo: (u && u.proximoPasso) || padrao, curto: (u && u.proximoPasso) || padrao, due: manualDue};
+  } else if (rel(ct)){
+    a = {tipo:"rel", titulo: (u && u.proximoPasso) || "Alinhar com a Leide antes de qualquer contato",
+         curto: (u && u.proximoPasso) || "Relacionamento", due: manualDue};
   } else {
     const pr = progresso(ct);
     if (pr.idx < 0){
@@ -1306,6 +1429,8 @@ function followUp(ct){
 function chipAcao(ct, comPrazo){
   const a = proximaAcao(ct);
   if (a.tipo === "fim") return "";
+  if (a.tipo === "rel" && !abordado(ct.id))
+    return `<span class="acao-chip rel" title="${REL_TXT}: alinhe com a Leide antes de qualquer contato"><span class="cic">${IC.aperto}</span><span>Alinhar com a Leide</span></span>`;
   const x = CANAL[a.canal] || NEUTRO;
   const p = comPrazo !== false && abordado(ct.id) ? prazoTxt(a.due, true) : {txt:"", cls:""};
   return `<span class="acao-chip ${p.cls}" style="${varsCanal(a.canal)}" title="Próxima ação: ${esc(a.titulo)}">
@@ -1319,6 +1444,7 @@ function valoresDe(k, emp, ct){
   if (k === "abordado") return abordagensDe(ct);
   if (k === "grupo") return [String(ct.grupo)];
   if (k === "am") return [emp.am];
+  if (k === "tipo") return [rel(ct) ? "rel" : "prosp"];
   return [];
 }
 function passa(emp, ct, ignorar){
@@ -1326,7 +1452,7 @@ function passa(emp, ct, ignorar){
   if (q && norm(emp.nome + " " + ct.nome + " " + (ct.cargo || "") + " " + (ct.email || "")).indexOf(q) < 0) return false;
   if (ignorar !== "acao" && filtro.acao !== "todos"){
     const ab = abordado(ct.id);
-    if (filtro.acao === "abordar" && ab) return false;
+    if (filtro.acao === "abordar" && (ab || rel(ct))) return false;
     if (filtro.acao === "abordados" && !ab) return false;
     if (filtro.acao === "followup" && !followUp(ct)) return false;
   }
@@ -1348,7 +1474,7 @@ function calcularFacetas(base){
     });
     if (passa(emp, ct, "acao")){
       f.acao.todos++;
-      if (abordado(ct.id)) f.acao.abordados++; else f.acao.abordar++;
+      if (abordado(ct.id)) f.acao.abordados++; else if (!rel(ct)) f.acao.abordar++;
       if (followUp(ct)) f.acao.followup++;
     }
   }));
@@ -1427,7 +1553,10 @@ function montarFiltros(){
     {key:"status",   label:"Status",       opcoes:opcoesStatus},
     {key:"evento",   label:"Evento",       opcoes:opcoesEvento},
     {key:"abordado", label:"Abordado por", opcoes:() => ABORDAGENS.map(a => ({v:a.v, label:a.opcao, html:`<span class="ab">${IC.fala}${esc(a.chip)}</span><span>${esc(a.sub)}</span>`}))},
-    {key:"grupo",    label:"Prioridade",   opcoes:() => ["1","2","3","4"].map(g => ({v:g, label:GRUPOS[g], html:`<span class="tag g${g}">${GRUPOS_CURTO[g]}</span><span>${GRUPOS[g]}</span>`}))}
+    {key:"grupo",    label:"Prioridade",   opcoes:() => ["1","2","3","4"].map(g => ({v:g, label:GRUPOS[g], html:`<span class="tag g${g}">${GRUPOS_CURTO[g]}</span><span>${GRUPOS[g]}</span>`}))},
+    {key:"tipo",     label:"Tipo de conta", opcoes:() => [
+      {v:"prosp", label:"Prospecção", html:`<span class="dot" style="--c:#009FDF"></span><span>Prospecção</span>`},
+      {v:"rel", label:REL_TXT, html:`<span class="rel-tag">${IC.aperto}Relacionamento</span>`}]}
   ];
   if (admin()) defs.push({key:"am", label:"Account", opcoes:opcoesAM});
   defs.forEach(d => criarDD(host, Object.assign({
@@ -1458,6 +1587,7 @@ $$(".view-toggle button").forEach(b => b.onclick = () => { modoView = b.dataset.
 function render(){
   if (!conta) return;
   cacheAcao = new Map();
+  cacheRel = null;
   if (aba === "gestao" && admin()) renderGestao();
   else renderLeads();
 }
@@ -1486,7 +1616,7 @@ function renderLeads(){
   base.forEach(emp => emp.contatos.forEach(ct => todos.push({emp, ct})));
   const nAb = todos.filter(x => abordado(x.ct.id)).length;
   const nFu = todos.filter(x => followUp(x.ct)).length;
-  const nP12 = todos.filter(x => !abordado(x.ct.id) && Number(x.ct.grupo) <= 2).length;
+  const nP12 = todos.filter(x => !abordado(x.ct.id) && !rel(x.ct) && Number(x.ct.grupo) <= 2).length;
   const nReun = todos.filter(x => ST_REUNIAO_MAIS.indexOf(statusDe(x.ct.id)) >= 0).length;
   const nome = APELIDO[conta.nome] || conta.nome.split(" ")[0];
   const quem = admin() ? "A equipe tem" : "Você tem";
@@ -1515,6 +1645,8 @@ function renderLeads(){
   const nCt = visiveis.reduce((s, e) => s + e.contatos.length, 0);
   $("#resumo-n").innerHTML = `<b>${plural(nCt, "contato", "contatos")}</b> em ${plural(visiveis.length, "empresa", "empresas")}`;
   $("#btn-limpar").classList.toggle("hidden", !filtroAtivo());
+  $("#btn-exp-leads").classList.toggle("hidden", !(admin() && modoView === "tabela" && nCt > 0));
+  $("#exp-rot-leads").textContent = `Exportar Excel (${plural(nCt, "contato", "contatos")})`;
 
   const cards = modoView === "cards";
   $("#grid").classList.toggle("hidden", !cards || !nCt);
@@ -1561,7 +1693,7 @@ function cardHTML(emp){
       <span class="emp-ic">${IC.empresa}</span>
       <div class="card-tit">
         <h3>${esc(emp.nome)}</h3>
-        <div class="card-sub">${eventosHTML(emp.eventos)}${metas.length ? `<span class="meta">${metas.join(" · ")}</span>` : ""}</div>
+        <div class="card-sub">${emp.contatos.some(rel) ? relTag() : ""}${eventosHTML(emp.eventos)}${metas.length ? `<span class="meta">${metas.join(" · ")}</span>` : ""}</div>
       </div>
       <span class="tag g${esc(emp.grupo)}">${GRUPOS[emp.grupo] || ""}</span>
     </div>
@@ -1574,14 +1706,13 @@ function cardHTML(emp){
 }
 
 function contatoCardHTML(emp, ct){
-  const st = statusDe(ct.id);
   return `<li><button class="contato" data-emp="${esc(emp.id)}" data-id="${esc(ct.id)}">
     ${avatarContato(ct)}
     <span class="info">
       <span class="n">${esc(ct.nome)}</span>
       <span class="c">${abordagensDe(ct).map(chipAbordagem).join("")}<span class="txt">${esc(ct.cargo || ct.nivel)}</span></span>
     </span>
-    <span class="dir">${chipAcao(ct)}${statusHTML(st)}</span>
+    <span class="dir">${chipAcao(ct)}${statusCt(ct)}</span>
     <span class="vai">${IC.direita}</span>
   </button></li>`;
 }
@@ -1626,15 +1757,15 @@ function renderTabela(visiveis){
     const st = statusDe(ct.id);
     const u = entradasDe(ct.id)[0];
     return `<tr data-emp="${esc(emp.id)}" data-id="${esc(ct.id)}" tabindex="0">
-      <td><div class="t-ct">${avatarContato(ct, 34)}<div><div class="t-nome">${esc(ct.nome)}</div>
+      <td class="t-cheia"><div class="t-ct">${avatarContato(ct, 34)}<div><div class="t-nome">${esc(ct.nome)}</div>
         <div class="t-sub">${abordagensDe(ct).map(chipAbordagem).join("")}<span>${esc(ct.cargo || ct.nivel)}</span></div></div></div></td>
-      <td><div class="t-emp">${IC.empresaP}<span>${esc(emp.nome)}</span></div></td>
-      <td>${eventosHTML(eventosDe(emp, ct)) || '<span class="t-vazio">-</span>'}</td>
-      <td><span class="tag g${esc(ct.grupo)}" title="${esc(GRUPOS[ct.grupo] || "")}">${GRUPOS_CURTO[ct.grupo] || ""}</span></td>
-      ${admin() ? `<td>${pessoaAm(emp.am, 26, "t")}</td>` : ""}
-      <td>${statusHTML(st)}</td>
-      <td>${u ? `<div class="t-data" title="${esc(fmtDataHora(u.criadoEm))}">${esc(fmtCurto(u.criadoEm))}</div><div class="t-sub">${esc(u.contaNome || "")}</div>` : '<span class="t-vazio">Nunca</span>'}</td>
-      <td>${chipAcao(ct) || '<span class="t-vazio">-</span>'}</td>
+      <td data-l="Empresa"><div class="t-emp">${IC.empresaP}<span>${esc(emp.nome)}</span></div></td>
+      <td data-l="Evento">${eventosHTML(eventosDe(emp, ct)) || '<span class="t-vazio">-</span>'}</td>
+      <td data-l="Prioridade"><span class="tag g${esc(ct.grupo)}" title="${esc(GRUPOS[ct.grupo] || "")}">${GRUPOS_CURTO[ct.grupo] || ""}</span></td>
+      ${admin() ? `<td data-l="Account">${pessoaAm(emp.am, 26, "t")}</td>` : ""}
+      <td data-l="Status">${statusCt(ct)}</td>
+      <td data-l="Última interação">${u ? `<div class="t-data" title="${esc(fmtDataHora(u.criadoEm))}">${esc(fmtCurto(u.criadoEm))}</div><div class="t-sub">${esc(u.contaNome || "")}</div>` : '<span class="t-vazio">Nunca</span>'}</td>
+      <td class="t-cheia" data-l="Próxima ação">${chipAcao(ct) || '<span class="t-vazio">-</span>'}</td>
     </tr>`;
   }).join("");
   $("#tabela").innerHTML = `<thead><tr>${th}</tr></thead><tbody>${tr}</tbody>`;
@@ -1682,7 +1813,7 @@ function metricas(lista){
     if (chegouA(ct.id, ST_REUNIAO_MAIS)) m.reunioes++;
     if (chegouA(ct.id, ST_OPORT)) m.oport++;
     if (followUp(ct)) m.followups++;
-    if (!l.length && Number(ct.grupo) <= 2) m.p12++;
+    if (!l.length && !rel(ct) && Number(ct.grupo) <= 2) m.p12++;
     m.etapas[etapaDe(st)]++;
     if (l[0] && String(l[0].criadoEm || "") > m.ultima) m.ultima = String(l[0].criadoEm);
   });
@@ -1953,7 +2084,7 @@ function renderFila(lista){
   const cont = {};
   let semCanal = 0, primeiros = 0;
   lista.forEach(({ct}) => {
-    if (!abordado(ct.id)){ primeiros++; return; }
+    if (!abordado(ct.id)){ if (!rel(ct)) primeiros++; return; }
     const a = proximaAcao(ct);
     if (a.tipo === "fim" || !a.due || a.due > hoje) return;
     if (a.canal) cont[a.canal] = (cont[a.canal] || 0) + 1; else semCanal++;
@@ -2077,7 +2208,7 @@ function renderDrawer(manterScroll){
   $("#d-nome").textContent = ct.nome;
   $("#d-cargo").textContent = [ct.cargo, emp.nome].filter(Boolean).join(" · ");
   $("#d-chips").innerHTML = [eventosHTML(eventosDe(emp, ct)), abordagensDe(ct).map(chipAbordagem).join(""),
-    `<span class="tag g${esc(ct.grupo)}">${GRUPOS[ct.grupo] || ""}</span>`, statusHTML(statusDe(ct.id))].join("");
+    `<span class="tag g${esc(ct.grupo)}">${GRUPOS[ct.grupo] || ""}</span>`, rel(ct) ? relTag() : "", rel(ct) && !abordado(ct.id) ? "" : statusHTML(statusDe(ct.id))].join("");
 
   const li = linkedinDe(ct);
   $("#d-dados").innerHTML = [
@@ -2092,6 +2223,8 @@ function renderDrawer(manterScroll){
   $("#d-abridor").textContent = ct.abridor;
 
   renderProximaAcao();
+  $("#d-sec-cad").classList.toggle("hidden", rel(ct));
+  $("#d-abridor").closest(".bloco").classList.toggle("hidden", rel(ct));
   renderCadencia();
   renderResponsavel();
   renderTimeline(entradasDe(ct.id));
@@ -2113,8 +2246,18 @@ function renderProximaAcao(){
       <div style="color:var(--suave);font-size:13.5px;font-weight:600">${esc(a.sub || "")}</div></div></div></div>`;
     return;
   }
+  if (a.tipo === "rel" && !abordado(ct.id)){
+    box.innerHTML = `<div class="pa rel"><div class="pa-topo">${`<span class="cic-solo">${IC.aperto}</span>`}<div><h3>Conta de relacionamento</h3>
+      <p>Cliente atual ou marcada em verde no farol da Leide</p></div></div>
+      <div class="pa-corpo"><p class="pa-dica">A diretoria já conversa com a <b>${esc(emp.nome)}</b>. Este lead <b>não entra na cadência de prospecção</b>.</p>
+      <ul class="rel-lista">
+        <li><span class="n">1</span><span><b>Alinhe com a Leide</b> antes de qualquer contato.</span></li>
+        <li><span class="n">2</span><span>Se combinarem uma ação, registre abaixo com <b>próximo passo e data</b>.</span></li>
+      </ul></div></div>`;
+    return;
+  }
   const p = abordado(ct.id) ? prazoTxt(a.due) : {txt:"primeiro contato", cls:"hoje"};
-  if (a.tipo === "manual"){
+  if (a.tipo === "manual" || a.tipo === "rel"){
     box.innerHTML = `<div class="pa" style="${varsCanal("")}"><div class="pa-topo">${cic("", 42)}<div><h3>${esc(a.titulo)}</h3>
       <p class="${p.cls}">${p.txt ? esc(p.txt.charAt(0).toUpperCase() + p.txt.slice(1)) : "Sem data definida"}</p></div></div>
       <div class="pa-corpo"><p class="pa-dica">Registre abaixo como foi e defina o próximo passo com data.</p></div></div>`;
@@ -2395,8 +2538,37 @@ function fechar(){
 }
 $("#btn-fechar").onclick = fechar;
 $("#fundo").onclick = fechar;
+/* ---------- Materiais: guia e links para compartilhar ---------- */
+const IC_IG = SVG(17, '<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><path d="M17.5 6.5v.01"/>');
+const MATERIAIS = [
+  {rede:"Material rico", titulo:"C.E.X.: o que o seu dashboard não mostra", url:"https://lp.engemonit.com.br/cex", cor:"#E57623", ic:() => IC.doc},
+  {rede:"Instagram", titulo:"Peso da TI e Destaque no Showcase", url:"https://www.instagram.com/p/Ddolx6BuSKM/", cor:"#C13584", ic:() => IC_IG},
+  {rede:"Instagram", titulo:"Onde está o peso da operação de TI?", url:"https://www.instagram.com/p/DdbwCRrIF7E/", cor:"#C13584", ic:() => IC_IG},
+  {rede:"LinkedIn", titulo:"Fabio e Leide no 4CIO Private Sectors", url:"https://lnkd.in/p/ds9riFEv", cor:"#0A66C2", ic:() => IC.linkedin},
+  {rede:"Instagram", titulo:"Time Engemon no HDI Experience", url:"https://www.instagram.com/p/Ddb_S1NoLBf/", cor:"#C13584", ic:() => IC_IG},
+  {rede:"LinkedIn", titulo:"Nossa diretoria no HDI Experience", url:"https://www.linkedin.com/feed/update/urn:li:activity:7505338725569245184/", cor:"#0A66C2", ic:() => IC.linkedin}
+];
+function abrirMateriais(){
+  $("#mat-lista").innerHTML = MATERIAIS.map((m, i) => `<li><span class="rede" style="--c:${m.cor}">${m.ic()}</span>
+    <div class="tx"><b>${esc(m.titulo)}</b><small>${esc(m.rede)} · ${esc(m.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</small></div>
+    <div class="ac"><a href="${esc(m.url)}" target="_blank" rel="noopener">Abrir</a><button type="button" data-mat="${i}">${IC.copiar}Copiar link</button></div></li>`).join("");
+  $("#mat-fundo").classList.add("on");
+}
+function fecharMateriais(){ $("#mat-fundo").classList.remove("on"); }
+$("#btn-guia").onclick = abrirMateriais;
+$("#mat-fechar").onclick = fecharMateriais;
+$("#mat-fundo").addEventListener("click", async e => {
+  if (e.target === e.currentTarget){ fecharMateriais(); return; }
+  const b = e.target.closest("[data-mat]");
+  if (!b) return;
+  const ok = await copiar(MATERIAIS[Number(b.dataset.mat)].url);
+  toast(ok ? "Link copiado" : "Não consegui copiar. Use o botão Abrir.");
+  if (ok){ b.classList.add("ok"); b.innerHTML = IC.check + "Copiado"; setTimeout(() => { b.classList.remove("ok"); b.innerHTML = IC.copiar + "Copiar link"; }, 1800); }
+});
+
 document.addEventListener("keydown", e => {
   if (e.key !== "Escape") return;
+  if ($("#mat-fundo").classList.contains("on")){ fecharMateriais(); return; }
   if (document.querySelector(".dd.aberto")){ DDS.forEach(d => d.fechar()); return; }
   fechar();
 });
@@ -2463,15 +2635,31 @@ function carregarXLSX(){
   });
   return urls.reduce((p, u) => p.catch(() => tenta(u)), Promise.reject());
 }
+/* Contatos visiveis na aba Leads agora (busca, atalho e filtros aplicados). */
+function contatosLeadsVisiveis(){
+  const out = [];
+  baseDaConta().forEach(emp => emp.contatos.forEach(ct => { if (passa(emp, ct)) out.push({emp, ct}); }));
+  return out;
+}
+function descFiltrosLeads(){
+  const seg = {todos:"Todos", abordar:"A abordar", abordados:"Abordados", followup:"Follow-up"}[filtro.acao];
+  const partes = [["Atalho", seg]];
+  if (filtro.q.trim()) partes.push(["Busca", filtro.q.trim()]);
+  const rot = {status:"Status", evento:"Evento", abordado:"Abordado por", grupo:"Prioridade", tipo:"Tipo de conta", am:"Account"};
+  const nomeV = (k, v) => k === "grupo" ? GRUPOS[v] : k === "tipo" ? (v === "rel" ? REL_TXT : "Prospecção") : v;
+  CHAVES.forEach(k => { if (filtro[k].size) partes.push([rot[k], Array.from(filtro[k]).map(v => nomeV(k, v)).join(", ")]); });
+  return partes;
+}
 function dataHoraExcel(iso){ const d = new Date(iso); return isNaN(d) ? "" : d; }
-function montarPlanilhas(){
+function montarPlanilhas(origem){
   cacheAcao = new Map();
   const cont = [["Account","Empresa","Faturamento","Colaboradores","Prioridade","Eventos","Contato","Cargo","Nível de decisão",
     "E-mail","Celular","LinkedIn","Abordado por","Temperatura","Status","Interações","Última interação","Última interação por",
-    "Próxima ação","Prazo da próxima ação","Próximo passo registrado","Gancho","Origem do gancho","Sugestão de abertura"]];
+    "Próxima ação","Prazo da próxima ação","Próximo passo registrado","Relacionamento","Gancho","Origem do gancho","Sugestão de abertura"]];
   const ints = [["Data e hora","Account do lead","Registrado por","Empresa","Contato","Status","Canais","O que foi conversado",
     "Próximo passo","Data do próximo passo","Oportunidade Salesforce","Editado em","Editado por"]];
-  const lista = contatosGestao();   /* respeita os filtros de Account e Evento da aba Gestão */
+  /* Gestao: filtros de Account e Evento. Leads: exatamente o que esta na tela. */
+  const lista = origem === "leads" ? contatosLeadsVisiveis() : contatosGestao();
   lista.forEach(({emp, ct}) => {
     const l = entradasDe(ct.id);
     const u = l[0];
@@ -2480,7 +2668,7 @@ function montarPlanilhas(){
       ct.nome, ct.cargo || "", ct.nivel || "", ct.email || "", ct.celular || "", linkedinDe(ct),
       abordagensDe(ct).map(v => ABORDAGENS.find(x => x.v === v).opcao).join(", "), TEMP[ct.temp] || "", statusDe(ct.id), l.length,
       u ? dataHoraExcel(u.criadoEm) : "", u ? (u.contaNome || "") : "",
-      a.tipo === "fim" ? "" : a.titulo, a.due ? fmtData(a.due) : "", u ? (u.proximoPasso || "") : "",
+      a.tipo === "fim" ? "" : a.titulo, a.due ? fmtData(a.due) : "", u ? (u.proximoPasso || "") : "", rel(ct) ? "Sim" : "",
       ct.gancho || "", ct.origem || "", ct.abridor || ""]);
     l.slice().reverse().forEach(e => ints.push([dataHoraExcel(e.criadoEm), emp.am, e.contaNome || e.conta || "", emp.nome, ct.nome,
       normStatus(e.status), (e.canais || []).join(", "), e.obs || "", e.proximoPasso || "", e.dataProximo ? fmtData(e.dataProximo) : "",
@@ -2495,17 +2683,20 @@ function montarPlanilhas(){
   });
   const desc = s => s.size ? Array.from(s).join(", ") : "Todos";
   const sobre = [["Portal de Leads | Eventos 2026 | Engemon IT"], [""], ["Exportado por", conta.nome], ["Exportado em", fmtDataHora(new Date().toISOString())],
-    ["Filtro de account", desc(gFiltro.am)], ["Filtro de evento", desc(gFiltro.evento)],
+    ["Origem", origem === "leads" ? "Aba Leads, visão em tabela" : "Aba Gestão"]].concat(
+    origem === "leads" ? descFiltrosLeads() : [["Filtro de account", desc(gFiltro.am)], ["Filtro de evento", desc(gFiltro.evento)]]).concat([
     ["Contatos", cont.length - 1], ["Interações", ints.length - 1], [""],
     ["Atenção", "Este arquivo contém dados pessoais (nome, e-mail, celular). Uso interno da Engemon IT. Não compartilhe fora da empresa."],
-    ["", "É uma fotografia do momento da exportação: alterações feitas aqui não voltam para o portal."]];
+    ["", "É uma fotografia do momento da exportação: alterações feitas aqui não voltam para o portal."]]);
   return {cont, ints, res, sobre};
 }
-async function exportarExcel(){
+async function exportarExcel(origem){
   if (!admin()) return;
   toast("Gerando arquivo...");
-  const p = montarPlanilhas();
-  const sufixo = gFiltro.am.size === 1 ? "_" + Array.from(gFiltro.am)[0].replace(/\s+/g, "_") : (gFiltro.am.size || gFiltro.evento.size ? "_filtrado" : "");
+  const p = montarPlanilhas(origem);
+  const sufixo = origem === "leads"
+    ? (filtro.am.size === 1 ? "_" + Array.from(filtro.am)[0].replace(/\s+/g, "_") : (filtroAtivo() ? "_filtrado" : ""))
+    : (gFiltro.am.size === 1 ? "_" + Array.from(gFiltro.am)[0].replace(/\s+/g, "_") : (gFiltro.am.size || gFiltro.evento.size ? "_filtrado" : ""));
   const nomeArq = "Portal_Leads_Eventos_2026" + sufixo + "_" + hojeSP();
   try {
     const X = await carregarXLSX();
@@ -2517,7 +2708,7 @@ async function exportarExcel(){
       if (fmt) fmt(ws);
       X.utils.book_append_sheet(wb, ws, nome);
     };
-    addAba(p.cont, [18,30,14,14,14,26,28,30,14,32,18,34,26,12,18,11,18,18,30,14,30,60,30,60], "Contatos");
+    addAba(p.cont, [18,30,14,14,14,26,28,30,14,32,18,34,26,12,18,11,18,18,30,14,30,14,60,30,60], "Contatos");
     addAba(p.ints, [18,18,18,30,28,24,22,60,30,16,24,18,18], "Interações");
     addAba(p.res, [22,8,11,11,18,26,24,18,17], "Resumo por account", ws => {
       for (let r = 1; r < p.res.length; r++) [3, 6].forEach(k => { const c = ws[X.utils.encode_cell({r, c:k})]; if (c) c.z = "0%"; });
@@ -2538,7 +2729,7 @@ async function exportarExcel(){
     toast("Excel indisponível agora. Exportei em CSV (abre no Excel).");
   }
 }
-$$("[data-exportar]").forEach(b => b.onclick = exportarExcel);
+$$("[data-exportar]").forEach(b => b.onclick = () => exportarExcel(b.dataset.exportar === "leads" ? "leads" : "gestao"));
 
 /* =====================================================================
    13. START
