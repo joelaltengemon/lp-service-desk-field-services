@@ -83,38 +83,6 @@ svg{flex:0 0 auto}
 a.sair{text-decoration:none}
 .guia-btn{background:#fff;color:var(--azul-esc,#0079AE);border-color:#fff}
 .guia-btn:hover{background:#E8F6FD}
-.mat-fundo{position:fixed;inset:0;background:rgba(10,30,50,.45);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}
-.mat-fundo.on{display:flex}
-.mat{background:var(--surf);border-radius:20px;width:min(560px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;overflow-x:hidden;box-shadow:var(--sombra-alta)}
-.mat-topo{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 6px}
-.mat-topo h2{margin:0;font-size:19px;font-weight:800;letter-spacing:-.3px}
-.mat-topo button{font-size:26px;line-height:1;color:var(--suave);padding:2px 6px}
-.mat-corpo{padding:8px 22px 22px}
-.mat-guia{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:var(--azul-claro);text-decoration:none;color:var(--tinta);margin-bottom:18px}
-.mat-guia .ic{width:42px;height:42px;border-radius:12px;background:var(--azul);color:#fff;display:grid;place-items:center;flex:0 0 auto}
-.mat-guia b{display:block;font-size:15px}
-.mat-guia span{font-size:13px;color:var(--suave);font-weight:600}
-.mat-guia .vai{margin-left:auto;color:var(--azul-esc)}
-.mat-sub{font-size:11.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--mudo);margin:0 0 8px}
-.mat-lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.mat-lista li{display:flex;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--linha);border-radius:12px}
-.mat-lista .rede{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:#fff;background:var(--c);flex:0 0 auto}
-.mat-lista .rede svg{width:17px;height:17px}
-.mat-lista .tx{flex:1;min-width:0}
-.mat-lista .tx b{display:block;font-size:14px;line-height:1.3}
-.mat-lista .tx small{display:block;font-size:12px;color:var(--suave);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mat-lista .ac{display:flex;gap:6px;flex:0 0 auto}
-.mat-lista .ac a,.mat-lista .ac button{font-size:12.5px;font-weight:700;padding:7px 10px;border-radius:9px;border:1.5px solid var(--linha);color:var(--tinta);background:var(--surf);display:inline-flex;align-items:center;gap:5px;text-decoration:none}
-.mat-lista .ac button{background:var(--azul);border-color:var(--azul);color:#fff}
-.mat-lista .ac button.ok{background:var(--verde);border-color:var(--verde)}
-@media(max-width:760px){
-  .mat-fundo{align-items:flex-end;padding:0}
-  .mat{width:100%;border-radius:20px 20px 0 0;max-height:88dvh}
-  .mat-lista li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px 12px}
-  .mat-lista .ac{grid-column:1 / -1}
-  .mat-lista .tx small{white-space:normal;word-break:break-all}
-  .mat-lista .ac a,.mat-lista .ac button{flex:1;justify-content:center;padding:9px 10px}
-}
 .login-guia{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:13px;font-weight:700;color:#0079AE;text-decoration:none;justify-content:center;width:100%}
 .login-guia:hover{text-decoration:underline}
 .sync{font-size:12px;font-weight:700;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.18);display:inline-flex;align-items:center;gap:6px;color:#fff;cursor:pointer}
@@ -641,7 +609,7 @@ textarea{min-height:84px;resize:vertical}
     </div>
     <p class="erro" id="erro-login"></p>
     <button class="btn btn-cta" type="submit">Entrar</button>
-    <a class="login-guia" href="guia.pdf" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg>Primeira vez? Veja o guia rápido</a>
+    <a class="login-guia" href="/portal-leads/guia.pdf" download="Guia_Portal_de_Leads_Engemon_IT.pdf"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg>Primeira vez? Veja o guia rápido</a>
   </form>
 </section>
 
@@ -655,7 +623,7 @@ textarea{min-height:84px;resize:vertical}
     </div>
     <div class="quem">
       <button type="button" class="sync" id="sync" title="Clique para buscar os dados mais recentes da planilha">Sincronizado</button>
-      <button type="button" class="sair guia-btn" id="btn-guia" title="Guia rápido e links para compartilhar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span>Materiais</span></button>
+      <a class="sair guia-btn" id="btn-guia" href="/portal-leads/guia.pdf" download="Guia_Portal_de_Leads_Engemon_IT.pdf" title="Baixar o guia rápido e materiais (PDF)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span>Guia e Materiais</span></a>
       <span class="eu" id="eu"></span>
       <button class="sair" id="btn-sair" title="Sair"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Sair</span></button>
     </div>
@@ -863,18 +831,6 @@ textarea{min-height:84px;resize:vertical}
       Salvar interação</button>
   </footer>
 </aside>
-
-<div class="mat-fundo" id="mat-fundo" role="dialog" aria-modal="true" aria-labelledby="mat-tit">
-  <div class="mat">
-    <div class="mat-topo"><h2 id="mat-tit">Materiais</h2><button type="button" id="mat-fechar" aria-label="Fechar">&times;</button></div>
-    <div class="mat-corpo">
-      <a class="mat-guia" href="guia.pdf" target="_blank" rel="noopener"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2Z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg></span>
-        <div><b>Guia rápido (PDF)</b><span>Como usar o portal, pautas, cases e prints</span></div><span class="vai">&rarr;</span></a>
-      <p class="mat-sub">Links para compartilhar com o lead</p>
-      <ul class="mat-lista" id="mat-lista"></ul>
-    </div>
-  </div>
-</div>
 
 <div class="tip" id="tip" role="tooltip"></div>
 <div class="ok-toast" id="toast" role="status"></div>
@@ -2538,37 +2494,8 @@ function fechar(){
 }
 $("#btn-fechar").onclick = fechar;
 $("#fundo").onclick = fechar;
-/* ---------- Materiais: guia e links para compartilhar ---------- */
-const IC_IG = SVG(17, '<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.2"/><path d="M17.5 6.5v.01"/>');
-const MATERIAIS = [
-  {rede:"Material rico", titulo:"C.E.X.: o que o seu dashboard não mostra", url:"https://lp.engemonit.com.br/cex", cor:"#E57623", ic:() => IC.doc},
-  {rede:"Instagram", titulo:"Peso da TI e Destaque no Showcase", url:"https://www.instagram.com/p/Ddolx6BuSKM/", cor:"#C13584", ic:() => IC_IG},
-  {rede:"Instagram", titulo:"Onde está o peso da operação de TI?", url:"https://www.instagram.com/p/DdbwCRrIF7E/", cor:"#C13584", ic:() => IC_IG},
-  {rede:"LinkedIn", titulo:"Fabio e Leide no 4CIO Private Sectors", url:"https://lnkd.in/p/ds9riFEv", cor:"#0A66C2", ic:() => IC.linkedin},
-  {rede:"Instagram", titulo:"Time Engemon no HDI Experience", url:"https://www.instagram.com/p/Ddb_S1NoLBf/", cor:"#C13584", ic:() => IC_IG},
-  {rede:"LinkedIn", titulo:"Nossa diretoria no HDI Experience", url:"https://www.linkedin.com/feed/update/urn:li:activity:7505338725569245184/", cor:"#0A66C2", ic:() => IC.linkedin}
-];
-function abrirMateriais(){
-  $("#mat-lista").innerHTML = MATERIAIS.map((m, i) => `<li><span class="rede" style="--c:${m.cor}">${m.ic()}</span>
-    <div class="tx"><b>${esc(m.titulo)}</b><small>${esc(m.rede)} · ${esc(m.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</small></div>
-    <div class="ac"><a href="${esc(m.url)}" target="_blank" rel="noopener">Abrir</a><button type="button" data-mat="${i}">${IC.copiar}Copiar link</button></div></li>`).join("");
-  $("#mat-fundo").classList.add("on");
-}
-function fecharMateriais(){ $("#mat-fundo").classList.remove("on"); }
-$("#btn-guia").onclick = abrirMateriais;
-$("#mat-fechar").onclick = fecharMateriais;
-$("#mat-fundo").addEventListener("click", async e => {
-  if (e.target === e.currentTarget){ fecharMateriais(); return; }
-  const b = e.target.closest("[data-mat]");
-  if (!b) return;
-  const ok = await copiar(MATERIAIS[Number(b.dataset.mat)].url);
-  toast(ok ? "Link copiado" : "Não consegui copiar. Use o botão Abrir.");
-  if (ok){ b.classList.add("ok"); b.innerHTML = IC.check + "Copiado"; setTimeout(() => { b.classList.remove("ok"); b.innerHTML = IC.copiar + "Copiar link"; }, 1800); }
-});
-
 document.addEventListener("keydown", e => {
   if (e.key !== "Escape") return;
-  if ($("#mat-fundo").classList.contains("on")){ fecharMateriais(); return; }
   if (document.querySelector(".dd.aberto")){ DDS.forEach(d => d.fechar()); return; }
   fechar();
 });
