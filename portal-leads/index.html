@@ -841,7 +841,10 @@ textarea{min-height:84px;resize:vertical}
    ===================================================================== */
 
 /* URL do app da web do Apps Script. Vazia = portal grava so no navegador. */
-const API_URL = "https://script.google.com/macros/s/AKfycbx813TFXBUlfR7QVT5EOp-Fx0k_sSPC4gMR7afWJDM1qAUkGE7YkWQFpGiyg7xjOTIN/exec";
+/* A partir daqui o portal fala com a ponte hospedada no Vercel (mesmo dominio do site),
+   nao mais direto com script.google.com. Ver /api/portal-leads-sync.js: e ele quem
+   conversa com o Apps Script a partir do servidor, contornando bloqueios de rede local. */
+const API_URL = "/api/portal-leads-sync";
 
 /* Contas com acesso. perfil "admin" enxerga todos os accounts, a aba Gestão, a troca de account e a exportação. */
 const CONTAS = [
