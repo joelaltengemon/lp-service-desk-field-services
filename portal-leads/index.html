@@ -1208,6 +1208,21 @@ function marcarSync(txt, erro){
   el.classList.toggle("erro-sync", !!erro);
 }
 
+/* Toda chamada de rede passa por aqui: um fetch sem timeout pode ficar pendurado
+   para sempre se a conexao travar no meio do caminho (proxy de wifi de evento, por
+   exemplo), e isso e o que deixava o selo preso em "Sincronizando" mesmo clicando
+   de novo. O AbortController garante que, no pior caso, a chamada desiste sozinha. */
+const TIMEOUT_REDE_MS = 15000;
+async function fetchComTimeout(url, opcoes){
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), TIMEOUT_REDE_MS);
+  try {
+    return await fetch(url, Object.assign({}, opcoes, {signal: ctrl.signal}));
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 let sincronizando = false;
 async function sincronizar(){
   if (!conta) return;
@@ -1219,7 +1234,7 @@ async function sincronizar(){
     await enviarFila();
     const alvo = admin() ? "todos" : conta.email;
     const url = API_URL + "?acao=registros&conta=" + encodeURIComponent(alvo) + "&senha=" + encodeURIComponent(conta.senha);
-    const r = await fetch(url);
+    const r = await fetchComTimeout(url);
     const j = await r.json();
     if (j && j.ok && j.registros){
       versaoServidor = Number(j.versao) || 1;
@@ -1231,7 +1246,11 @@ async function sincronizar(){
       if (atual) reabrirAtual();
       marcarSync("Sincronizado");
     } else marcarSync("Modo local");
-  } catch(e){ marcarSync("Offline, salvo no navegador", true); }
+  } catch(e){
+    const foiTimeout = e && e.name === "AbortError";
+    marcarSync(foiTimeout ? "Rede lenta, tentando de novo" : "Offline, salvo no navegador", true);
+    if (foiTimeout) setTimeout(() => { if (conta && !document.hidden) sincronizar(); }, 5000);
+  }
   sincronizando = false;
 }
 
@@ -1243,7 +1262,7 @@ async function enviarFila(){
     const item = fila[0];
     let r;
     try {
-      r = await fetch(API_URL, {
+      r = await fetchComTimeout(API_URL, {
         method:"POST",
         headers:{"Content-Type":"text/plain;charset=utf-8"},
         body: JSON.stringify(Object.assign({}, item, {acao:item.acao || "salvar", conta:conta.email, senha:conta.senha}))
