@@ -1223,7 +1223,11 @@ function marcarSync(txt, erro){
    para sempre se a conexao travar no meio do caminho (proxy de wifi de evento, por
    exemplo), e isso e o que deixava o selo preso em "Sincronizando" mesmo clicando
    de novo. O AbortController garante que, no pior caso, a chamada desiste sozinha. */
-const TIMEOUT_REDE_MS = 15000;
+/* O Apps Script varia bastante de velocidade (visto em producao: de ~4s a ~17s pra
+   mesma chamada). 15s desistia cedo demais e gerava "Rede lenta" em respostas que
+   dariam certo. 30s da folga sem deixar quem usa esperando pra sempre num caso real
+   de rede ruim. */
+const TIMEOUT_REDE_MS = 30000;
 async function fetchComTimeout(url, opcoes){
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), TIMEOUT_REDE_MS);
