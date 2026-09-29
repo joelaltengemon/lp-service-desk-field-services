@@ -770,8 +770,6 @@ textarea{min-height:84px;resize:vertical}
     <button class="fechar" id="btn-fechar" aria-label="Fechar">&times;</button>
   </header>
   <div class="corpo" id="d-corpo">
-    <div class="sec" id="d-sec-acao"><p class="sec-tit">O que fazer agora</p><div id="d-acao"></div></div>
-
     <div class="sec"><p class="sec-tit">Contato</p><div class="dados" id="d-dados"></div><div class="sinais" id="d-sinais"></div></div>
 
     <div class="sec">
@@ -789,6 +787,8 @@ textarea{min-height:84px;resize:vertical}
     </div>
 
     <div class="sec" id="d-sec-cad"><p class="sec-tit">Cadência de abordagem</p><p class="cad-nome" id="d-cad-nome"></p><div class="caixa"><ul class="passos" id="d-passos"></ul></div></div>
+
+    <div class="sec" id="d-sec-acao"><p class="sec-tit">O que fazer agora</p><div id="d-acao"></div></div>
 
     <div class="sec hidden" id="d-sec-resp"><p class="sec-tit">Account responsável</p><div class="caixa" id="d-resp"></div></div>
 
@@ -2322,7 +2322,7 @@ function renderCadencia(){
   const st = statusDe(ct.id);
   const pr = progresso(ct);
   const parada = FINAIS.indexOf(st) >= 0 || ST_REUNIAO_MAIS.indexOf(st) >= 0;
-  $("#d-cad-nome").textContent = pr.cad.nome + ", " + pr.cad.desc + (parada ? ". Pausada porque o lead avançou de etapa." : ".") + " Toque num passo pra ver o texto sugerido dele.";
+  $("#d-cad-nome").textContent = pr.cad.nome + ", " + pr.cad.desc + (parada ? ". Pausada porque o lead avançou de etapa." : ".") + " Toque num passo pra ver o texto sugerido dele logo abaixo.";
   $("#d-passos").innerHTML = pr.passos.map((x, i) => {
     const cls = x.estado === "atual" && parada ? "pendente" : x.estado;
     const clicavel = x.estado !== "pulado";
