@@ -19,6 +19,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script>document.documentElement.className+=' js';</script>
+<script>
+/* sempre abre no topo, mesmo ao recarregar (o navegador restauraria a rolagem anterior) */
+(function () {
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+  var touched = false;
+  ['touchstart','wheel','keydown','mousedown'].forEach(function (ev) {
+    window.addEventListener(ev, function () { touched = true; }, { once: true, passive: true });
+  });
+  function top() { if (!location.hash && !touched) window.scrollTo(0, 0); }
+  top();
+  document.addEventListener('DOMContentLoaded', top);
+  window.addEventListener('load', top);
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { touched = false; top(); } });
+})();
+</script>
 <style>
   :root{
     --blue:#009FDF; --navy:#0055A5; --deep:#00346B; --orange:#E57623; --orange-d:#CF6618;
@@ -233,6 +248,11 @@
   @media (prefers-reduced-motion:reduce){
     .js .eva-row .evawrap,.js .eva-row .bubble{opacity:1;transform:none;transition:none}
   }
+
+  /* revelar ao rolar: cada bloco entra na tela quando a pessoa chega nele */
+  .js .rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease var(--d,0s),transform .65s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+  .js .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}}
 
   /* desktop: aproveita a largura (o mobile continua sendo a prioridade) */
   @media (min-width:960px){
@@ -527,6 +547,47 @@
       io.observe(evaRow);
     } else { evaRow.classList.add('in'); }
   }
+
+  /* revelar ao rolar */
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    var items = [];
+    function add(list, stagger) {
+      Array.prototype.forEach.call(list, function (el, i) {
+        el.classList.add('rv');
+        if (stagger) el.style.setProperty('--d', Math.min(i * 0.08, 0.4) + 's');
+        items.push(el);
+      });
+    }
+    add(document.querySelectorAll('.hero .herotxt > *'), true);
+    add(document.querySelectorAll('.hero .shot'), false);
+    var shot = document.querySelector('.hero .shot');
+    if (shot) shot.style.setProperty('--d', '0.25s');
+    add(document.querySelectorAll('section:not(.hero) .wrap > .kicker, section:not(.hero) .wrap > h2.t, section:not(.hero) .wrap > p.lead'), false);
+    add(document.querySelectorAll('.chtxt, .flowcap, .vwrap, .vlink, .quote, .award, .ctatxt, #leadForm'), false);
+    ['.feats > .feat', '.flow .node', '.stats > .stat', '.news > .nitem', '.cases > .cs'].forEach(function (sel) {
+      var parents = [];
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (el) {
+        var par = el.parentNode, idx = parents.indexOf(par);
+        if (idx === -1) { parents.push(par); idx = parents.length - 1; par.__n = 0; }
+        el.classList.add('rv');
+        el.style.setProperty('--d', Math.min(par.__n++ * 0.08, 0.4) + 's');
+        items.push(el);
+      });
+    });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        el.classList.add('in');
+        io.unobserve(el);
+        /* depois de revelado, devolve o controle das transicoes originais (hover etc.) */
+        setTimeout(function () { el.classList.remove('rv', 'in'); el.style.removeProperty('--d'); }, 1300);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  })();
 
   /* cliques nos CTAs */
   Array.prototype.forEach.call(document.querySelectorAll('[data-cta]'), function (a) {
