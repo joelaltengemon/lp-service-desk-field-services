@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+<script>document.documentElement.className+=' js';</script>
 <style>
   :root{
     --blue:#009FDF; --navy:#0055A5; --deep:#00346B; --orange:#E57623; --orange-d:#CF6618;
@@ -85,7 +86,7 @@
   .callout b{display:block;font-size:15px;margin-bottom:3px}
   .eva-row{display:flex;align-items:flex-start;gap:8px;margin-top:20px;max-width:620px}
   .eva-row.rev{flex-direction:row-reverse}
-  .eva-row .evawrap{width:clamp(100px,22vw,150px);margin-top:6px}
+  .eva-row .evawrap{width:clamp(88px,14.3vw,122px);margin-top:6px}
   .bubble{position:relative;flex:1;margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;font-size:15px;line-height:1.4;font-weight:700;box-shadow:0 3px 10px rgba(15,30,51,.08)}
   .bubble small{display:block;font-weight:500;font-size:13px;color:var(--muted);margin-top:3px}
   .bubble::after{content:"";position:absolute;top:50%;margin-top:-7px;width:14px;height:14px;background:#fff;transform:rotate(45deg);border-radius:2px}
@@ -223,6 +224,16 @@
     .cases{grid-template-columns:1fr 1fr}
   }
 
+
+  /* Eva e balao: aparecem quando a secao entra na tela */
+  .js .eva-row .evawrap{opacity:0;transform:translateY(16px) scale(.94);transform-origin:center bottom;transition:opacity .55s ease,transform .55s ease}
+  .js .eva-row.in .evawrap{opacity:1;transform:none}
+  .js .eva-row .bubble{opacity:0;transform:translateX(-10px) scale(.96);transform-origin:left center;transition:opacity .5s ease .4s,transform .5s ease .4s}
+  .js .eva-row.in .bubble{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .js .eva-row .evawrap,.js .eva-row .bubble{opacity:1;transform:none;transition:none}
+  }
+
   /* desktop: aproveita a largura (o mobile continua sendo a prioridade) */
   @media (min-width:960px){
     .wrap{max-width:1160px;padding:0 40px}
@@ -247,7 +258,7 @@
     .solution .kicker,.solution h2.t{grid-column:1/-1}
     .solution .feats{grid-column:1;margin-top:22px;grid-template-columns:1fr 1fr}
     .solution .eva-row{grid-column:2;margin-top:22px;max-width:none;flex-direction:column;align-items:center;text-align:center}
-    .solution .eva-row .evawrap{width:190px}
+    .solution .eva-row .evawrap{width:122px}
     .solution .bubble{margin-top:18px;flex:none;width:100%;max-width:420px;font-size:17px}
     .solution .bubble::after{left:50%;top:-7px;margin:0 0 0 -7px;border:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
 
@@ -368,7 +379,7 @@
         <div class="stat"><b>Grátis</b><span>nas lojas de aplicativos</span></div>
       </div>
       <blockquote class="quote">
-        <p>"Ele deixa de comprar por descrição e passa a <span>decidir por experiência</span>."</p>
+        <p>“Ele deixa de comprar por descrição e passa a <span>decidir por experiência</span>.”</p>
         <div class="who"><b>Leide Azevedo</b><span>Diretora comercial, Engemon IT</span></div>
       </blockquote>
       <div class="award">
@@ -505,6 +516,17 @@
     document.getElementById('vwrap').replaceChildren(f);
     window.dataLayer.push({ event: 'video_play', video_id: 'w1RP7ZcgADo', pagina: PAGINA });
   });
+
+  /* Eva falando: dispara quando a secao aparece */
+  var evaRow = document.querySelector('.eva-row');
+  if (evaRow) {
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { evaRow.classList.add('in'); io.disconnect(); } });
+      }, { threshold: 0.6 });
+      io.observe(evaRow);
+    } else { evaRow.classList.add('in'); }
+  }
 
   /* cliques nos CTAs */
   Array.prototype.forEach.call(document.querySelectorAll('[data-cta]'), function (a) {
