@@ -1,40 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "sustentabilidade.engemon.com.br"
-        }
-      ],
-      "destination": "/relatorio-sustentabilidade-2025/:path*"
-    },
-    {
       "source": "/haas-e-venda-de-hardware",
       "destination": "https://engemon-care-cycle.vercel.app/haas-e-venda-de-hardware"
     },
     {
       "source": "/_haas/:path*",
       "destination": "https://engemon-care-cycle.vercel.app/_haas/:path*"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/relatorio-sustentabilidade-2025/(.*)",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noimageindex"
-        }
-      ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/relatorio-sustentabilidade-2025",
-      "destination": "/relatorio-sustentabilidade-2025/",
-      "permanent": false
     }
   ]
 }
