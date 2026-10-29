@@ -29,5 +29,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/relatorio-sustentabilidade-2025",
+      "destination": "/relatorio-sustentabilidade-2025/",
+      "permanent": false
+    }
   ]
 }
